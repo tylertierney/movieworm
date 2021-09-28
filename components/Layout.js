@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
           minH="100vh"
           // h="93vh"
           // maxH="93vh"
-          paddingX={["1", "0", "0", "0"]}
+          paddingX={["0", "0", "0", "0"]}
         >
           {children}
         </Box>

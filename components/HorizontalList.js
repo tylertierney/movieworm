@@ -22,7 +22,6 @@ const HorizontalList = ({
         Popular
       </BrandedHeading>
       <HStack
-        border="solid green 1px"
         overflowX="scroll"
         className="hideScrollbar"
         p="0.4rem 0.4rem 1.5rem 0.4rem"
@@ -52,7 +51,7 @@ const HorizontalList = ({
                 onClick={() => handleClick(item)}
                 cursor="pointer"
                 transition="0.3s ease-in-out"
-                _hover={{ transform: "scale(1.1)" }}
+                _hover={{ transform: "scale(1.05)" }}
                 key={index}
                 boxShadow="7px 7px 10px 1px rgb(0, 0, 0, 0.2)"
                 w={40}
