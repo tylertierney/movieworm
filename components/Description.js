@@ -74,6 +74,8 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
     }
   };
 
+  const headingColor = useColorModeValue("brand.gray", "brand.white");
+
   return (
     <>
       {movieDetails && (
@@ -85,7 +87,7 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
             justify="space-between"
           >
             <Heading
-              color={useColorModeValue("brand.gray", "brand.white")}
+              color={headingColor}
               //   border="solid blue 1px"
               maxW="80%"
               fontSize="1.6rem"
