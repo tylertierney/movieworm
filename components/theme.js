@@ -39,8 +39,7 @@ const themeObj = {
   components: {
     Heading: {
       baseStyle: {
-        color: "brand.primary.1000",
-        fontSize: "4rem",
+        color: "gray.700",
       },
     },
   },

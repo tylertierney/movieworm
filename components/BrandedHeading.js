@@ -23,7 +23,7 @@ const BrandedHeading = ({ children, props }) => {
       mb="0.9rem"
       {...props}
       // textAlign="center"
-      p="0.3rem 0"
+      p="0.3rem 0.4rem"
     >
       {children}
     </Heading>
