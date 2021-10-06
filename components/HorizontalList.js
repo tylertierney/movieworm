@@ -1,14 +1,20 @@
 import { Flex, HStack, Image } from "@chakra-ui/react";
+import { generateKey } from "../utils/helperFunctions";
 import BrandedHeading from "./BrandedHeading";
 
 const HorizontalList = ({
+  title,
   movieList,
   setDescriptionDetails,
+  descriptionShowing,
   setDescriptionShowing,
 }) => {
   const handleClick = (item) => {
     setDescriptionDetails(item);
-    setDescriptionShowing(true);
+
+    if (!descriptionShowing) {
+      setDescriptionShowing(true);
+    }
   };
 
   return (
@@ -19,7 +25,7 @@ const HorizontalList = ({
           mb: "0rem",
         }}
       >
-        Popular
+        {title}
       </BrandedHeading>
       <HStack
         overflowX="scroll"
@@ -28,7 +34,7 @@ const HorizontalList = ({
         m="0"
         spacing={3}
       >
-        {movieList &&
+        {movieList ? (
           movieList.map((item, index) => {
             const {
               adult,
@@ -55,11 +61,16 @@ const HorizontalList = ({
                 key={index}
                 boxShadow="7px 7px 10px 1px rgb(0, 0, 0, 0.2)"
                 w={40}
+                minW={40}
+                minH="240px"
                 alt={`${title} Poster`}
                 src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
               />
             );
-          })}
+          })
+        ) : (
+          <></>
+        )}
       </HStack>
     </Flex>
   );

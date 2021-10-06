@@ -23,17 +23,9 @@ body {
   animation: spinner 1.7s infinite linear;
 }
 
-.imageMargin {
+/* .imageMargin {
   margin-bottom: 1rem;
-}
-
-.screenshots {
-  box-shadow: 14px 14px 24px 1px rgb(0, 0, 0, 0.2);
-}
-
-.borderRadius {
-  border-radius: 10px;
-}
+} */
 
 @keyframes spinner {
   from {

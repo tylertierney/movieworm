@@ -10,6 +10,7 @@ import {
 import { FiEdit } from "react-icons/fi";
 import { BsChatDots } from "react-icons/bs";
 import { HiOutlineDocumentReport } from "react-icons/hi";
+import { generateKey } from "../utils/helperFunctions";
 
 const IconList = ({ items, props }) => {
   const iconBgColor = useColorModeValue("brand.white", "gray.600");
@@ -32,7 +33,7 @@ const IconList = ({ items, props }) => {
     }
 
     return (
-      <ListItem mb="0.4rem" key={index}>
+      <ListItem mb="0.4rem" key={generateKey()}>
         <Flex
           maxW={["100%", "", "300px"]}
           justify="center"

@@ -7,15 +7,22 @@ import {
   Text,
   Button,
   InputRightElement,
+  FormHelperText,
+  Flex,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
 
-const BrandedInput = ({ name, props, isLoading, state, type }) => {
+const BrandedInput = ({ name, props, isLoading, state, type, helperText }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <FormControl isRequired id={name} isDisabled={isLoading}>
+      {helperText && (
+        <FormHelperText pl="0.5rem" pb="0.2rem" opacity="0.7" fontSize="0.7rem">
+          {helperText}
+        </FormHelperText>
+      )}
       <InputGroup>
         <Input
           value={state.value}

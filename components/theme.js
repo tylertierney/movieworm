@@ -29,7 +29,9 @@ const themeObj = {
         100: "#F9C5BD",
       },
       white: "#F5F5F5",
-      gray: "#2D3748",
+      // gray: "#2D3748",
+      gray: "#35353b",
+      darkgray: "#232329",
       text: {
         dark: "#696969",
         light: "#E1E1E1",

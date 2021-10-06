@@ -3,7 +3,7 @@ import BrandedButton from "../BrandedButton/BrandedButton";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { useState } from "react";
 import { useUser } from "../../context/authContext";
-import UserMenu from "./UserMenu";
+// import UserMenu from "./UserMenu";
 
 const NavbarControls = () => {
   // const [loginDisabled, setLoginDisabled] = useState(false);
@@ -17,12 +17,9 @@ const NavbarControls = () => {
   return (
     <Flex align="center" justify="center" h="100%">
       <ThemeSwitch />
-      {user ? (
-        <UserMenu />
-      ) : (
-        <>
-          <BrandedButton
-            props={{ margin: "0px 4px" }}
+
+      {/* <BrandedButton
+            props={{ margin: "0px 4px", maxH: "80%" }}
             variant="ghost"
             color="none"
             action="link"
@@ -31,23 +28,19 @@ const NavbarControls = () => {
             setIsLoading={setLoginIsLoading}
           >
             Log In
-          </BrandedButton>
-          <BrandedButton
-            variant="solid"
-            color="primary"
-            action="link"
-            href="/signup"
-            props={{ margin: "0px 4px", maxH: "90%" }}
-            isLoading={signupIsLoading}
-            setIsLoading={setSignupIsLoading}
-          >
-            Sign Up
-          </BrandedButton>
-        </>
-      )}
+          </BrandedButton> */}
+      <BrandedButton
+        variant="solid"
+        color="primary"
+        action="link"
+        href="/signup"
+        props={{ margin: "0px 4px", size: "sm" }}
+        isLoading={signupIsLoading}
+        setIsLoading={setSignupIsLoading}
+      >
+        Log In
+      </BrandedButton>
     </Flex>
-    //   )}
-    // </>
   );
 };
 
