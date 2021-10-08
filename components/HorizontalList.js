@@ -27,15 +27,16 @@ const HorizontalList = ({
       >
         {title}
       </BrandedHeading>
-      <HStack
-        overflowX="scroll"
-        className="hideScrollbar"
-        p="0.4rem 0.4rem 1.5rem 0.4rem"
-        m="0"
-        spacing={3}
-      >
-        {movieList ? (
-          movieList.map((item, index) => {
+
+      {movieList.length > 0 ? (
+        <HStack
+          overflowX="scroll"
+          className="hideScrollbar"
+          p="0.4rem 0.4rem 1.5rem 0.4rem"
+          m="0"
+          spacing={3}
+        >
+          {movieList.map((item, index) => {
             const {
               adult,
               backdrop_path,
@@ -67,11 +68,11 @@ const HorizontalList = ({
                 src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
               />
             );
-          })
-        ) : (
-          <></>
-        )}
-      </HStack>
+          })}
+        </HStack>
+      ) : (
+        <></>
+      )}
     </Flex>
   );
 };

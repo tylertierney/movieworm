@@ -49,7 +49,6 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
   const [multipleDirectors, setMultipleDirectors] = useState(false);
 
   const findDirectors = (crew) => {
-    console.log(credits, crew);
     if (credits === undefined) {
       return;
     }
@@ -186,7 +185,8 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
                 size="sm"
                 color="white"
                 variant="solid"
-                colorScheme="blue"
+                // colorScheme="blue"
+                backgroundColor="brand.primary.1000"
                 rightIcon={<AiOutlinePlus color="white" />}
               >
                 Add Review

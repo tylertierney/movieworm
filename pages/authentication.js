@@ -24,7 +24,12 @@ import BrandedButton from "../components/BrandedButton/BrandedButton";
 import BrandedInput from "../components/BrandedInput";
 import BrandedHeading from "../components/BrandedHeading";
 
-const Login = () => {
+// import { useUser } from "../context/authContext";
+import { useUser } from "@auth0/nextjs-auth0";
+
+const Authentication = () => {
+  const { login, user } = useUser();
+
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,6 +44,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    login();
   };
 
   const dividerColor = useColorModeValue("brand.gray", "brand.white");
@@ -104,7 +110,7 @@ const Login = () => {
             borderRadius="lg"
           ></Box>
         </Flex>
-        <form onSubmit={(e) => handleSubmit(e)} style={{ width: "100%" }}>
+        {/* <form onSubmit={(e) => handleSubmit(e)} style={{ width: "100%" }}>
           <VStack spacing={6}>
             <Flex w="100%" direction="column" align="center">
               <BrandedHeading props={{ m: "0rem 0rem 0.5rem 0rem" }}>
@@ -112,7 +118,7 @@ const Login = () => {
               </BrandedHeading>
 
               <Text textAlign="center">
-                Create or join a group and start reviewing movies
+                Create or join a group to start reviewing movies
               </Text>
               <br />
               <Container
@@ -156,10 +162,10 @@ const Login = () => {
               </Container>
             </Flex>
           </VStack>
-        </form>
+        </form> */}
       </VStack>
     </>
   );
 };
 
-export default Login;
+export default Authentication;

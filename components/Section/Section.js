@@ -26,13 +26,24 @@ const Section = ({ title, movieList }) => {
   }, [descriptionShowing, descriptionDetails]);
 
   const noReviewsMessage = (
-    <Flex w="100%" h="100%" justify="center" align="center" direction="column">
-      <BrandedSubheading props={{ fontSize: "1rem", m: "0" }}>
-        Your group hasn&apos;t posted any reviews yet
-      </BrandedSubheading>
-      <BrandedParagraph props={{ fontSize: "0.8rem" }}>
-        Click on a movie to view details and leave a rating or review.
-      </BrandedParagraph>
+    <Flex
+      w="100%"
+      paddingX="1rem"
+      h="100%"
+      justify="center"
+      align="center"
+      direction="column"
+    >
+      <Box maxW="90%">
+        <BrandedSubheading
+          props={{ fontSize: "1rem", m: "0", textAlign: "center" }}
+        >
+          Your group hasn&apos;t posted any reviews yet
+        </BrandedSubheading>
+        <BrandedParagraph props={{ fontSize: "0.8rem", textAlign: "center" }}>
+          Click on a movie to view details and leave a rating or review.
+        </BrandedParagraph>
+      </Box>
     </Flex>
   );
 

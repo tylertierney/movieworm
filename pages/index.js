@@ -1,18 +1,31 @@
-import { useUser } from "../context/authContext";
-
-import { useState, useEffect, useRef } from "react";
-// import BrandedHeading from "../components/BrandedHeading";
-// import HorizontalList from "../components/HorizontalList";
-// import Description from "../components/Description";
-// import { Box } from "@chakra-ui/react";
+// import { useUser } from "../context/authContext";
+import { getAccessToken, useUser } from "@auth0/nextjs-auth0";
+import axios from "axios";
 
 import Section from "../components/Section/Section";
 
 const Home = ({ api_key, popularList, genre_list }) => {
   const groupList = [];
 
+  const { user, isLoading, error } = useUser();
+
+  const tokenURL = "https://dev-gexu-wbz.us.auth0.com/oauth/token";
+  const headers = { "content-type": "application/json" };
+
+  const getToken = () => {
+    axios
+      .get("/api/gettoken")
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
+  };
+
+  if (isLoading) return <div>Loading</div>;
+  if (error) return <div>error</div>;
+
   return (
     <main>
+      <button onClick={() => console.log(user)}>get user</button>
+      {/* <button onClick={() => getToken()}>get token</button> */}
       <Section title="Your Group" movieList={groupList} />
       <Section title="Popular" movieList={popularList} />
     </main>

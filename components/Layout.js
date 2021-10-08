@@ -1,6 +1,7 @@
 import Navbar from "./Navbar/Navbar";
 import Head from "next/head";
-import { useUser } from "../context/authContext";
+// import { useUser } from "../context/authContext";
+import { useUser } from "@auth0/nextjs-auth0";
 import { Box } from "@chakra-ui/react";
 import Footer from "./Footer/Footer";
 

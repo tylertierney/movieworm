@@ -12,7 +12,9 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import { useUser } from "../context/authContext";
+// import { useUser } from "../context/authContext";
+
+import { useUser } from "@auth0/nextjs-auth0";
 
 import useInput from "../hooks/useInput";
 import { useState } from "react";
@@ -33,8 +35,6 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     login();
-
-    console.log(email, password);
   };
 
   return (

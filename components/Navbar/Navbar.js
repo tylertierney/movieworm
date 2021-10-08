@@ -30,13 +30,9 @@ const Navbar = () => {
         w="100%"
         h="7vh"
         pl="0.5rem"
-        pr="0.8rem"
+        pr="1.2rem"
       >
-        <Box
-          width="100px"
-          cursor="pointer"
-          // onClick={router.push("/")}
-        >
+        <Box width="100px" cursor="pointer" onClick={() => router.push("/")}>
           <Logo />
         </Box>
 
