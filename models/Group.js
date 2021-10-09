@@ -6,6 +6,10 @@ const GroupSchema = new mongoose.Schema({
     required: [true, "Please provide a name for this group."],
     maxlength: [30, "Group name cannot exceed 30 characters"],
   },
+  owner_id: {
+    type: String,
+    required: true,
+  },
   group_id: {
     type: String,
     required: true,
@@ -15,4 +19,4 @@ const GroupSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.models.Group || mongoose.model("Group", GroupSchema);
+export default GroupSchema;

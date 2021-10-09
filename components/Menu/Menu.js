@@ -8,13 +8,13 @@ import {
   Flex,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { generateKey } from "../../utils/helperFunctions";
+
 import Link from "next/link";
 
 const MenuComponent = ({ menuName, menuIcon, menuItems }) => {
   const menuItemArray = menuItems.map((item, index) => {
     return (
-      <Link key={index} href="/api/auth/logout" passHref>
+      <Link key={index} href={item.link} passHref>
         <a>
           <MenuItem>
             {item.icon}

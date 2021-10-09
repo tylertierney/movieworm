@@ -1,56 +1,11 @@
-// import router from "next/router";
-// import { useState, useEffect, createContext, useContext } from "react";
-
-// const AuthContext = createContext();
-
-// const AuthContextProvider = ({ children }) => {
-//   const [user, setUser] = useState(null);
-
-// useEffect(() => {
-//   const userFromLocal = localStorage.getItem("user");
-//   if (!userFromLocal) {
-//     return;
-//   } else {
-//     setUser(JSON.parse(userFromLocal));
-//   }
-// }, []);
-
-//   const login = () => {
-//     const initial = {
-//       firstname: "Tyler",
-//       lastname: "Tierney",
-//       username: "ttierney",
-//       email: "tytierney@yahoo.com",
-//       id: "123456",
-//     };
-//     localStorage.setItem("user", JSON.stringify(initial));
-//     setUser(() => initial);
-//     router.push("/");
-//   };
-
-//   const logout = () => {
-//     setUser(() => null);
-//     localStorage.clear();
-//   };
-
-//   const context = {
-//     user,
-//     setUser,
-//     login,
-//     logout,
-//   };
-
-//   return (
-//     <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
-//   );
-// };
-
-// export default AuthContextProvider;
-
-// export const useUser = () => useContext(AuthContext);
-
 import router from "next/router";
 import { useContext, createContext, useReducer, useEffect } from "react";
+import axios from "axios";
+import { findUserByEmail } from "../utils/helperFunctions";
+
+import { useUser } from "@auth0/nextjs-auth0";
+
+// console.log(user);
 
 const placeholder_user = {
   firstname: "Tyler",
@@ -60,19 +15,18 @@ const placeholder_user = {
   id: "123456",
 };
 
-const initial = null;
-
-export const AuthContext = createContext(initial);
+export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
+  const { user } = useUser();
+
   useEffect(() => {
-    const userFromLocal = localStorage.getItem("user");
-    if (!userFromLocal) {
-      return;
-    } else {
-      login();
+    if (user != undefined) {
+      findUserByEmail(user.email)
+        .then((res) => login())
+        .catch((err) => console.log(err));
     }
-  }, []);
+  }, [user]);
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -85,7 +39,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const [user, dispatch] = useReducer(reducer, initial);
+  const [group_user, dispatch] = useReducer(reducer, null);
 
   const login = (name) => {
     dispatch({ type: "login", payload: name });
@@ -99,11 +53,11 @@ const AuthProvider = ({ children }) => {
     router.push("/");
   };
 
-  const ctx = { user, login, logout };
+  const ctx = { group_user, login, logout };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
 
-export const useUser = () => useContext(AuthContext);
+export const useLocalUser = () => useContext(AuthContext);

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Group from "./Group";
+import GroupSchema from "./Group";
 
 const UserSchema = new mongoose.Schema({
   tenant: {
@@ -20,11 +20,14 @@ const UserSchema = new mongoose.Schema({
   email_verified: {
     type: Boolean,
   },
+  username: {
+    type: String,
+  },
   owned_groups: {
-    type: [Group],
+    type: [GroupSchema],
   },
   joined_groups: {
-    type: [Group],
+    type: [GroupSchema],
   },
   reviews: {
     type: Array,

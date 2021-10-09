@@ -4,15 +4,21 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Icon } from "@chakra-ui/react";
 import { BiLogOut } from "react-icons/bi";
+import { AiOutlineUser } from "react-icons/ai";
 
 const UserMenu = ({ user }) => {
   // const { logout } = useUser();
 
   const menuItems = [
     {
+      text: "You",
+      icon: <Icon as={AiOutlineUser} />,
+      link: "/user/abc",
+    },
+    {
       text: "Log Out",
       icon: <Icon as={BiLogOut} />,
-      // onclick: logout,
+      link: "/api/auth/logout",
     },
   ];
 

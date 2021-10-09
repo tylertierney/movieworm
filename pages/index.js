@@ -1,6 +1,8 @@
-// import { useUser } from "../context/authContext";
-import { getAccessToken, useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0";
+import { useEffect } from "react";
 import axios from "axios";
+import { findUserByEmail } from "../utils/helperFunctions";
+import { useLocalUser } from "../context/authContext";
 
 import Section from "../components/Section/Section";
 
@@ -8,24 +10,32 @@ const Home = ({ api_key, popularList, genre_list }) => {
   const groupList = [];
 
   const { user, isLoading, error } = useUser();
+  const { group_user } = useLocalUser();
 
-  const tokenURL = "https://dev-gexu-wbz.us.auth0.com/oauth/token";
-  const headers = { "content-type": "application/json" };
-
-  const getToken = () => {
+  const getAllUsers = () => {
     axios
-      .get("/api/gettoken")
-      .then((response) => console.log(response))
+      .get("/api/user/abc")
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+
+  // const findUserByEmail = (email) => {
+  //   axios
+  //     .get(`/api/user/${email}`)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // };
 
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>error</div>;
 
   return (
     <main>
-      <button onClick={() => console.log(user)}>get user</button>
-      {/* <button onClick={() => getToken()}>get token</button> */}
+      {/* <button onClick={() => getAllUsers()}>get all users</button> */}
+      <button onClick={() => console.log(group_user)}>group user</button>
+      {/* <button onClick={() => findUserByEmail(user.email)}>
+        get user by id
+      </button> */}
       <Section title="Your Group" movieList={groupList} />
       <Section title="Popular" movieList={popularList} />
     </main>
