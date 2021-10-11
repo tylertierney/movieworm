@@ -13,13 +13,28 @@ import {
 
 import { useState } from "react";
 
-const BrandedInput = ({ name, props, isLoading, state, type, helperText }) => {
+const BrandedInput = ({
+  name,
+  props,
+  isLoading,
+  state,
+  type,
+  helperText,
+  formLabel,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <FormControl isRequired id={name} isDisabled={isLoading}>
+    <FormControl id={name} isDisabled={isLoading}>
+      {formLabel && <FormLabel mb="0">{formLabel}</FormLabel>}
       {helperText && (
-        <FormHelperText pl="0.5rem" pb="0.2rem" opacity="0.7" fontSize="0.7rem">
+        <FormHelperText
+          pr="0.5rem"
+          textAlign="right"
+          pb="0.2rem"
+          opacity="0.7"
+          fontSize="0.7rem"
+        >
           {helperText}
         </FormHelperText>
       )}

@@ -6,25 +6,11 @@ import { useLocalUser } from "../context/authContext";
 
 import Section from "../components/Section/Section";
 
-const Home = ({ api_key, popularList, genre_list }) => {
+const Home = ({ popularList, genre_list, comedyList }) => {
   const groupList = [];
 
   const { user, isLoading, error } = useUser();
-  const { group_user } = useLocalUser();
-
-  const getAllUsers = () => {
-    axios
-      .get("/api/user/abc")
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
-
-  // const findUserByEmail = (email) => {
-  //   axios
-  //     .get(`/api/user/${email}`)
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // };
+  const { localUser } = useLocalUser();
 
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>error</div>;
@@ -32,12 +18,15 @@ const Home = ({ api_key, popularList, genre_list }) => {
   return (
     <main>
       {/* <button onClick={() => getAllUsers()}>get all users</button> */}
-      <button onClick={() => console.log(group_user)}>group user</button>
+      <button onClick={() => console.log(localUser)}>group user</button>
+      <br />
+      <button onClick={() => console.log(user)}>user</button>
       {/* <button onClick={() => findUserByEmail(user.email)}>
         get user by id
       </button> */}
-      <Section title="Your Group" movieList={groupList} />
-      <Section title="Popular" movieList={popularList} />
+      {user ? <Section title="Your Group" movieList={groupList} /> : <></>}
+      {/* <Section title="Popular" movieList={popularList} />
+      <Section title="Comedy" movieList={comedyList} /> */}
     </main>
   );
 };
@@ -46,21 +35,32 @@ export default Home;
 
 export async function getStaticProps() {
   const api_key = process.env.API_KEY;
-  let popularList, genre_list;
-  const popular_url = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`;
-  await fetch(popular_url)
-    .then((res) => res.json())
-    .then((data) => (popularList = data.results))
-    .catch((err) => console.log(err));
+  let popularList, genre_list, comedyList;
 
-  const genres_url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=en-US`;
+  popularList = [];
+  genre_list = [];
+  comedyList = [];
 
-  await fetch(genres_url)
-    .then((res) => res.json())
-    .then((data) => (genre_list = data))
-    .catch((err) => console.log(err));
+  // const popular_url = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`;
+  // const comedy_url = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=35`;
+  // await fetch(popular_url)
+  //   .then((res) => res.json())
+  //   .then((data) => (popularList = data.results))
+  //   .catch((err) => console.log(err));
+
+  // await fetch(comedy_url)
+  //   .then((res) => res.json())
+  //   .then((data) => (comedyList = data.results))
+  //   .catch((err) => console.log(err));
+
+  // const genres_url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=en-US`;
+
+  // await fetch(genres_url)
+  //   .then((res) => res.json())
+  //   .then((data) => (genre_list = data))
+  //   .catch((err) => console.log(err));
 
   return {
-    props: { popularList, genre_list },
+    props: { popularList, genre_list, comedyList },
   };
 }

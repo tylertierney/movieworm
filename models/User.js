@@ -23,10 +23,7 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
   },
-  owned_groups: {
-    type: [GroupSchema],
-  },
-  joined_groups: {
+  groups: {
     type: [GroupSchema],
   },
   reviews: {

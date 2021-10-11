@@ -21,17 +21,32 @@ const AuthProvider = ({ children }) => {
   const { user } = useUser();
 
   useEffect(() => {
-    if (user != undefined) {
-      findUserByEmail(user.email)
-        .then((res) => login())
-        .catch((err) => console.log(err));
+    console.log(user);
+    if (user === undefined) {
+      return;
     }
-  }, [user]);
+
+    console.log(user);
+    findUserByEmail(user.email)
+      .then((res) => login(res.data))
+      .catch((err) => console.log(err));
+  }, [user?.email]);
+
+  // useEffect(() => {
+  //   if (user == undefined) {
+  //     return;
+  //   }
+
+  //   console.log(user);
+  //   findUserByEmail(user.email)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // }, [user?.email]);
 
   const reducer = (state, action) => {
     switch (action.type) {
       case "login":
-        return placeholder_user;
+        return action.payload;
       case "logout":
         return null;
       default:
@@ -39,12 +54,12 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const [group_user, dispatch] = useReducer(reducer, null);
+  const [localUser, dispatch] = useReducer(reducer, null);
 
-  const login = (name) => {
-    dispatch({ type: "login", payload: name });
-    localStorage.setItem("user", JSON.stringify(placeholder_user));
-    router.push("/");
+  const login = (userFromMongo) => {
+    dispatch({ type: "login", payload: userFromMongo });
+    // localStorage.setItem("user", JSON.stringify(placeholder_user));
+    // router.push("/");
   };
 
   const logout = (name) => {
@@ -53,7 +68,7 @@ const AuthProvider = ({ children }) => {
     router.push("/");
   };
 
-  const ctx = { group_user, login, logout };
+  const ctx = { localUser, login, logout };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;
 };
