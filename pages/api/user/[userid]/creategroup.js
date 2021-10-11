@@ -19,7 +19,8 @@ export default async function handler(req, res) {
           name: req.body.groupname,
           group_id: req.body.group_id,
           owner_id: req.query.userid,
-          members: [req.query.userid],
+          members: [{ userid: req.query.userid, username: req.body.username }],
+          reviews: [],
         };
 
         user.groups.push(new_group);

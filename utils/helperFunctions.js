@@ -18,8 +18,8 @@ export const groupBy = (objectArray, property) => {
   return objectArray.reduce(reducer, {});
 };
 
-export const findUserByEmail = (email) => {
-  return axios
+export const findUserByEmail = async (email) => {
+  return await axios
     .get(`/api/user/${email}`)
     .then((res) => res.data)
 

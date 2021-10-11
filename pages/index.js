@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { findUserByEmail } from "../utils/helperFunctions";
 import { useLocalUser } from "../context/authContext";
+import { Heading } from "@chakra-ui/react";
 
 import Section from "../components/Section/Section";
 
@@ -26,12 +27,14 @@ const Home = ({ popularList, genre_list, comedyList }) => {
     });
   }
 
+  console.log(localUser);
+  console.count();
+
   return (
     <main>
-      <button onClick={() => console.log(localUser)}>group user</button>
+      {/* <button onClick={() => console.log(localUser)}>group user</button>
       <br />
-      <button onClick={() => console.log(user)}>user</button>
-      {/* {user ? <Section title="Your Group" movieList={groupList} /> : <></>} */}
+      <button onClick={() => console.log(user)}>user</button> */}
       {groupSection}
       {/* <Section title="Popular" movieList={popularList} />
       <Section title="Comedy" movieList={comedyList} /> */}

@@ -1,4 +1,5 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
+import emojiTree from "emoji-tree";
 
 const BrandedHeading = ({ children, props }) => {
   let bgGradient;
@@ -14,6 +15,20 @@ const BrandedHeading = ({ children, props }) => {
       bgGradient = "linear(to-r, brand.primary.1000,lightblue)";
   }
 
+  // Find any emojis and replace them with a different text component,
+  // so that backgroundClip doesn't render them as a solid block
+
+  const headingArray = emojiTree(children);
+
+  let headingToString = [];
+  headingArray.forEach((char) => {
+    if (char.type === "text") {
+      headingToString.push(char.text);
+    } else {
+      headingToString.push(<Text as="span">{char.text}</Text>);
+    }
+  });
+
   return (
     <Heading
       size={props?.size ? props.size : "2xl"}
@@ -22,10 +37,9 @@ const BrandedHeading = ({ children, props }) => {
       maxW="480px"
       mb="0.9rem"
       {...props}
-      // textAlign="center"
       p="0.3rem 0.4rem"
     >
-      {children}
+      {headingToString}
     </Heading>
   );
 };

@@ -48,6 +48,7 @@ const CreateGroup = () => {
       .post(`/api/user/${localUser._id}/creategroup`, {
         groupname: groupname.value,
         group_id,
+        username: username.value,
       })
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
@@ -55,6 +56,7 @@ const CreateGroup = () => {
 
   const groupname = useInput("");
   const password = useInput("");
+  const username = useInput("");
 
   //   const generateID = () => {
   //     return Math.random().toString(16).substr(2, 16);
@@ -89,9 +91,17 @@ const CreateGroup = () => {
                 helperText="Max 20 characters"
                 formLabel="1. Give your group a name"
               />
+              <BrandedInput
+                name="Username"
+                state={username}
+                isLoading={isLoading}
+                type="text"
+                helperText="This is how you will appear to other members"
+                formLabel="2. Select a username to use in your group"
+              />
               <FormControl>
                 <FormLabel mb="0">
-                  2. Copy your group ID to share with your friends
+                  3. Copy your group ID to share with your friends
                 </FormLabel>
                 <FormHelperText textAlign="right">
                   {idIsCopied ? "Copied!" : " "}

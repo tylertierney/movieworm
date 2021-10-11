@@ -28,22 +28,7 @@ const AuthProvider = ({ children }) => {
     findUserByEmail(user.email)
       .then((res) => login(res.data))
       .catch((err) => console.log(err));
-
-    if (localStorage.getItem("movieworm-active_group")) {
-      console.log(localStorage.getItem("movieworm-active_group"));
-    }
   }, [user?.email]);
-
-  // useEffect(() => {
-  //   if (user == undefined) {
-  //     return;
-  //   }
-
-  //   console.log(user);
-  //   findUserByEmail(user.email)
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // }, [user?.email]);
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -62,6 +47,18 @@ const AuthProvider = ({ children }) => {
   const [localUser, dispatch] = useReducer(reducer, null);
 
   const login = (userFromMongo) => {
+    const activeGroup = localStorage.getItem("movieworm-active_group");
+
+    if (activeGroup) {
+      userFromMongo.groups.forEach((group) => {
+        if (group.name === activeGroup) {
+          group.isActive = true;
+        } else {
+          group.isActive = false;
+        }
+      });
+    }
+
     dispatch({ type: "login", payload: userFromMongo });
     // localStorage.setItem("user", JSON.stringify(placeholder_user));
     // router.push("/");
@@ -74,7 +71,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const setActiveGroup = (group_name) => {
-    localUser.groups.forEach((group, index) => {
+    let copyOfLocalUser = { ...localUser };
+    copyOfLocalUser.groups.forEach((group, index) => {
       if (group.name === group_name) {
         group.isActive = true;
         localStorage.setItem("movieworm-active_group", group.name);
@@ -83,7 +81,7 @@ const AuthProvider = ({ children }) => {
       }
     });
 
-    dispatch({ type: "setActiveGroup", payload: localUser });
+    dispatch({ type: "setActiveGroup", payload: copyOfLocalUser });
 
     // dispatch({type: "setActiveGroup", payload: })
   };

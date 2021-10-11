@@ -41,7 +41,7 @@ const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
     return (
       <MenuItem key={index} onClick={group.onClick ? group.onClick : null}>
         {group.icon}
-        <Text ml="10px">{group.text}&nbsp;</Text>
+        <Text ml="10px">{group.text}&nbsp;&nbsp;</Text>
         {group.isActive ? (
           <Icon as={AiOutlineCheckCircle} color="lightgreen" />
         ) : (
