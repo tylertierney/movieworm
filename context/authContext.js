@@ -21,15 +21,17 @@ const AuthProvider = ({ children }) => {
   const { user } = useUser();
 
   useEffect(() => {
-    console.log(user);
     if (user === undefined) {
       return;
     }
 
-    console.log(user);
     findUserByEmail(user.email)
       .then((res) => login(res.data))
       .catch((err) => console.log(err));
+
+    if (localStorage.getItem("movieworm-active_group")) {
+      console.log(localStorage.getItem("movieworm-active_group"));
+    }
   }, [user?.email]);
 
   // useEffect(() => {
@@ -49,6 +51,9 @@ const AuthProvider = ({ children }) => {
         return action.payload;
       case "logout":
         return null;
+      case "setActiveGroup":
+        return action.payload;
+        break;
       default:
         return state;
     }
@@ -68,7 +73,22 @@ const AuthProvider = ({ children }) => {
     router.push("/");
   };
 
-  const ctx = { localUser, login, logout };
+  const setActiveGroup = (group_name) => {
+    localUser.groups.forEach((group, index) => {
+      if (group.name === group_name) {
+        group.isActive = true;
+        localStorage.setItem("movieworm-active_group", group.name);
+      } else {
+        group.isActive = false;
+      }
+    });
+
+    dispatch({ type: "setActiveGroup", payload: localUser });
+
+    // dispatch({type: "setActiveGroup", payload: })
+  };
+
+  const ctx = { localUser, login, logout, setActiveGroup };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;
 };

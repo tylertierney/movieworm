@@ -15,7 +15,7 @@ import { useLocalUser } from "../../context/authContext";
 const UserMenu = ({ user }) => {
   // const { logout } = useUser();
 
-  const { localUser } = useLocalUser();
+  const { localUser, setActiveGroup } = useLocalUser();
 
   const menuItems = [
     {
@@ -35,25 +35,34 @@ const UserMenu = ({ user }) => {
       link: "/",
     },
     {
-      text: "Log localuser",
-      icon: <Icon as={AiOutlineUser} />,
-      onClick: () => console.log(localUser),
-    },
-    {
       text: "Log Out",
       icon: <Icon as={BiLogOut} />,
       link: "/api/auth/logout",
     },
   ];
 
+  let groupsArray;
+
+  if (localUser.groups.length > 0) {
+    groupsArray = localUser.groups.map((group) => {
+      console.log(group.isActive);
+      return {
+        text: group.name,
+        icon: <Icon as={AiOutlineUser} />,
+        onClick: () => setActiveGroup(group.name),
+        isActive: group.isActive,
+      };
+    });
+  }
+
   const menuIcon = [
     <ChevronDownIcon key="1234567" fontSize="1.4rem" />,
     <ChevronUpIcon key="509887123487969765" fontSize="1.4rem" />,
   ];
 
-  let trimmedUsername = user?.nickname;
-  if (user?.nickname.length > 16) {
-    trimmedUsername = user.nickname.substr(0, 16) + "...";
+  let trimmedUsername = user?.email;
+  if (user?.email.length > 16) {
+    trimmedUsername = user.email.substr(0, 16) + "...";
   }
 
   return (
@@ -61,6 +70,7 @@ const UserMenu = ({ user }) => {
       menuName={trimmedUsername}
       menuIcon={menuIcon}
       menuItems={menuItems}
+      groupsArray={groupsArray}
     />
   );
 };

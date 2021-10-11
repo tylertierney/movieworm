@@ -5,8 +5,6 @@ import User from "../../../../models/User";
 export default async function handler(req, res) {
   const { method } = req;
 
-  console.log(req.body);
-
   await dbConnect();
   switch (method) {
     case "POST":
@@ -17,7 +15,15 @@ export default async function handler(req, res) {
 
         res.status(200).json({ success: true, data: user });
 
-        user.groups.push();
+        const new_group = {
+          name: req.body.groupname,
+          group_id: req.body.group_id,
+          owner_id: req.query.userid,
+          members: [req.query.userid],
+        };
+
+        user.groups.push(new_group);
+        user.save();
       } catch (error) {
         res.status(400).json({ success: false });
         return;

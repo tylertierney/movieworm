@@ -15,16 +15,24 @@ const Home = ({ popularList, genre_list, comedyList }) => {
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>error</div>;
 
+  let groupSection;
+  if (localUser == null) {
+    groupSection = null;
+  } else {
+    localUser.groups.forEach((group) => {
+      if (group.isActive) {
+        groupSection = <Section title={group.name} movieList={groupList} />;
+      }
+    });
+  }
+
   return (
     <main>
-      {/* <button onClick={() => getAllUsers()}>get all users</button> */}
       <button onClick={() => console.log(localUser)}>group user</button>
       <br />
       <button onClick={() => console.log(user)}>user</button>
-      {/* <button onClick={() => findUserByEmail(user.email)}>
-        get user by id
-      </button> */}
-      {user ? <Section title="Your Group" movieList={groupList} /> : <></>}
+      {/* {user ? <Section title="Your Group" movieList={groupList} /> : <></>} */}
+      {groupSection}
       {/* <Section title="Popular" movieList={popularList} />
       <Section title="Comedy" movieList={comedyList} /> */}
     </main>

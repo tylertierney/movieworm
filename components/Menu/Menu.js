@@ -8,12 +8,15 @@ import {
   Text,
   Flex,
   useColorModeValue,
+  Icon,
 } from "@chakra-ui/react";
+
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 import Link from "next/link";
 import { useLocalUser } from "../../context/authContext";
 
-const MenuComponent = ({ menuName, menuIcon, menuItems }) => {
+const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
   const { localUser } = useLocalUser();
 
   const menuItemArray = menuItems.map((item, index) => {
@@ -30,6 +33,21 @@ const MenuComponent = ({ menuName, menuIcon, menuItems }) => {
       <Link key={index} href={item.link} passHref>
         <a>{children}</a>
       </Link>
+    );
+  });
+
+  const groupItems = groupsArray.map((group, index) => {
+    console.log(group.isActive);
+    return (
+      <MenuItem key={index} onClick={group.onClick ? group.onClick : null}>
+        {group.icon}
+        <Text ml="10px">{group.text}&nbsp;</Text>
+        {group.isActive ? (
+          <Icon as={AiOutlineCheckCircle} color="lightgreen" />
+        ) : (
+          <></>
+        )}
+      </MenuItem>
     );
   });
 
@@ -50,7 +68,14 @@ const MenuComponent = ({ menuName, menuIcon, menuItems }) => {
               {isOpen ? menuIcon[1] : menuIcon[0]}
             </Text>
           </MenuButton>
-          <MenuList bgColor={menuColor}>{menuItemArray}</MenuList>
+          <MenuList bgColor={menuColor} fontSize="0.8rem">
+            {menuItemArray}
+            {groupsArray ? (
+              <MenuGroup title="Groups">{groupItems}</MenuGroup>
+            ) : (
+              <></>
+            )}
+          </MenuList>
         </>
       )}
     </Menu>
