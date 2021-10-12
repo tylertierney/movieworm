@@ -53,10 +53,10 @@ const CreateGroup = () => {
         username: username.value,
       })
       .then((res) => {
+        console.log(res);
         window.location = "/";
       })
       .catch((err) => console.log(err));
-    window.location = "/";
   };
 
   const groupname = useInput("");

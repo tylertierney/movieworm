@@ -2,20 +2,28 @@ import {
   Text,
   Flex,
   Heading,
+  Icon,
   IconButton,
   useColorModeValue,
   Image,
   Button,
   Divider,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import BrandedParagraph from "../components/BrandedParagraph";
-import { useEffect, useState } from "react";
-import { groupBy, generateKey } from "../utils/helperFunctions";
+import { useEffect, useState, useRef } from "react";
+import { groupBy } from "../utils/helperFunctions";
+import { BsChevronDoubleLeft } from "react-icons/bs";
 
 import { AiOutlinePlus } from "react-icons/ai";
+import ReviewModal from "./ReviewModal/ReviewModal";
 
 const Description = ({ movieDetails, setDescriptionShowing }) => {
+  const castScrollerRef = useRef(null);
+
+  // console.log(castScrollerRef.current);
+
   const {
     adult,
     backdrop_path,
@@ -113,6 +121,18 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
     });
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [showLeftScrollBtn, setShowLeftScrollBtn] = useState(false);
+
+  const handleScroll = (e) => {
+    if (e.target.scrollLeft > 40) {
+      setShowLeftScrollBtn(true);
+    } else {
+      setShowLeftScrollBtn(false);
+    }
+  };
+
   return (
     <>
       {movieDetails ? (
@@ -154,18 +174,31 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
                 </Text>
                 <Divider />
                 <Flex align="center">
-                  <Text
-                    as="span"
-                    fontSize="0.9rem"
-                    fontWeight="bold"
-                    p="0.4rem 0 0.4rem 0"
-                  >
-                    Cast:&nbsp;
-                  </Text>
+                  {showLeftScrollBtn ? (
+                    <Icon
+                      as={BsChevronDoubleLeft}
+                      minW="2.68rem"
+                      cursor="pointer"
+                      onClick={() => (castScrollerRef.current.scrollLeft = 0)}
+                    />
+                  ) : (
+                    <Text
+                      as="span"
+                      fontSize="0.9rem"
+                      fontWeight="bold"
+                      p="0.4rem 0 0.4rem 0"
+                      minW="2.68rem"
+                    >
+                      Cast:&nbsp;
+                    </Text>
+                  )}
                   <Flex
                     p="0.4rem 1rem 0.4rem 0"
                     overflowX="scroll"
                     className="hideScrollbar"
+                    ref={castScrollerRef}
+                    onScroll={(e) => handleScroll(e)}
+                    style={{ scrollBehavior: "smooth" }}
                   >
                     {credits === undefined ? null : findCast(credits.cast)}
                   </Flex>
@@ -185,7 +218,7 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
                 size="sm"
                 color="white"
                 variant="solid"
-                // colorScheme="blue"
+                onClick={onOpen}
                 backgroundColor="brand.primary.1000"
                 rightIcon={<AiOutlinePlus color="white" />}
               >
@@ -193,6 +226,16 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
               </Button>
             </Flex>
           </Flex>
+          <ReviewModal
+            onOpen={onOpen}
+            isOpen={isOpen}
+            onClose={onClose}
+            movieDetails={movieDetails}
+            multipleDirectors={multipleDirectors}
+            setMultipleDirectors={setMultipleDirectors}
+            credits={credits}
+            findDirectors={findDirectors}
+          />
         </Flex>
       ) : (
         <></>

@@ -25,3 +25,18 @@ export const findUserByEmail = async (email) => {
 
     .catch((err) => err);
 };
+
+export const findActiveGroup = (localUser) => {
+  if (localUser === null || localUser === undefined) {
+    return {};
+  }
+
+  if (localUser.groups === null || localUser.groups === undefined) {
+    return {};
+  }
+  for (let i = 0; i < localUser.groups.length; i++) {
+    if (localUser.groups[i].isActive) {
+      return localUser.groups[i];
+    }
+  }
+};
