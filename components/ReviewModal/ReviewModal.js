@@ -10,7 +10,6 @@ import {
   Image,
   Flex,
   Text,
-  Heading,
   Input,
   FormControl,
   FormLabel,
@@ -25,15 +24,13 @@ import {
   NumberDecrementStepper,
 } from "@chakra-ui/react";
 
-import { useState } from "react";
-
-import useInput from "../../hooks/useInput";
-
-import BrandedSubheading from "../BrandedSubheading";
+import { useEffect, useState } from "react";
 
 import { useLocalUser } from "../../context/authContext";
 
 import { findActiveGroup } from "../../utils/helperFunctions";
+
+import axios from "axios";
 
 const ReviewModal = ({
   onOpen,
@@ -62,7 +59,7 @@ const ReviewModal = ({
     vote_count,
   } = movieDetails;
 
-  const reviewText = useInput("");
+  const [reviewText, setReviewText] = useState("");
 
   const { localUser } = useLocalUser();
 
@@ -70,14 +67,39 @@ const ReviewModal = ({
 
   const [rating, setRating] = useState(0);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const activeGroup = findActiveGroup(localUser);
+
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
+
+    axios
+      .post(`api/user/${localUser._id}/${activeGroup._id}/createreview`, {
+        reviewText: reviewText,
+        rating,
+        movieDetails,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    setRating(0);
+    setReviewText("");
+  }, [title]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bgColor={useColorModeValue("brand.white", "brand.gray")}>
         <form onSubmit={(e) => handleSubmit(e)}>
           <ModalHeader>
             <Flex w="100%" mb="1rem">
@@ -107,22 +129,20 @@ const ReviewModal = ({
             <Input
               isReadOnly={true}
               isDisabled
-              value={findActiveGroup(localUser).name}
+              value={activeGroup.name}
               type="text"
               mb="1rem"
             />
             <FormControl>
-              <FormLabel m="0" color="inherit">
-                Rating
-              </FormLabel>
-              <FormHelperText
-                pr="0.5rem"
-                textAlign="right"
-                pb="0.2rem"
-                opacity="0.7"
-                fontSize="0.7rem"
-                m="0"
-              >{`${rating}/10`}</FormHelperText>
+              <Flex align="center" justify="space-between" mb="0.2rem">
+                <FormLabel m="0" color="inherit">
+                  Rating
+                </FormLabel>
+                <FormHelperText
+                  opacity="0.7"
+                  fontSize="0.7rem"
+                >{`${rating}/10`}</FormHelperText>
+              </Flex>
               <NumberInput
                 defaultValue={0}
                 max={10}
@@ -130,6 +150,7 @@ const ReviewModal = ({
                 value={rating}
                 onChange={(e) => setRating(e)}
                 mb="1rem"
+                isDisabled={isLoading}
               >
                 <NumberInputField />
                 <NumberInputStepper>
@@ -138,38 +159,46 @@ const ReviewModal = ({
                 </NumberInputStepper>
               </NumberInput>
             </FormControl>
-            <FormControl isInvalid={reviewText.value.length > 1000}>
-              <FormLabel m="0" color="inherit">
-                Review
-              </FormLabel>
-              <FormHelperText
-                pr="0.5rem"
-                textAlign="right"
-                pb="0.2rem"
-                opacity="0.7"
-                fontSize="0.7rem"
-                m="0"
-              >
-                {`${reviewText.value.length}/1000 characters`}
-              </FormHelperText>
+            <FormControl>
+              <Flex align="center" justify="space-between" mb="0.2rem">
+                <FormLabel m="0" color="inherit">
+                  Review
+                </FormLabel>
+                <FormHelperText opacity="0.7" fontSize="0.7rem">
+                  {`${reviewText.length}/1000 characters`}
+                </FormHelperText>
+              </Flex>
               <Textarea
+                isDisabled={isLoading}
                 maxLength="1000"
                 color="inherit"
-                value={reviewText.value}
-                onChange={reviewText.onChange}
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
               ></Textarea>
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="ghost" color={textColor} mr={3} onClick={onClose}>
+            <Button
+              _hover={{ opacity: "0.6" }}
+              variant="ghost"
+              transition="0.3s ease-in-out"
+              color={textColor}
+              mr={3}
+              onClick={onClose}
+            >
               Close
             </Button>
             <Button
+              transition="0.3s ease-in-out"
               variant="solid"
               color="brand.white"
               bgColor="brand.primary.1000"
               type="submit"
+              _hover={{
+                opacity: "0.6",
+              }}
+              isDisabled={isLoading}
             >
               Submit
             </Button>

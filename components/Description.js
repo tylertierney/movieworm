@@ -19,10 +19,17 @@ import { BsChevronDoubleLeft } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import ReviewModal from "./ReviewModal/ReviewModal";
 
-const Description = ({ movieDetails, setDescriptionShowing }) => {
+const Description = ({
+  movieDetails,
+  setDescriptionShowing,
+  credits,
+  setCredits,
+  findDirectors,
+  isOpen,
+  onOpen,
+  onClose,
+}) => {
   const castScrollerRef = useRef(null);
-
-  // console.log(castScrollerRef.current);
 
   const {
     adult,
@@ -41,7 +48,7 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
     vote_count,
   } = movieDetails;
 
-  const [credits, setCredits] = useState(null);
+  // const [credits, setCredits] = useState(null);
 
   useEffect(() => {
     if (id === undefined) {
@@ -55,29 +62,6 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
   }, [id]);
 
   const [multipleDirectors, setMultipleDirectors] = useState(false);
-
-  const findDirectors = (crew) => {
-    if (credits === undefined) {
-      return;
-    }
-    const directorsArray = groupBy(crew, "job")["Director"];
-
-    if (directorsArray.length > 1) {
-      setMultipleDirectors(true);
-    }
-    return directorsArray.map((item, index) => {
-      let addComma = true;
-      if (index === directorsArray.length - 1) {
-        addComma = false;
-      }
-      return (
-        <Text as="span" key={index} fontWeight="normal">
-          {item.name}
-          {addComma ? ", " : ""}
-        </Text>
-      );
-    });
-  };
 
   const headingColor = useColorModeValue("brand.gray", "brand.white");
 
@@ -121,8 +105,6 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
     });
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [showLeftScrollBtn, setShowLeftScrollBtn] = useState(false);
 
   const handleScroll = (e) => {
@@ -158,10 +140,7 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
               />
             </Flex>
           </Flex>
-          <Flex
-            // maxW="900px"
-            direction="column"
-          >
+          <Flex direction="column">
             <BrandedParagraph props={{ fontSize: "0.9rem", p: "0 0 0.5rem 0" }}>
               {overview}
             </BrandedParagraph>
@@ -212,7 +191,7 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
               align="center"
             >
               <Text as="span" fontSize="0.9rem" fontWeight="bold">
-                Reviews:&nbsp;
+                {`0 Reviews`}
               </Text>
               <Button
                 size="sm"
@@ -221,21 +200,13 @@ const Description = ({ movieDetails, setDescriptionShowing }) => {
                 onClick={onOpen}
                 backgroundColor="brand.primary.1000"
                 rightIcon={<AiOutlinePlus color="white" />}
+                _hover={{ opacity: "0.6" }}
+                transition="0.3s ease-in-out"
               >
                 Add Review
               </Button>
             </Flex>
           </Flex>
-          <ReviewModal
-            onOpen={onOpen}
-            isOpen={isOpen}
-            onClose={onClose}
-            movieDetails={movieDetails}
-            multipleDirectors={multipleDirectors}
-            setMultipleDirectors={setMultipleDirectors}
-            credits={credits}
-            findDirectors={findDirectors}
-          />
         </Flex>
       ) : (
         <></>

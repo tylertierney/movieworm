@@ -1,5 +1,4 @@
-import { Flex, HStack, Image } from "@chakra-ui/react";
-import { generateKey } from "../utils/helperFunctions";
+import { Flex, HStack, Image, Box } from "@chakra-ui/react";
 import BrandedHeading from "./BrandedHeading";
 
 const HorizontalList = ({
@@ -53,20 +52,32 @@ const HorizontalList = ({
               vote_average,
               vote_count,
             } = item;
+
             return (
-              <Image
-                onClick={() => handleClick(item)}
-                cursor="pointer"
-                transition="0.3s ease-in-out"
-                _hover={{ transform: "scale(1.05)" }}
-                key={index}
-                boxShadow="7px 7px 10px 1px rgb(0, 0, 0, 0.2)"
-                w={40}
-                minW={40}
-                minH="240px"
-                alt={`${title} Poster`}
-                src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
-              />
+              <Box key={index}>
+                <Image
+                  onClick={() => handleClick(item)}
+                  cursor="pointer"
+                  transition="0.3s ease-in-out"
+                  _hover={{ transform: "scale(1.05)" }}
+                  boxShadow="7px 7px 10px 1px rgb(0, 0, 0, 0.2)"
+                  w={40}
+                  minW={40}
+                  minH="240px"
+                  alt={`${title} Poster`}
+                  src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+                />
+                {/* <ReviewModal
+                  onOpen={movieTitleOnOpen}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  movieDetails={movieDetails}
+                  multipleDirectors={multipleDirectors}
+                  setMultipleDirectors={setMultipleDirectors}
+                  credits={credits}
+                  findDirectors={findDirectors}
+                /> */}
+              </Box>
             );
           })}
         </HStack>

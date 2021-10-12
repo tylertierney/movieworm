@@ -1,19 +1,8 @@
 import router from "next/router";
 import { useContext, createContext, useReducer, useEffect } from "react";
-import axios from "axios";
 import { findUserByEmail } from "../utils/helperFunctions";
 
 import { useUser } from "@auth0/nextjs-auth0";
-
-// console.log(user);
-
-const placeholder_user = {
-  firstname: "Tyler",
-  lastname: "Tierney",
-  username: "ttierney",
-  email: "tytierney@yahoo.com",
-  id: "123456",
-};
 
 export const AuthContext = createContext(null);
 
