@@ -45,7 +45,6 @@ const UserMenu = ({ user }) => {
 
   if (localUser.groups.length > 0) {
     groupsArray = localUser.groups.map((group) => {
-      console.log(group.isActive);
       return {
         text: group.name,
         icon: <Icon as={AiOutlineUser} />,
@@ -61,9 +60,26 @@ const UserMenu = ({ user }) => {
   ];
 
   let trimmedUsername = user?.email;
-  if (user?.email.length > 16) {
-    trimmedUsername = user.email.substr(0, 16) + "...";
+
+  if (localUser) {
+    localUser.groups.forEach((group) => {
+      if (group.isActive) {
+        group.members.forEach((member) => {
+          if (member.userid === localUser._id) {
+            if (member.username.length > 16) {
+              trimmedUsername = member.username.substr(0, 16) + "...";
+            } else {
+              trimmedUsername = member.username;
+            }
+          }
+        });
+      }
+    });
   }
+  // let trimmedUsername = user?.email;
+  // if (user?.email.length > 16) {
+  //   trimmedUsername = user.email.substr(0, 16) + "...";
+  // }
 
   return (
     <Menu

@@ -36,8 +36,7 @@ const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
     );
   });
 
-  const groupItems = groupsArray.map((group, index) => {
-    console.log(group.isActive);
+  const groupItems = groupsArray?.map((group, index) => {
     return (
       <MenuItem key={index} onClick={group.onClick ? group.onClick : null}>
         {group.icon}
@@ -70,6 +69,7 @@ const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
           </MenuButton>
           <MenuList bgColor={menuColor} fontSize="0.8rem">
             {menuItemArray}
+            <MenuDivider />
             {groupsArray ? (
               <MenuGroup title="Groups">{groupItems}</MenuGroup>
             ) : (

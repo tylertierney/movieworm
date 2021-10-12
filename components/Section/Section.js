@@ -34,7 +34,7 @@ const Section = ({ title, movieList }) => {
       align="center"
       direction="column"
     >
-      <Box maxW="90%">
+      <Box maxW="75%">
         <BrandedSubheading
           props={{ fontSize: "1rem", m: "0", textAlign: "center" }}
         >

@@ -38,7 +38,6 @@ const AuthProvider = ({ children }) => {
         return null;
       case "setActiveGroup":
         return action.payload;
-        break;
       default:
         return state;
     }
@@ -60,8 +59,6 @@ const AuthProvider = ({ children }) => {
     }
 
     dispatch({ type: "login", payload: userFromMongo });
-    // localStorage.setItem("user", JSON.stringify(placeholder_user));
-    // router.push("/");
   };
 
   const logout = (name) => {
@@ -82,11 +79,14 @@ const AuthProvider = ({ children }) => {
     });
 
     dispatch({ type: "setActiveGroup", payload: copyOfLocalUser });
-
-    // dispatch({type: "setActiveGroup", payload: })
   };
 
-  const ctx = { localUser, login, logout, setActiveGroup };
+  const ctx = {
+    localUser,
+    login,
+    logout,
+    setActiveGroup,
+  };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;
 };

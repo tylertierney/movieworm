@@ -27,13 +27,10 @@ const Home = ({ popularList, genre_list, comedyList }) => {
     });
   }
 
-  console.log(localUser);
-  console.count();
-
   return (
     <main>
-      {/* <button onClick={() => console.log(localUser)}>group user</button>
-      <br />
+      <button onClick={() => console.log(localUser)}>group user</button>
+      {/* <br />
       <button onClick={() => console.log(user)}>user</button> */}
       {groupSection}
       {/* <Section title="Popular" movieList={popularList} />

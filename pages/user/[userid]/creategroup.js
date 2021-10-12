@@ -27,6 +27,7 @@ import useInput from "../../../hooks/useInput";
 import axios from "axios";
 
 import { useLocalUser } from "../../../context/authContext";
+import router from "next/router";
 
 const generateID = () => {
   return Math.random().toString(16).substr(2, 16);
@@ -38,24 +39,27 @@ const CreateGroup = () => {
   const textColor = useColorModeValue("brand.text.dark", "brand.text.light");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+
   const [idIsCopied, setIdIsCopied] = useState(false);
 
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
-    setIsLoading(false);
-    axios
-      .post(`/api/user/${localUser._id}/creategroup`, {
-        groupname: groupname.value,
-        group_id,
-        username: username.value,
-      })
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+
+    // axios
+    //   .post(`/api/user/${localUser._id}/creategroup`, {
+    //     groupname: groupname.value,
+    //     group_id,
+    //     username: username.value,
+    //   })
+    //   .then((res) => {
+    //     window.location = "/";
+    //   })
+    //   .catch((err) => console.log(err));
+    window.location = "/";
   };
 
   const groupname = useInput("");
-  const password = useInput("");
   const username = useInput("");
 
   //   const generateID = () => {

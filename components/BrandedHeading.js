@@ -21,11 +21,15 @@ const BrandedHeading = ({ children, props }) => {
   const headingArray = emojiTree(children);
 
   let headingToString = [];
-  headingArray.forEach((char) => {
+  headingArray.forEach((char, index) => {
     if (char.type === "text") {
       headingToString.push(char.text);
     } else {
-      headingToString.push(<Text as="span">{char.text}</Text>);
+      headingToString.push(
+        <Text as="span" key={index}>
+          {char.text}
+        </Text>
+      );
     }
   });
 
