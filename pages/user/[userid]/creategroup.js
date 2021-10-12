@@ -46,25 +46,22 @@ const CreateGroup = () => {
     setIsLoading(true);
     e.preventDefault();
 
-    // axios
-    //   .post(`/api/user/${localUser._id}/creategroup`, {
-    //     groupname: groupname.value,
-    //     group_id,
-    //     username: username.value,
-    //   })
-    //   .then((res) => {
-    //     window.location = "/";
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .post(`/api/user/${localUser._id}/creategroup`, {
+        groupname: groupname.value,
+        group_id,
+        username: username.value,
+      })
+      .then((res) => {
+        window.location = "/";
+      })
+      .catch((err) => console.log(err));
     window.location = "/";
   };
 
   const groupname = useInput("");
   const username = useInput("");
 
-  //   const generateID = () => {
-  //     return Math.random().toString(16).substr(2, 16);
-  //   };
   const [group_id, setGroup_id] = useState(() => generateID());
 
   const copyID = () => {
