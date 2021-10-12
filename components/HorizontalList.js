@@ -15,6 +15,8 @@ const HorizontalList = ({
     if (!descriptionShowing) {
       setDescriptionShowing(true);
     }
+
+    console.log(item);
   };
 
   return (

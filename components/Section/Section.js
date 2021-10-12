@@ -2,7 +2,7 @@ import HorizontalList from "../HorizontalList";
 import Description from "../Description";
 import BrandedSubheading from "../BrandedSubheading";
 
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Divider } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import BrandedParagraph from "../BrandedParagraph";
 
@@ -33,6 +33,7 @@ const Section = ({ title, movieList }) => {
       justify="center"
       align="center"
       direction="column"
+      mb="1.5rem"
     >
       <Box maxW="75%">
         <BrandedSubheading
@@ -62,7 +63,8 @@ const Section = ({ title, movieList }) => {
           movieDetails={descriptionDetails}
         />
       </Box>
-      {title === "Popular" ? <></> : noReviewsMessage}
+      {movieList.length === 0 ? noReviewsMessage : <></>}
+      <Divider />
     </Box>
   );
 };
