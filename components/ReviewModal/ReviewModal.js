@@ -120,19 +120,11 @@ const ReviewModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      // size="sm"
       autoFocus={false}
       motionPreset="slideInBottom"
-
-      // styleConfig={{ border: "solid red 1px" }}
     >
       <ModalOverlay />
-      <ModalContent
-        border="solid red 1px"
-        bgColor={useColorModeValue("brand.white", "brand.gray")}
-        // height="100vh"
-        // minH="100vh"
-      >
+      <ModalContent bgColor={useColorModeValue("brand.white", "brand.gray")}>
         <form onSubmit={(e) => handleSubmit(e)}>
           <ModalHeader>
             <Flex w="100%" mb="1rem">
