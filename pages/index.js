@@ -1,20 +1,17 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import { useEffect } from "react";
-import axios from "axios";
-import { findUserByEmail } from "../utils/helperFunctions";
+
 import { useLocalUser } from "../context/authContext";
-import { Heading } from "@chakra-ui/react";
+
+import GroupSection from "../components/GroupSection/GroupSection";
 
 import Section from "../components/Section/Section";
 
 const Home = ({ popularList, genre_list, comedyList }) => {
-  const groupList = [];
-
   const { user, isLoading, error } = useUser();
   const { localUser } = useLocalUser();
 
   if (isLoading) return <div>Loading</div>;
-  if (error) return <div>error</div>;
+  if (error) return <div>Error</div>;
 
   let groupSection;
   if (localUser == null) {
@@ -22,7 +19,18 @@ const Home = ({ popularList, genre_list, comedyList }) => {
   } else {
     localUser.groups.forEach((group) => {
       if (group.isActive) {
-        groupSection = <Section title={group.name} movieList={groupList} />;
+        const groupList = [];
+
+        const groupList1 = group.reviews.map((review) => {
+          return review.movieDetails;
+        });
+        groupSection = (
+          <GroupSection
+            title={group.name}
+            // movieList={groupList1}
+            group={group}
+          />
+        );
       }
     });
   }

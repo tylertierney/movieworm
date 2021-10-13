@@ -22,6 +22,9 @@ import {
   NumberInputField,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Tooltip,
+  Box,
+  Portal,
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
@@ -72,18 +75,19 @@ const ReviewModal = ({
 
   const activeGroup = findActiveGroup(localUser);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
 
-    axios
+    await axios
       .post(`api/user/${localUser._id}/${activeGroup._id}/createreview`, {
-        reviewText: reviewText,
+        reviewText,
         rating,
         movieDetails,
       })
       .then((res) => {
         console.log(res);
+        onClose();
       })
       .catch((err) => {
         console.log(err);
@@ -96,14 +100,44 @@ const ReviewModal = ({
     setReviewText("");
   }, [title]);
 
+  const modalSubmitDisabled = () => {
+    if (localUser === null || localUser === undefined) {
+      return true;
+    }
+
+    if (isLoading) {
+      return true;
+    }
+
+    if (activeGroup === null || activeGroup === undefined) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      // size="sm"
+      autoFocus={false}
+      motionPreset="slideInBottom"
+
+      // styleConfig={{ border: "solid red 1px" }}
+    >
       <ModalOverlay />
-      <ModalContent bgColor={useColorModeValue("brand.white", "brand.gray")}>
+      <ModalContent
+        border="solid red 1px"
+        bgColor={useColorModeValue("brand.white", "brand.gray")}
+        // height="100vh"
+        // minH="100vh"
+      >
         <form onSubmit={(e) => handleSubmit(e)}>
           <ModalHeader>
             <Flex w="100%" mb="1rem">
               <Image
+                alt={`${title} poster`}
                 src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
                 w={140}
               />
@@ -129,7 +163,7 @@ const ReviewModal = ({
             <Input
               isReadOnly={true}
               isDisabled
-              value={activeGroup.name}
+              value={activeGroup?.name}
               type="text"
               mb="1rem"
             />
@@ -164,6 +198,7 @@ const ReviewModal = ({
                 <FormLabel m="0" color="inherit">
                   Review
                 </FormLabel>
+
                 <FormHelperText opacity="0.7" fontSize="0.7rem">
                   {`${reviewText.length}/1000 characters`}
                 </FormHelperText>
@@ -178,9 +213,9 @@ const ReviewModal = ({
             </FormControl>
           </ModalBody>
 
-          <ModalFooter>
+          <ModalFooter p="1rem">
             <Button
-              _hover={{ opacity: "0.6" }}
+              // _hover={{ opacity: "0.6" }}
               variant="ghost"
               transition="0.3s ease-in-out"
               color={textColor}
@@ -189,19 +224,32 @@ const ReviewModal = ({
             >
               Close
             </Button>
-            <Button
-              transition="0.3s ease-in-out"
-              variant="solid"
-              color="brand.white"
-              bgColor="brand.primary.1000"
-              type="submit"
-              _hover={{
-                opacity: "0.6",
-              }}
-              isDisabled={isLoading}
+
+            <Tooltip
+              fontSize="0.7rem"
+              label={
+                modalSubmitDisabled()
+                  ? "Log in and create a group to save your reviews"
+                  : ""
+              }
+              placement="top"
             >
-              Submit
-            </Button>
+              <Box>
+                <Button
+                  transition="0.3s ease-in-out"
+                  variant="solid"
+                  color="brand.white"
+                  bgColor="brand.primary.1000"
+                  type="submit"
+                  _hover={{
+                    opacity: "0.6",
+                  }}
+                  isDisabled={modalSubmitDisabled()}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Tooltip>
           </ModalFooter>
         </form>
       </ModalContent>

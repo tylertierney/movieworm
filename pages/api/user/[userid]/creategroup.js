@@ -13,7 +13,7 @@ export default async function handler(req, res) {
           _id: req.query.userid,
         });
 
-        res.status(200).json({ success: true, data: user });
+        console.log(req.body.reviews);
 
         const new_group = {
           name: req.body.groupname,
@@ -25,6 +25,8 @@ export default async function handler(req, res) {
 
         user.groups.push(new_group);
         user.save();
+
+        res.status(200).json({ success: true, data: "it worked" });
       } catch (error) {
         res.status(400).json({ success: false });
         return;

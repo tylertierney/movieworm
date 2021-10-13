@@ -16,22 +16,20 @@ export default async function handler(req, res) {
           _id: userid,
         });
 
-        let foundgroup;
         for (let i = 0; i < user.groups.length; i++) {
-          if (user.groups[i]._id === groupid) {
-            console.log(groups[i]);
+          if (user.groups[i]._id.toString() == groupid) {
+            user.groups[i].reviews.push({
+              postedBy: userid,
+              reviewText,
+              rating,
+              movieDetails,
+            });
           }
         }
 
-        res.status(200).json({ success: true, data: "I think it worked" });
-        // user.save();
-        // const new_group = {
-        //   name: req.body.groupname,
-        //   group_id: req.body.group_id,
-        //   owner_id: req.query.userid,
-        //   members: [{ userid: req.query.userid, username: req.body.username }],
-        //   reviews: [],
-        // };
+        user.save();
+
+        res.status(200).json({ success: true, data: "It worked" });
       } catch (error) {
         res.status(400).json({ success: false });
         return;

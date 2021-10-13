@@ -14,6 +14,10 @@ const GroupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  reviews: {
+    type: Array,
+    required: true,
+  },
   members: {
     type: Array,
   },

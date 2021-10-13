@@ -26,9 +26,6 @@ const UserSchema = new mongoose.Schema({
   groups: {
     type: [GroupSchema],
   },
-  reviews: {
-    type: Array,
-  },
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
