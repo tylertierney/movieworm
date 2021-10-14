@@ -66,8 +66,6 @@ const Description = ({
 
   const headingColor = useColorModeValue("brand.gray", "brand.white");
 
-  console.log(reviewsArray);
-
   const findCast = (cast) => {
     return cast.map((item, index) => {
       return (

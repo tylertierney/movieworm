@@ -32,7 +32,7 @@ const UserMenu = ({ user }) => {
     {
       text: "Join a Group",
       icon: <Icon as={AiOutlineUsergroupAdd} />,
-      link: "/",
+      link: `/user/${localUser?._id}/joingroup`,
     },
     {
       text: "Log Out",

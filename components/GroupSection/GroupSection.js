@@ -44,9 +44,11 @@ const GroupSection = ({ title, group }) => {
 
   const [credits, setCredits] = useState(null);
 
-  let reviewsList = groupByNestedProperty(group.reviews, "movieDetails", "id");
-
-  reviewsList.reverse();
+  const reviewsList = groupByNestedProperty(
+    group.reviews,
+    "movieDetails",
+    "id"
+  );
 
   return (
     <Box>
@@ -75,6 +77,7 @@ const GroupSection = ({ title, group }) => {
         movieDetails={descriptionDetails}
         credits={credits}
       />
+      <Divider />
     </Box>
   );
 };

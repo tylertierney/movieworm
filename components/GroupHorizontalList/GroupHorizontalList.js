@@ -17,6 +17,8 @@ const GroupHorizontalList = ({ title, handleClick, reviewsList }) => {
     );
   }
 
+  movieArray.reverse();
+
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
       <BrandedHeading
