@@ -1,23 +1,19 @@
-import HorizontalList from "../HorizontalList";
+import GroupHorizontalList from "../GroupHorizontalList/GroupHorizontalList";
 import Description from "../Description";
-import BrandedSubheading from "../BrandedSubheading";
 
-import { Box, Flex, Divider, useDisclosure, Text } from "@chakra-ui/react";
+import { Box, Divider, useDisclosure } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
-import BrandedParagraph from "../BrandedParagraph";
 
-import { groupBy } from "../../utils/helperFunctions";
+import NoReviewsMessage from "../NoReviewsMessage/NoReviewsMessage";
 
 import ReviewModal from "../ReviewModal/ReviewModal";
 
-const Section = ({ title, group }) => {
-  const movieList = group.reviews.map((review) => {
-    console.log(review);
-    return review.movieDetails;
-  });
+import { groupByNestedProperty } from "../../utils/helperFunctions";
 
+const GroupSection = ({ title, group }) => {
   const [descriptionShowing, setDescriptionShowing] = useState(false);
   const [descriptionDetails, setDescriptionDetails] = useState({});
+  const [reviewsArray, setReviewsArray] = useState(null);
   const descriptionRef = useRef(null);
 
   useEffect(() => {
@@ -34,66 +30,32 @@ const Section = ({ title, group }) => {
     }
   }, [descriptionShowing, descriptionDetails]);
 
-  const noReviewsMessage = (
-    <Flex
-      w="100%"
-      paddingX="1rem"
-      h="100%"
-      justify="center"
-      align="center"
-      direction="column"
-      mb="1.5rem"
-    >
-      <Box maxW="75%">
-        <BrandedSubheading
-          props={{ fontSize: "1rem", m: "0", textAlign: "center" }}
-        >
-          Your group hasn&apos;t posted any reviews yet
-        </BrandedSubheading>
-        <BrandedParagraph props={{ fontSize: "0.8rem", textAlign: "center" }}>
-          Click on a movie to view details and leave a rating or review.
-        </BrandedParagraph>
-      </Box>
-    </Flex>
-  );
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [multipleDirectors, setMultipleDirectors] = useState(false);
-
-  const findDirectors = (crew) => {
-    if (credits === undefined) {
-      return;
+  const handleClick = (descriptionDetails, reviewsArray) => {
+    setDescriptionDetails(descriptionDetails, reviewsArray);
+    if (reviewsArray) {
+      setReviewsArray(reviewsArray);
     }
-    const directorsArray = groupBy(crew, "job")["Director"];
-
-    if (directorsArray.length > 1) {
-      setMultipleDirectors(true);
+    if (!descriptionShowing) {
+      setDescriptionShowing(true);
     }
-    return directorsArray.map((item, index) => {
-      let addComma = true;
-      if (index === directorsArray.length - 1) {
-        addComma = false;
-      }
-      return (
-        <Text as="span" key={index} fontWeight="normal">
-          {item.name}
-          {addComma ? ", " : ""}
-        </Text>
-      );
-    });
   };
 
   const [credits, setCredits] = useState(null);
 
+  const reviewsList = groupByNestedProperty(
+    group.reviews,
+    "movieDetails",
+    "id"
+  );
+
   return (
     <Box>
-      <HorizontalList
+      <GroupHorizontalList
+        handleClick={handleClick}
         title={title}
-        setDescriptionDetails={setDescriptionDetails}
-        movieList={movieList}
-        setDescriptionShowing={setDescriptionShowing}
-        descriptionShowing={descriptionShowing}
+        reviewsList={reviewsList}
       />
       <Box ref={descriptionRef} height="0" opacity="0">
         <Description
@@ -102,27 +64,21 @@ const Section = ({ title, group }) => {
           onClose={onClose}
           setDescriptionShowing={setDescriptionShowing}
           movieDetails={descriptionDetails}
-          multipleDirectors={multipleDirectors}
-          setMultipleDirectors={setMultipleDirectors}
           credits={credits}
           setCredits={setCredits}
-          findDirectors={findDirectors}
+          reviewsArray={reviewsArray}
         />
       </Box>
-      {movieList.length === 0 ? noReviewsMessage : <></>}
-      <Divider />
+      {group.reviews.length === 0 ? <NoReviewsMessage /> : <></>}
       <ReviewModal
         onOpen={onOpen}
         isOpen={isOpen}
         onClose={onClose}
         movieDetails={descriptionDetails}
-        multipleDirectors={multipleDirectors}
-        setMultipleDirectors={setMultipleDirectors}
         credits={credits}
-        findDirectors={findDirectors}
       />
     </Box>
   );
 };
 
-export default Section;
+export default GroupSection;

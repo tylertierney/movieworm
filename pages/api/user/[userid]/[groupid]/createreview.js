@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { userid, groupid } = req.query;
-        const { reviewText, rating, movieDetails } = req.body;
+        const { reviewText, rating, movieDetails, postedAt } = req.body;
 
         const user = await User.findOne({
           _id: userid,
@@ -23,6 +23,7 @@ export default async function handler(req, res) {
               reviewText,
               rating,
               movieDetails,
+              postedAt,
             });
           }
         }

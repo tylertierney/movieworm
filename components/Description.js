@@ -8,28 +8,33 @@ import {
   Image,
   Button,
   Divider,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import BrandedParagraph from "../components/BrandedParagraph";
 import { useEffect, useState, useRef } from "react";
-import { groupBy } from "../utils/helperFunctions";
 import { BsChevronDoubleLeft } from "react-icons/bs";
 
 import { AiOutlinePlus } from "react-icons/ai";
-import ReviewModal from "./ReviewModal/ReviewModal";
+
+import {
+  findDirectors,
+  getUsernameFromUserId,
+  findActiveGroup,
+} from "../utils/helperFunctions";
+
+import { useLocalUser } from "../context/authContext";
 
 const Description = ({
   movieDetails,
   setDescriptionShowing,
   credits,
   setCredits,
-  findDirectors,
-  isOpen,
   onOpen,
-  onClose,
+  reviewsArray,
 }) => {
   const castScrollerRef = useRef(null);
+
+  const { localUser } = useLocalUser();
 
   const {
     adult,
@@ -48,8 +53,6 @@ const Description = ({
     vote_count,
   } = movieDetails;
 
-  // const [credits, setCredits] = useState(null);
-
   useEffect(() => {
     if (id === undefined) {
       return;
@@ -61,9 +64,9 @@ const Description = ({
       .catch((err) => console.log(err));
   }, [id]);
 
-  const [multipleDirectors, setMultipleDirectors] = useState(false);
-
   const headingColor = useColorModeValue("brand.gray", "brand.white");
+
+  console.log(reviewsArray);
 
   const findCast = (cast) => {
     return cast.map((item, index) => {
@@ -115,6 +118,37 @@ const Description = ({
     }
   };
 
+  const reviewArrayItems = reviewsArray?.map((review) => {
+    const postedAtDate = () => {
+      if (review.postedAt === null || review.postedAt === undefined) {
+        return null;
+      }
+
+      return new Date(review.postedAt).toLocaleDateString();
+    };
+
+    const postedBy = () => {
+      console.log(findActiveGroup(localUser));
+    };
+
+    return (
+      <Flex
+        direction="column"
+        border="solid 1px"
+        borderColor="brand.primary.1000"
+        borderRadius="lg"
+        p="0.5rem"
+      >
+        <Flex pb="0.5rem" align="center" justify="space-between">
+          <Text fontSize="0.6rem">{review.postedBy}</Text>
+          <Text fontSize="0.6rem">{postedAtDate()}</Text>
+        </Flex>
+
+        <Text fontSize="0.8rem">{review.reviewText}</Text>
+      </Flex>
+    );
+  });
+
   return (
     <>
       {movieDetails ? (
@@ -148,8 +182,10 @@ const Description = ({
             {credits && (
               <>
                 <Text fontSize="0.9rem" fontWeight="bold" p="0.4rem 0 0.4rem 0">
-                  Director{multipleDirectors ? "s" : ""}:&nbsp;
-                  {findDirectors(credits.crew)}
+                  Director
+                  {findDirectors(credits).multipleDirectors ? "s" : ""}
+                  :&nbsp;
+                  {findDirectors(credits).list}
                 </Text>
                 <Divider />
                 <Flex align="center">
@@ -191,7 +227,8 @@ const Description = ({
               align="center"
             >
               <Text as="span" fontSize="0.9rem" fontWeight="bold">
-                {`0 Reviews`}
+                {`${reviewsArray?.length} Review`}
+                {reviewsArray?.length > 1 ? "s" : ""}
               </Text>
               <Button
                 size="sm"
@@ -206,6 +243,8 @@ const Description = ({
                 Add Review
               </Button>
             </Flex>
+            {reviewArrayItems}
+            <Divider />
           </Flex>
         </Flex>
       ) : (

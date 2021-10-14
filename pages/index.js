@@ -19,11 +19,11 @@ const Home = ({ popularList, genre_list, comedyList }) => {
   } else {
     localUser.groups.forEach((group) => {
       if (group.isActive) {
-        const groupList = [];
+        // const groupList = [];
 
-        const groupList1 = group.reviews.map((review) => {
-          return review.movieDetails;
-        });
+        // const groupList1 = group.reviews.map((review) => {
+        //   return review.movieDetails;
+        // });
         groupSection = (
           <GroupSection
             title={group.name}

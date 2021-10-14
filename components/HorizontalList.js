@@ -7,14 +7,15 @@ const HorizontalList = ({
   setDescriptionDetails,
   descriptionShowing,
   setDescriptionShowing,
+  handleClick,
 }) => {
-  const handleClick = (item) => {
-    setDescriptionDetails(item);
+  // const handleClick = (item) => {
+  //   setDescriptionDetails(item);
 
-    if (!descriptionShowing) {
-      setDescriptionShowing(true);
-    }
-  };
+  //   if (!descriptionShowing) {
+  //     setDescriptionShowing(true);
+  //   }
+  // };
 
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
@@ -67,16 +68,6 @@ const HorizontalList = ({
                   alt={`${title} Poster`}
                   src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
                 />
-                {/* <ReviewModal
-                  onOpen={movieTitleOnOpen}
-                  isOpen={isOpen}
-                  onClose={onClose}
-                  movieDetails={movieDetails}
-                  multipleDirectors={multipleDirectors}
-                  setMultipleDirectors={setMultipleDirectors}
-                  credits={credits}
-                  findDirectors={findDirectors}
-                /> */}
               </Box>
             );
           })}
