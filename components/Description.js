@@ -116,7 +116,7 @@ const Description = ({
     }
   };
 
-  const reviewArrayItems = reviewsArray?.map((review) => {
+  const reviewArrayItems = reviewsArray?.map((review, index) => {
     const postedAtDate = () => {
       if (review.postedAt === null || review.postedAt === undefined) {
         return null;
@@ -132,6 +132,7 @@ const Description = ({
 
     return (
       <Flex
+        key={index}
         direction="column"
         border="solid 1px"
         borderColor="brand.primary.1000"

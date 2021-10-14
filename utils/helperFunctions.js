@@ -25,6 +25,10 @@ export const groupByNestedProperty = (
   property,
   nestedProperty
 ) => {
+  if (objectArray === null || objectArray === undefined) {
+    return;
+  }
+
   const reducer = (acc, elem) => {
     let key = elem[property][nestedProperty];
     if (!acc[key]) {

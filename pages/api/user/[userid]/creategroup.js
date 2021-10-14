@@ -13,8 +13,6 @@ export default async function handler(req, res) {
           _id: req.query.userid,
         });
 
-        console.log(req.body.reviews);
-
         const new_group = {
           name: req.body.groupname,
           group_id: req.body.group_id,

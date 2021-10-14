@@ -25,7 +25,7 @@ const MoviePoster = ({ reviews, handleClick, movieDetails }) => {
 
     const total = reviews.reduce(reducer, 0);
     const average = total / reviews.length;
-    return average;
+    return average.toFixed(1);
   };
 
   return (

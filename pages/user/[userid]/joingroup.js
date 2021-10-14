@@ -1,21 +1,4 @@
-import {
-  Input,
-  InputGroup,
-  VStack,
-  Container,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Heading,
-  Text,
-  Button,
-  InputRightElement,
-  Divider,
-  Flex,
-  Box,
-  useColorModeValue,
-  FormHelperText,
-} from "@chakra-ui/react";
+import { VStack, Container, Flex, useColorModeValue } from "@chakra-ui/react";
 
 import { useState } from "react";
 
@@ -27,27 +10,22 @@ import useInput from "../../../hooks/useInput";
 import axios from "axios";
 
 import { useLocalUser } from "../../../context/authContext";
-import router from "next/router";
 
-const generateID = () => {
-  return Math.random().toString(16).substr(2, 16);
-};
-
-const CreateGroup = () => {
+const JoinGroup = () => {
   const { localUser } = useLocalUser();
 
   const textColor = useColorModeValue("brand.text.dark", "brand.text.light");
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [idIsCopied, setIdIsCopied] = useState(false);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
 
-    axios
-      .post(`/api/user/${localUser._id}/${groupid.value}/joingroup`, {})
+    await axios
+      .post(`/api/user/${localUser._id}/${groupid.value}/joingroup`, {
+        username: username.value,
+      })
       .then((res) => {
         console.log(res);
         // window.location = "/";
@@ -58,6 +36,7 @@ const CreateGroup = () => {
   };
 
   const groupid = useInput("");
+  const username = useInput("");
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} style={{ width: "100%" }}>
@@ -79,7 +58,15 @@ const CreateGroup = () => {
                 state={groupid}
                 isLoading={isLoading}
                 type="text"
-                formLabel="Enter a Group ID"
+                formLabel="1. Enter a Group ID"
+              />
+              <BrandedInput
+                name="Username"
+                state={username}
+                isLoading={isLoading}
+                type="text"
+                formLabel="2. Enter a username"
+                helperText="This is how you will appear to other members in the group."
               />
               <BrandedButton
                 disabled={isLoading}
@@ -98,4 +85,4 @@ const CreateGroup = () => {
   );
 };
 
-export default CreateGroup;
+export default JoinGroup;

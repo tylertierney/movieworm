@@ -1,17 +1,19 @@
 import HorizontalList from "../HorizontalList";
 import Description from "../Description";
 
-import { Box, Flex, Divider, useDisclosure, Text } from "@chakra-ui/react";
+import { Box, Divider, useDisclosure, Text } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
-import BrandedParagraph from "../BrandedParagraph";
 
 import ReviewModal from "../ReviewModal/ReviewModal";
 
 import NoReviewsMessage from "../NoReviewsMessage/NoReviewsMessage";
 
-const Section = ({ title, movieList }) => {
+import { groupByNestedProperty } from "../../utils/helperFunctions";
+
+const Section = ({ title, movieList, group }) => {
   const [descriptionShowing, setDescriptionShowing] = useState(false);
   const [descriptionDetails, setDescriptionDetails] = useState({});
+  const [reviewsArray, setReviewsArray] = useState(null);
   const descriptionRef = useRef(null);
 
   useEffect(() => {
@@ -30,15 +32,23 @@ const Section = ({ title, movieList }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleClick = (item) => {
-    setDescriptionDetails(item);
-
+  const handleClick = (descriptionDetails, reviewsArray) => {
+    setDescriptionDetails(descriptionDetails, reviewsArray);
+    if (reviewsArray) {
+      setReviewsArray(reviewsArray);
+    }
     if (!descriptionShowing) {
       setDescriptionShowing(true);
     }
   };
 
   const [credits, setCredits] = useState(null);
+
+  const reviewsList = groupByNestedProperty(
+    group.reviews,
+    "movieDetails",
+    "id"
+  );
 
   return (
     <Box>
@@ -49,6 +59,7 @@ const Section = ({ title, movieList }) => {
         movieList={movieList}
         setDescriptionShowing={setDescriptionShowing}
         descriptionShowing={descriptionShowing}
+        group={group}
       />
       <Box ref={descriptionRef} height="0" opacity="0">
         <Description

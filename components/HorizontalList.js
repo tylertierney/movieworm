@@ -1,21 +1,24 @@
 import { Flex, HStack, Image, Box } from "@chakra-ui/react";
 import BrandedHeading from "./BrandedHeading";
 
-const HorizontalList = ({
-  title,
-  movieList,
-  setDescriptionDetails,
-  descriptionShowing,
-  setDescriptionShowing,
-  handleClick,
-}) => {
-  // const handleClick = (item) => {
-  //   setDescriptionDetails(item);
+import { useLocalUser } from "../context/authContext";
 
-  //   if (!descriptionShowing) {
-  //     setDescriptionShowing(true);
-  //   }
-  // };
+import MoviePoster from "./MoviePoster/MoviePoster";
+import {
+  findActiveGroup,
+  groupByNestedProperty,
+} from "../utils/helperFunctions";
+
+const HorizontalList = ({ title, movieList, handleClick, group }) => {
+  const { localUser } = useLocalUser();
+
+  const activeGroup = findActiveGroup(localUser);
+
+  const reviewsList = groupByNestedProperty(
+    group.reviews,
+    "movieDetails",
+    "id"
+  );
 
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
@@ -53,6 +56,21 @@ const HorizontalList = ({
               vote_average,
               vote_count,
             } = item;
+
+            for (let i = 0; i < activeGroup?.reviews?.length; i++) {
+              console.log(activeGroup.reviews[i]);
+              const { movieDetails } = activeGroup.reviews[i];
+
+              if (movieDetails.id === id) {
+                return (
+                  <MoviePoster
+                    movieDetails={movieDetails}
+                    reviews={activeGroup.reviews}
+                    handleClick={handleClick}
+                  />
+                );
+              }
+            }
 
             return (
               <Box key={index}>

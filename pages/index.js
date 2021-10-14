@@ -6,9 +6,16 @@ import GroupSection from "../components/GroupSection/GroupSection";
 
 import Section from "../components/Section/Section";
 
+import { findActiveGroup } from "../utils/helperFunctions";
+
 const Home = ({ popularList, genre_list, comedyList }) => {
-  const { user, isLoading, error } = useUser();
+  const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();
+
+  let activeGroup = {};
+  if (localUser) {
+    activeGroup = findActiveGroup(localUser);
+  }
 
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>Error</div>;
@@ -17,32 +24,16 @@ const Home = ({ popularList, genre_list, comedyList }) => {
   if (localUser == null) {
     groupSection = null;
   } else {
-    localUser.groups.forEach((group) => {
-      if (group.isActive) {
-        // const groupList = [];
-
-        // const groupList1 = group.reviews.map((review) => {
-        //   return review.movieDetails;
-        // });
-        groupSection = (
-          <GroupSection
-            title={group.name}
-            // movieList={groupList1}
-            group={group}
-          />
-        );
-      }
-    });
+    groupSection = (
+      <GroupSection title={activeGroup.name} group={activeGroup} />
+    );
   }
 
   return (
     <main>
-      {/* <button onClick={() => console.log(localUser)}>group user</button>
-      <br />
-      <button onClick={() => console.log(user)}>user</button> */}
       {groupSection}
-      <Section title="Popular" movieList={popularList} />
-      <Section title="Comedy" movieList={comedyList} />
+      <Section title="Popular" movieList={popularList} group={activeGroup} />
+      <Section title="Comedy" movieList={comedyList} group={activeGroup} />
     </main>
   );
 };
