@@ -90,5 +90,13 @@ export const findDirectors = (credits) => {
 };
 
 export const getUsernameFromUserId = (userid, activeGroup) => {
-  return "something";
+  let username = "";
+
+  activeGroup.members.forEach((member) => {
+    if (member.userid === userid) {
+      username = member.username;
+    }
+  });
+
+  return username;
 };

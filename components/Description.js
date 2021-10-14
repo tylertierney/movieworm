@@ -127,8 +127,9 @@ const Description = ({
       return new Date(review.postedAt).toLocaleDateString();
     };
 
-    const postedBy = () => {
-      console.log(findActiveGroup(localUser));
+    const postedBy = (userid) => {
+      const activeGroup = findActiveGroup(localUser);
+      return getUsernameFromUserId(userid, activeGroup);
     };
 
     return (
@@ -137,14 +138,23 @@ const Description = ({
         border="solid 1px"
         borderColor="brand.primary.1000"
         borderRadius="lg"
-        p="0.5rem"
+        p="0.5rem 0.5rem 0.1rem 0.5rem"
+        boxShadow="5px 3px 20px 1px rgb(0, 0, 0, 0.2)"
+        mb="1rem"
       >
         <Flex pb="0.5rem" align="center" justify="space-between">
-          <Text fontSize="0.6rem">{review.postedBy}</Text>
-          <Text fontSize="0.6rem">{postedAtDate()}</Text>
+          <Text fontSize="0.6rem">{postedBy(review.postedBy)}</Text>
+
+          <Flex align="baseline">
+            <Text fontSize="1rem">{review.rating}</Text>
+            <Text fontSize="0.6rem">/10</Text>
+          </Flex>
         </Flex>
 
         <Text fontSize="0.8rem">{review.reviewText}</Text>
+        <Flex pb="0.5rem" align="center" justify="flex-end">
+          <Text fontSize="0.6rem">{postedAtDate()}</Text>
+        </Flex>
       </Flex>
     );
   });
