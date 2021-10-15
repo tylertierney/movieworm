@@ -14,49 +14,32 @@ import { truncateUsername } from "../../utils/helperFunctions";
 
 import { useState, useEffect } from "react";
 
-import { getActiveGroupFromLocalStorage } from "../../utils/helperFunctions";
-import axios from "axios";
-
-const UserMenu = ({ user }) => {
+const UserMenu = () => {
   const [groupsArray, setGroupsArray] = useState([]);
-
-  const activeGroup = getActiveGroupFromLocalStorage();
 
   const { localUser, setActiveGroup, addActiveGroupToLocalUser } =
     useLocalUser();
 
   useEffect(() => {
-    if (localUser) {
-      if (localUser.groups.length > 0) {
-        setActiveGroup(localUser._id, localUser.groups[0].group_id);
-      }
+    if (localUser.groups.length > 0) {
+      setActiveGroup(localUser._id, localUser.groups[0].group_id);
     }
+  }, []);
 
-    axios
-      .get(`/api/user/${localUser._id}/getgroups`)
-      .then((res) => {
-        const groupsAsMenuItems = res.data.data.map((group) => {
-          let isActive = false;
-          if (
-            group.name == localUser.activeGroup?.name ||
-            activeGroup == "undefined"
-          ) {
-            isActive = true;
-          }
-          return {
-            text: group.name,
-            icon: <Icon as={AiOutlineUser} />,
-            onClick: () => {
-              setActiveGroup(localUser._id, group.group_id);
-              addActiveGroupToLocalUser(group);
-            },
-            isActive,
-          };
-        });
-        setGroupsArray(() => groupsAsMenuItems);
-      })
-      .catch((err) => console.log(err));
-  }, [localUser.activeGroup?.name]);
+  const groupsAsMenuItems = localUser.groups.map((group) => {
+    let isActive = false;
+    if (group.name == localUser.activeGroup?.name) {
+      isActive = true;
+    }
+    return {
+      text: group.name,
+      icon: <Icon as={AiOutlineUser} />,
+      onClick: () => {
+        setActiveGroup(localUser._id, group.group_id);
+      },
+      isActive,
+    };
+  });
 
   const menuItems = [
     {
@@ -86,10 +69,10 @@ const UserMenu = ({ user }) => {
     <ChevronUpIcon key="509887123487969765" fontSize="1.4rem" />,
   ];
 
-  let trimmedUsername = truncateUsername(user.email);
+  let trimmedUsername = truncateUsername(localUser.email);
 
-  for (let i = 0; i < activeGroup?.members.length; i++) {
-    const member = activeGroup?.members[i];
+  for (let i = 0; i < localUser.activeGroup?.members.length; i++) {
+    const member = localUser.activeGroup?.members[i];
     if (member.userid == localUser._id) {
       trimmedUsername = truncateUsername(member.username);
     }
@@ -100,7 +83,7 @@ const UserMenu = ({ user }) => {
       menuName={trimmedUsername}
       menuIcon={menuIcon}
       menuItems={menuItems}
-      groupsArray={groupsArray}
+      groupsArray={groupsAsMenuItems}
     />
   );
 };

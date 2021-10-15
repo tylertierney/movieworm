@@ -5,7 +5,6 @@ import { useState } from "react";
 // import { useUser } from "../../context/authContext";
 import { useUser } from "@auth0/nextjs-auth0";
 import UserMenu from "./UserMenu";
-import UserMenu2 from "./UserMenu2";
 import Link from "next/link";
 import { useLocalUser } from "../../context/authContext";
 
@@ -13,8 +12,8 @@ const NavbarControls = () => {
   // const [loginDisabled, setLoginDisabled] = useState(false);
   // const [signupDisabled, setSignupDisabled] = useState(false);
 
-  const [loginIsLoading, setLoginIsLoading] = useState(false);
-  const [signupIsLoading, setSignupIsLoading] = useState(false);
+  // const [loginIsLoading, setLoginIsLoading] = useState(false);
+  // const [signupIsLoading, setSignupIsLoading] = useState(false);
 
   const { localUser } = useLocalUser();
 
@@ -23,7 +22,7 @@ const NavbarControls = () => {
       <ThemeSwitch />
 
       {localUser ? (
-        <UserMenu2 user={localUser} />
+        <UserMenu />
       ) : (
         <Link href="/api/auth/login" passHref>
           <Button

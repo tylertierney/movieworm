@@ -28,8 +28,6 @@ const MoviePoster = ({ reviews, handleClick, movieDetails }) => {
     return average.toFixed(1);
   };
 
-  console.log(reviews);
-
   return (
     <Box
       position="relative"

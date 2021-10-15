@@ -39,9 +39,23 @@ const AuthProvider = ({ children }) => {
   const [localUser, dispatch] = useReducer(reducer, null);
 
   const login = async (userFromMongo) => {
-    const activeGroup = localStorage.getItem("movieworm-active_group");
+    // Since the user in MongoDB only has references to groups (not actual group data),
+    // we'll use that ID reference to fetch the meaningful group data (reviews, members, etc)
+    // and enrich the localUser context
 
-    dispatch({ type: "login", payload: userFromMongo });
+    await axios
+      .get(`/api/user/${userFromMongo._id}/getgroups`)
+      .then((res) => {
+        const groups = res.data.data;
+        userFromMongo.groups = groups;
+        dispatch({ type: "login", payload: userFromMongo });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: "login", payload: userFromMongo });
+      });
+
+    // dispatch({ type: "login", payload: userFromMongo });
   };
 
   const logout = (name) => {
@@ -53,21 +67,11 @@ const AuthProvider = ({ children }) => {
   const setActiveGroup = (userid, groupid) => {
     let copyOfLocalUser = { ...localUser };
 
-    axios
-      .get(`/api/user/${userid}/${groupid}`)
-      .then((res) => {
-        if (res.data.data === undefined) {
-          return;
-        }
-
-        copyOfLocalUser.activeGroup = res.data.data;
-
-        localStorage.setItem(
-          "movieworm-active_group",
-          JSON.stringify(res.data.data)
-        );
-      })
-      .catch((err) => console.log(err));
+    copyOfLocalUser.groups.forEach((group) => {
+      if (group.group_id === groupid) {
+        copyOfLocalUser.activeGroup = group;
+      }
+    });
 
     dispatch({ type: "setActiveGroup", payload: copyOfLocalUser });
   };

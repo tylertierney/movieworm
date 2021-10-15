@@ -50,8 +50,6 @@ const GroupSection = ({ group }) => {
     "id"
   );
 
-  console.log(group);
-
   return (
     <Box>
       <GroupHorizontalList

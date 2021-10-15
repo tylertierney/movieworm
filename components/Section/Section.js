@@ -16,8 +16,6 @@ const Section = ({ title, movieList, group }) => {
   const [reviewsArray, setReviewsArray] = useState(null);
   const descriptionRef = useRef(null);
 
-  console.log(group);
-
   useEffect(() => {
     if (descriptionShowing) {
       descriptionRef.current.style.height = "auto";
@@ -74,6 +72,7 @@ const Section = ({ title, movieList, group }) => {
           credits={credits}
           setCredits={setCredits}
           reviewsArray={reviewsArray}
+          group={group}
         />
       </Box>
       {movieList.length === 0 ? <NoReviewsMessage /> : <></>}

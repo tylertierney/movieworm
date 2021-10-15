@@ -31,6 +31,7 @@ const Description = ({
   setCredits,
   onOpen,
   reviewsArray,
+  group,
 }) => {
   const castScrollerRef = useRef(null);
 
@@ -126,8 +127,7 @@ const Description = ({
     };
 
     const postedBy = (userid) => {
-      const activeGroup = findActiveGroup(localUser);
-      return getUsernameFromUserId(userid, activeGroup);
+      return getUsernameFromUserId(userid, group);
     };
 
     return (
