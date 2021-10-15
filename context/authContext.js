@@ -4,6 +4,8 @@ import { findUserByEmail } from "../utils/helperFunctions";
 
 import { useUser } from "@auth0/nextjs-auth0";
 
+import axios from "axios";
+
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
@@ -27,6 +29,8 @@ const AuthProvider = ({ children }) => {
         return null;
       case "setActiveGroup":
         return action.payload;
+      case "addActiveGroupToLocalUser":
+        return action.payload;
       default:
         return state;
     }
@@ -34,18 +38,8 @@ const AuthProvider = ({ children }) => {
 
   const [localUser, dispatch] = useReducer(reducer, null);
 
-  const login = (userFromMongo) => {
+  const login = async (userFromMongo) => {
     const activeGroup = localStorage.getItem("movieworm-active_group");
-
-    if (activeGroup) {
-      userFromMongo.groups.forEach((group) => {
-        if (group.name === activeGroup) {
-          group.isActive = true;
-        } else {
-          group.isActive = false;
-        }
-      });
-    }
 
     dispatch({ type: "login", payload: userFromMongo });
   };
@@ -56,18 +50,34 @@ const AuthProvider = ({ children }) => {
     router.push("/");
   };
 
-  const setActiveGroup = (group_name) => {
+  const setActiveGroup = (userid, groupid) => {
     let copyOfLocalUser = { ...localUser };
-    copyOfLocalUser.groups.forEach((group, index) => {
-      if (group.name === group_name) {
-        group.isActive = true;
-        localStorage.setItem("movieworm-active_group", group.name);
-      } else {
-        group.isActive = false;
-      }
-    });
+
+    axios
+      .get(`/api/user/${userid}/${groupid}`)
+      .then((res) => {
+        if (res.data.data === undefined) {
+          return;
+        }
+
+        copyOfLocalUser.activeGroup = res.data.data;
+
+        localStorage.setItem(
+          "movieworm-active_group",
+          JSON.stringify(res.data.data)
+        );
+      })
+      .catch((err) => console.log(err));
 
     dispatch({ type: "setActiveGroup", payload: copyOfLocalUser });
+  };
+
+  const addActiveGroupToLocalUser = (group) => {
+    let copyOfLocalUser = { ...localUser };
+
+    copyOfLocalUser.activeGroup = group;
+
+    dispatch({ type: "addActiveGroupToLocalUser", payload: copyOfLocalUser });
   };
 
   const ctx = {
@@ -75,6 +85,7 @@ const AuthProvider = ({ children }) => {
     login,
     logout,
     setActiveGroup,
+    addActiveGroupToLocalUser,
   };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;

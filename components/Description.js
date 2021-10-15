@@ -152,7 +152,7 @@ const Description = ({
 
         <Text fontSize="0.8rem">{review.reviewText}</Text>
         <Flex pb="0.5rem" align="center" justify="flex-end">
-          <Text fontSize="0.6rem">{postedAtDate()}</Text>
+          <Text fontSize="0.5rem">{postedAtDate()}</Text>
         </Flex>
       </Flex>
     );

@@ -16,6 +16,8 @@ const Section = ({ title, movieList, group }) => {
   const [reviewsArray, setReviewsArray] = useState(null);
   const descriptionRef = useRef(null);
 
+  console.log(group);
+
   useEffect(() => {
     if (descriptionShowing) {
       descriptionRef.current.style.height = "auto";
@@ -45,7 +47,7 @@ const Section = ({ title, movieList, group }) => {
   const [credits, setCredits] = useState(null);
 
   const reviewsList = groupByNestedProperty(
-    group.reviews,
+    group?.reviews,
     "movieDetails",
     "id"
   );
@@ -60,6 +62,7 @@ const Section = ({ title, movieList, group }) => {
         setDescriptionShowing={setDescriptionShowing}
         descriptionShowing={descriptionShowing}
         group={group}
+        reviewsList={reviewsList}
       />
       <Box ref={descriptionRef} height="0" opacity="0">
         <Description
@@ -70,6 +73,7 @@ const Section = ({ title, movieList, group }) => {
           movieDetails={descriptionDetails}
           credits={credits}
           setCredits={setCredits}
+          reviewsArray={reviewsArray}
         />
       </Box>
       {movieList.length === 0 ? <NoReviewsMessage /> : <></>}
@@ -80,6 +84,7 @@ const Section = ({ title, movieList, group }) => {
         onClose={onClose}
         movieDetails={descriptionDetails}
         credits={credits}
+        group={group}
       />
     </Box>
   );

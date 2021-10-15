@@ -2,35 +2,34 @@ import dbConnect from "../../../../../utils/dbConnect";
 
 import User from "../../../../../models/User";
 
+import Group from "../../../../../models/Group";
+
 export default async function handler(req, res) {
   const { method } = req;
+
+  const { groupid, userid } = req.query;
+
+  const { reviewText, rating, movieDetails, postedAt } = req.body;
 
   await dbConnect();
   switch (method) {
     case "POST":
       try {
-        const { userid, groupid } = req.query;
-        const { reviewText, rating, movieDetails, postedAt } = req.body;
-
-        const user = await User.findOne({
-          _id: userid,
+        const group = await Group.findOne({
+          _id: groupid,
         });
 
-        for (let i = 0; i < user.groups.length; i++) {
-          if (user.groups[i]._id.toString() == groupid) {
-            user.groups[i].reviews.push({
-              postedBy: userid,
-              reviewText,
-              rating,
-              movieDetails,
-              postedAt,
-            });
-          }
-        }
+        group.reviews.push({
+          userid,
+          reviewText,
+          rating,
+          movieDetails,
+          postedAt,
+        });
 
-        user.save();
+        group.save();
 
-        res.status(200).json({ success: true, data: "It worked" });
+        res.status(200).json({ success: true, data: "it worked" });
       } catch (error) {
         res.status(400).json({ success: false });
         return;

@@ -1,7 +1,5 @@
 import dbConnect from "../../../../../utils/dbConnect";
 
-import db from "mongoose";
-
 import User from "../../../../../models/User";
 import Group from "../../../../../models/Group";
 
@@ -13,35 +11,25 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
-        const targetuser = await User.findOne({
-          "groups.group_id": groupid,
-        });
-
-        const currentuser = await User.findOne({
+        const user = await User.findOne({
           _id: userid,
         });
 
-        targetuser.groups.forEach((group) => {
-          if (group.group_id === groupid) {
-            group.members.push({
-              userid: userid,
-              username: req.body.username,
-            });
+        user.groups.push({ group_id: groupid });
 
-            const new_group = {
-              name: group.name,
-              group_id: group.group_id,
-              owner_id: group.owner_id,
-              members: group.members,
-              reviews: group.reviews,
-            };
+        user.save();
 
-            currentuser.groups.push(new_group);
-          }
+        const group = await Group.findOne({
+          group_id: groupid,
         });
 
-        targetuser.save();
-        currentuser.save();
+        group.members.push({
+          userid: userid,
+          username: req.body.username,
+        });
+
+        group.save();
+
         res.status(200).json({ success: true, data: "it worked" });
       } catch (error) {
         res.status(400).json({ success: false });

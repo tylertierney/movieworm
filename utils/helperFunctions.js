@@ -104,3 +104,23 @@ export const getUsernameFromUserId = (userid, activeGroup) => {
 
   return username;
 };
+
+export const truncateUsername = (usernameOrEmail) => {
+  if (usernameOrEmail.length > 16) {
+    return usernameOrEmail.substr(0, 16) + "...";
+  }
+
+  return usernameOrEmail;
+};
+
+export const getActiveGroupFromLocalStorage = () => {
+  let activeGroup = localStorage.getItem("movieworm-active_group");
+
+  if (activeGroup === "undefined") {
+    return undefined;
+  }
+
+  if (activeGroup != undefined) {
+    return JSON.parse(activeGroup);
+  }
+};

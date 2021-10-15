@@ -10,7 +10,7 @@ import ReviewModal from "../ReviewModal/ReviewModal";
 
 import { groupByNestedProperty } from "../../utils/helperFunctions";
 
-const GroupSection = ({ title, group }) => {
+const GroupSection = ({ group }) => {
   const [descriptionShowing, setDescriptionShowing] = useState(false);
   const [descriptionDetails, setDescriptionDetails] = useState({});
   const [reviewsArray, setReviewsArray] = useState(null);
@@ -50,14 +50,14 @@ const GroupSection = ({ title, group }) => {
     "id"
   );
 
-  console.log(reviewsList);
+  console.log(group);
 
   return (
     <Box>
       <GroupHorizontalList
         handleClick={handleClick}
-        title={title}
         reviewsList={reviewsList}
+        group={group}
       />
       <Box ref={descriptionRef} height="0" opacity="0">
         <Description
@@ -78,6 +78,7 @@ const GroupSection = ({ title, group }) => {
         onClose={onClose}
         movieDetails={descriptionDetails}
         credits={credits}
+        group={group}
       />
       <Divider />
     </Box>

@@ -23,8 +23,11 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
   },
+  // groups: {
+  //   type: [GroupSchema],
+  // },
   groups: {
-    type: [GroupSchema],
+    type: Array,
   },
 });
 

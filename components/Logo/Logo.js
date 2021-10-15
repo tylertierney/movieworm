@@ -1,7 +1,5 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
-import router from "next/router";
-
 const Logo = ({ props }) => {
   const textColor = useColorModeValue("rgb(138, 138, 138)", "white");
 

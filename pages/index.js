@@ -8,30 +8,30 @@ import Section from "../components/Section/Section";
 
 import { findActiveGroup } from "../utils/helperFunctions";
 
+import axios from "axios";
+import { useEffect } from "react";
+
 const Home = ({ popularList, genre_list, comedyList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();
 
-  let activeGroup = {};
-  if (localUser) {
-    activeGroup = findActiveGroup(localUser);
-  }
-
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>Error</div>;
 
-  let groupSection;
-  if (localUser == null) {
-    groupSection = null;
-  } else {
-    groupSection = (
-      <GroupSection title={activeGroup.name} group={activeGroup} />
-    );
+  let groupSection = null;
+  let activeGroup = undefined;
+  if (localUser != null && localUser != undefined) {
+    if (localUser.activeGroup != null && localUser.activeGroup != undefined) {
+      activeGroup = localUser.activeGroup;
+      groupSection = <GroupSection group={activeGroup} />;
+    }
   }
 
   return (
     <main>
+      <button onClick={() => console.log(localUser)}>localUser</button>
       {groupSection}
+
       <Section title="Popular" movieList={popularList} group={activeGroup} />
       <Section title="Comedy" movieList={comedyList} group={activeGroup} />
     </main>

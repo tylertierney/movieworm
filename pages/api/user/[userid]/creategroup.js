@@ -2,6 +2,8 @@ import dbConnect from "../../../../utils/dbConnect";
 
 import User from "../../../../models/User";
 
+import Group from "../../../../models/Group";
+
 export default async function handler(req, res) {
   const { method } = req;
 
@@ -13,16 +15,19 @@ export default async function handler(req, res) {
           _id: req.query.userid,
         });
 
+        user.groups.push({ group_id: req.body.group_id });
+
+        user.save();
+
         const new_group = {
           name: req.body.groupname,
-          group_id: req.body.group_id,
           owner_id: req.query.userid,
-          members: [{ userid: req.query.userid, username: req.body.username }],
+          group_id: req.body.group_id,
           reviews: [],
+          members: [{ userid: req.query.userid, username: req.body.username }],
         };
 
-        user.groups.push(new_group);
-        user.save();
+        await Group.create(new_group);
 
         res.status(200).json({ success: true, data: "it worked" });
       } catch (error) {

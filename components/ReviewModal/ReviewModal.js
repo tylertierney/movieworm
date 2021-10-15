@@ -31,15 +31,13 @@ import { useEffect, useState } from "react";
 
 import { useLocalUser } from "../../context/authContext";
 
-import { findActiveGroup } from "../../utils/helperFunctions";
-
 import axios from "axios";
 
 import { findDirectors } from "../../utils/helperFunctions";
 
 import ConfirmationMessage from "../ConfirmationMessage/ConfirmationMessage";
 
-const ReviewModal = ({ isOpen, onClose, movieDetails, credits }) => {
+const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
   const { onOpen } = useDisclosure();
 
   const {
@@ -76,15 +74,13 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
-  const activeGroup = findActiveGroup(localUser);
-
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const currentDate = new Date();
 
     await axios
-      .post(`api/user/${localUser._id}/${activeGroup._id}/createreview`, {
+      .post(`api/user/${localUser._id}/${group._id}/createreview`, {
         reviewText,
         rating,
         movieDetails,
@@ -119,7 +115,7 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits }) => {
       return true;
     }
 
-    if (activeGroup === null || activeGroup === undefined) {
+    if (group === null || group === undefined) {
       return true;
     }
 
@@ -127,6 +123,11 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits }) => {
   };
 
   const bgColor = useColorModeValue("brand.white", "brand.gray");
+
+  const handleClose = () => {
+    setConfirmation("");
+    onClose();
+  };
 
   return (
     <>
@@ -172,7 +173,7 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits }) => {
               <Input
                 isReadOnly={true}
                 isDisabled
-                value={activeGroup?.name}
+                value={group?.name}
                 type="text"
                 mb="1rem"
               />
@@ -261,13 +262,15 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits }) => {
             </ModalFooter>
           </form>
         </ModalContent>
-        <ConfirmationMessage
-          bgColor={bgColor}
-          confirmation={confirmation}
-          onOpen={confirmationOnOpen}
-          isOpen={confirmationIsOpen}
-          onClose={onClose}
-        />
+        {confirmation && (
+          <ConfirmationMessage
+            bgColor={bgColor}
+            confirmation={confirmation}
+            onOpen={confirmationOnOpen}
+            isOpen={confirmationIsOpen}
+            onClose={handleClose}
+          />
+        )}
       </Modal>
     </>
   );

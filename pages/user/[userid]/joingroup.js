@@ -27,8 +27,7 @@ const JoinGroup = () => {
         username: username.value,
       })
       .then((res) => {
-        console.log(res);
-        // window.location = "/";
+        window.location = "/";
       })
       .catch((err) => console.log(err));
 

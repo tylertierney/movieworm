@@ -5,6 +5,7 @@ import { useState } from "react";
 // import { useUser } from "../../context/authContext";
 import { useUser } from "@auth0/nextjs-auth0";
 import UserMenu from "./UserMenu";
+import UserMenu2 from "./UserMenu2";
 import Link from "next/link";
 import { useLocalUser } from "../../context/authContext";
 
@@ -22,20 +23,9 @@ const NavbarControls = () => {
       <ThemeSwitch />
 
       {localUser ? (
-        <UserMenu user={localUser} />
+        <UserMenu2 user={localUser} />
       ) : (
         <Link href="/api/auth/login" passHref>
-          {/* <BrandedButton
-            variant="solid"
-            color="primary"
-            action="link"
-            href="/authentication"
-            props={{ margin: "0px 4px", size: "sm" }}
-            isLoading={signupIsLoading}
-            setIsLoading={setSignupIsLoading}
-          >
-            Log In
-          </BrandedButton> */}
           <Button
             variant="solid"
             _hover={{ opacity: "0.7" }}
@@ -44,7 +34,6 @@ const NavbarControls = () => {
             color="brand.white"
             size="sm"
             maxH="1.5rem"
-            // h="96%"
           >
             Log In
           </Button>

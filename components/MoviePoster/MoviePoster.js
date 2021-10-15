@@ -28,6 +28,8 @@ const MoviePoster = ({ reviews, handleClick, movieDetails }) => {
     return average.toFixed(1);
   };
 
+  console.log(reviews);
+
   return (
     <Box
       position="relative"
@@ -55,7 +57,7 @@ const MoviePoster = ({ reviews, handleClick, movieDetails }) => {
         justify="space-between"
         pr="0.2rem"
       >
-        <Flex fontSize="0.55rem" p="0.3rem 0.4rem">
+        <Flex p="0.3rem 0.4rem">
           <Flex
             p="0.2rem"
             h="0.8rem"
@@ -66,7 +68,7 @@ const MoviePoster = ({ reviews, handleClick, movieDetails }) => {
             borderRadius="sm"
             opacity="0.8"
           >
-            <Text color="white">
+            <Text color="white" fontSize="0.65rem">
               {`${reviews.length} Review`}
               {reviews.length > 1 ? "s" : ""}
             </Text>

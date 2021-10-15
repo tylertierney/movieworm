@@ -4,18 +4,11 @@ import BrandedHeading from "./BrandedHeading";
 import { useLocalUser } from "../context/authContext";
 
 import MoviePoster from "./MoviePoster/MoviePoster";
-import {
-  findActiveGroup,
-  groupByNestedProperty,
-} from "../utils/helperFunctions";
+import { groupByNestedProperty } from "../utils/helperFunctions";
 
 const HorizontalList = ({ title, movieList, handleClick, group }) => {
-  const { localUser } = useLocalUser();
-
-  const activeGroup = findActiveGroup(localUser);
-
   const reviewsList = groupByNestedProperty(
-    group.reviews,
+    group?.reviews,
     "movieDetails",
     "id"
   );
@@ -24,7 +17,7 @@ const HorizontalList = ({ title, movieList, handleClick, group }) => {
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
       <BrandedHeading
         props={{
-          fontSize: "2rem",
+          fontSize: ["1.8rem", "2rem", "2rem"],
           mb: "0rem",
         }}
       >
@@ -57,18 +50,20 @@ const HorizontalList = ({ title, movieList, handleClick, group }) => {
               vote_count,
             } = item;
 
-            for (let i = 0; i < activeGroup?.reviews?.length; i++) {
-              console.log(activeGroup.reviews[i]);
-              const { movieDetails } = activeGroup.reviews[i];
+            if (group != undefined && group != null) {
+              for (let i = 0; i < group.reviews.length; i++) {
+                const { movieDetails } = group.reviews[i];
 
-              if (movieDetails.id === id) {
-                return (
-                  <MoviePoster
-                    movieDetails={movieDetails}
-                    reviews={activeGroup.reviews}
-                    handleClick={handleClick}
-                  />
-                );
+                if (movieDetails.id === id) {
+                  return (
+                    <MoviePoster
+                      key={id}
+                      movieDetails={movieDetails}
+                      reviews={reviewsList[id]}
+                      handleClick={handleClick}
+                    />
+                  );
+                }
               }
             }
 
