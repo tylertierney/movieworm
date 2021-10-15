@@ -67,6 +67,7 @@ const GroupSection = ({ group }) => {
           credits={credits}
           setCredits={setCredits}
           reviewsArray={reviewsArray}
+          group={group}
         />
       </Box>
       {group.reviews.length === 0 ? <NoReviewsMessage /> : <></>}

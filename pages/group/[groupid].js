@@ -1,6 +1,6 @@
 import { useLocalUser } from "../../context/authContext";
 
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
 const GroupHomePage = () => {
   const { localUser } = useLocalUser();
@@ -17,7 +17,13 @@ const GroupHomePage = () => {
     });
   }
 
-  return <Flex p="1rem">{groupMembersArray}</Flex>;
+  return (
+    <Flex p="1rem">
+      <Text>{`Group ID: ${localUser.activeGroup.group_id}`}</Text>
+      <br />
+      {groupMembersArray}
+    </Flex>
+  );
 };
 
 export default GroupHomePage;

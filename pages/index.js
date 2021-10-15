@@ -20,6 +20,8 @@ const Home = ({ popularList, genre_list, comedyList }) => {
 
   let groupSection = null;
   let activeGroup = undefined;
+  console.log(localUser != null && localUser != undefined);
+
   if (localUser != null && localUser != undefined) {
     if (localUser.activeGroup != null && localUser.activeGroup != undefined) {
       activeGroup = localUser.activeGroup;

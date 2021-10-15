@@ -20,6 +20,7 @@ import {
   findDirectors,
   getUsernameFromUserId,
   findActiveGroup,
+  getCastItems,
 } from "../utils/helperFunctions";
 
 import { useLocalUser } from "../context/authContext";
@@ -67,46 +68,6 @@ const Description = ({
 
   const headingColor = useColorModeValue("brand.gray", "brand.white");
 
-  const findCast = (cast) => {
-    return cast.map((item, index) => {
-      return (
-        <Flex
-          key={index}
-          shrink="0"
-          align="center"
-          border="solid lightgray 1px"
-          borderRadius="lg"
-          p="0 0 0 0.2rem"
-          boxShadow="2px 2px 8px 1px rgb(0, 0, 0, 0.1)"
-          mr="1rem"
-          _hover={{ transform: "scale(1.05)" }}
-          transition="0.3s ease-in-out"
-          cursor="default"
-          zIndex={1}
-          maxH="2.3rem"
-        >
-          <Flex direction="column" p="0 0.3rem">
-            <Text as="span" fontSize="0.8rem" fontWeight="normal">
-              {item.name}
-            </Text>
-            <Text opacity="0.8" fontSize="0.5rem" fontWeight="normal">
-              {item.character}
-            </Text>
-          </Flex>
-          <Image
-            alt={item.name}
-            fallbackSrc="https://via.placeholder.com/60?text=+"
-            borderRightRadius="lg"
-            objectFit="cover"
-            width="40px"
-            height="100%"
-            src={`https://image.tmdb.org/t/p/w300${item.profile_path}`}
-          />
-        </Flex>
-      );
-    });
-  };
-
   const [showLeftScrollBtn, setShowLeftScrollBtn] = useState(false);
 
   const handleScroll = (e) => {
@@ -127,7 +88,7 @@ const Description = ({
     };
 
     const postedBy = (userid) => {
-      return getUsernameFromUserId(userid, group);
+      return getUsernameFromUserId(userid, group.members);
     };
 
     return (
@@ -142,7 +103,7 @@ const Description = ({
         mb="1rem"
       >
         <Flex pb="0.5rem" align="center" justify="space-between">
-          <Text fontSize="0.6rem">{postedBy(review.postedBy)}</Text>
+          <Text fontSize="0.6rem">{postedBy(review.userid)}</Text>
 
           <Flex align="baseline">
             <Text fontSize="1rem">{review.rating}</Text>
@@ -157,6 +118,16 @@ const Description = ({
       </Flex>
     );
   });
+
+  let reviewsNumber = "0 Reviews";
+
+  if (reviewsArray?.length === 1) {
+    reviewsNumber = "1 Review";
+  }
+
+  if (reviewsArray?.length > 1) {
+    reviewsNumber = `${reviewsArray.length} Reviews`;
+  }
 
   return (
     <>
@@ -224,7 +195,7 @@ const Description = ({
                     onScroll={(e) => handleScroll(e)}
                     style={{ scrollBehavior: "smooth" }}
                   >
-                    {credits === undefined ? null : findCast(credits.cast)}
+                    {credits === undefined ? null : getCastItems(credits.cast)}
                   </Flex>
                 </Flex>
                 <Divider />
@@ -236,8 +207,7 @@ const Description = ({
               align="center"
             >
               <Text as="span" fontSize="0.9rem" fontWeight="bold">
-                {`${reviewsArray?.length} Review`}
-                {reviewsArray?.length > 1 ? "s" : ""}
+                {reviewsNumber}
               </Text>
               <Button
                 size="sm"
@@ -253,7 +223,7 @@ const Description = ({
               </Button>
             </Flex>
             {reviewArrayItems}
-            <Divider />
+            {/* <Divider /> */}
           </Flex>
         </Flex>
       ) : (

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Text } from "@chakra-ui/react";
+import { Flex, Text, Image } from "@chakra-ui/react";
 
 export const generateKey = () => {
   const key = Math.floor(Math.random() * 10000);
@@ -93,10 +93,10 @@ export const findDirectors = (credits) => {
   return { list, multipleDirectors };
 };
 
-export const getUsernameFromUserId = (userid, activeGroup) => {
+export const getUsernameFromUserId = (userid, members) => {
   let username = "";
 
-  activeGroup.members.forEach((member) => {
+  members.forEach((member) => {
     if (member.userid === userid) {
       username = member.username;
     }
@@ -113,14 +113,54 @@ export const truncateUsername = (usernameOrEmail) => {
   return usernameOrEmail;
 };
 
-export const getActiveGroupFromLocalStorage = () => {
-  let activeGroup = localStorage.getItem("movieworm-active_group");
+// export const getActiveGroupFromLocalStorage = () => {
+//   let activeGroup = localStorage.getItem("movieworm-active_group");
 
-  if (activeGroup === "undefined") {
-    return undefined;
-  }
+//   if (activeGroup === "undefined") {
+//     return undefined;
+//   }
 
-  if (activeGroup != undefined) {
-    return JSON.parse(activeGroup);
-  }
+//   if (activeGroup != undefined) {
+//     return JSON.parse(activeGroup);
+//   }
+// };
+
+export const getCastItems = (cast) => {
+  return cast.map((item, index) => {
+    return (
+      <Flex
+        key={index}
+        shrink="0"
+        align="center"
+        border="solid lightgray 1px"
+        borderRadius="lg"
+        p="0 0 0 0.2rem"
+        boxShadow="2px 2px 8px 1px rgb(0, 0, 0, 0.1)"
+        mr="1rem"
+        _hover={{ transform: "scale(1.05)" }}
+        transition="0.3s ease-in-out"
+        cursor="default"
+        zIndex={1}
+        maxH="2.3rem"
+      >
+        <Flex direction="column" p="0 0.3rem">
+          <Text as="span" fontSize="0.8rem" fontWeight="normal">
+            {item.name}
+          </Text>
+          <Text opacity="0.8" fontSize="0.5rem" fontWeight="normal">
+            {item.character}
+          </Text>
+        </Flex>
+        <Image
+          alt={item.name}
+          fallbackSrc="https://via.placeholder.com/60?text=+"
+          borderRightRadius="lg"
+          objectFit="cover"
+          width="40px"
+          height="100%"
+          src={`https://image.tmdb.org/t/p/w300${item.profile_path}`}
+        />
+      </Flex>
+    );
+  });
 };
