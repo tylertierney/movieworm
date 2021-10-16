@@ -6,13 +6,27 @@ import GroupSection from "../components/GroupSection/GroupSection";
 
 import Section from "../components/Section/Section";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import axios from "axios";
 
 const Home = ({ popularList, genre_list, comedyList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    if (searchQuery != "") {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+        )
+        .then((res) => setSearchResults(() => res.data.results))
+        .catch((err) => console.log(err));
+    }
+  }, [searchQuery]);
 
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>Error</div>;
@@ -44,12 +58,10 @@ const Home = ({ popularList, genre_list, comedyList }) => {
 
   return (
     <main>
-      {/* <button onClick={() => console.log(localUser)}>localUser</button> */}
-      <p>{searchQuery}</p>
       {isSearching && (
         <Section
           title="Search"
-          movieList={[]}
+          movieList={searchResults}
           group={activeGroup}
           isSearchbar={true}
           searchQuery={searchQuery}

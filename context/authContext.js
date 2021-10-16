@@ -82,9 +82,10 @@ const AuthProvider = ({ children }) => {
   // so the user doesn't have to reload the page to see the new review
 
   const createReviewInLocalUser = (reviewObject) => {
+    console.log(reviewObject);
     let copyOfLocalUser = { ...localUser };
 
-    copyOfLocalUser.activeGroup.reviews.push(reviewObject);
+    copyOfLocalUser.activeGroup.reviews.unshift(reviewObject);
 
     dispatch({ type: "createReviewInLocalUser", payload: copyOfLocalUser });
   };
@@ -95,21 +96,20 @@ const AuthProvider = ({ children }) => {
 
     if (copyOfLocalUser.isSearching == undefined) {
       copyOfLocalUser.isSearching = true;
-      // console.log(copyOfLocalUser.isSearching);
+
       dispatch({ type: "setIsSearching", payload: copyOfLocalUser });
       return;
     }
 
     if (copyOfLocalUser.isSearching === false) {
       copyOfLocalUser.isSearching = true;
-      // console.log(copyOfLocalUser.isSearching);
+
       dispatch({ type: "setIsSearching", payload: copyOfLocalUser });
       return;
     }
 
     if (copyOfLocalUser.isSearching === true) {
       copyOfLocalUser.isSearching = false;
-      // console.log(copyOfLocalUser.isSearching);
       dispatch({ type: "setIsSearching", payload: copyOfLocalUser });
       return;
     }

@@ -80,6 +80,7 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
     const currentDate = new Date();
 
     const reviewObject = {
+      userid: localUser._id,
       reviewText,
       rating,
       movieDetails,
@@ -89,7 +90,6 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
     await axios
       .post(`api/user/${localUser._id}/${group._id}/createreview`, reviewObject)
       .then((res) => {
-        console.log(res);
         setRating(0);
         setReviewText("");
         createReviewInLocalUser(reviewObject);

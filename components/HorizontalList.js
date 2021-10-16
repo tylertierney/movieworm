@@ -1,10 +1,25 @@
-import { Flex, HStack, Image, Box, Input } from "@chakra-ui/react";
+import {
+  Flex,
+  HStack,
+  Image,
+  Box,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Icon,
+  Text,
+} from "@chakra-ui/react";
+
+import LoadingIcon from "./LoadingIcon/LoadingIcon";
+
 import BrandedHeading from "./BrandedHeading";
 
 import { useLocalUser } from "../context/authContext";
 
 import MoviePoster from "./MoviePoster/MoviePoster";
 import { groupByNestedProperty } from "../utils/helperFunctions";
+
+import { AiOutlineClose } from "react-icons/ai";
 
 const HorizontalList = ({
   title,
@@ -15,6 +30,8 @@ const HorizontalList = ({
   searchQuery,
   setSearchQuery,
 }) => {
+  const { setIsSearching } = useLocalUser();
+
   const reviewsList = groupByNestedProperty(
     group?.reviews,
     "movieDetails",
@@ -22,8 +39,8 @@ const HorizontalList = ({
   );
 
   return (
-    <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
-      <Flex align="center" justify="space-between">
+    <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem" minH="200px">
+      <Flex align="center" justify="space-between" maxW="94vw">
         <BrandedHeading
           props={{
             fontSize: ["1.8rem", "2rem", "2rem"],
@@ -34,13 +51,23 @@ const HorizontalList = ({
           {title}
         </BrandedHeading>
         {isSearchbar && (
-          <Input
-            ml="0.6rem"
-            variant="flushed"
-            color="brand.text.dark"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          <InputGroup>
+            <Input
+              autoFocus
+              ml="0.6rem"
+              variant="flushed"
+              color="brand.text.dark"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <InputRightElement>
+              <Icon
+                cursor="pointer"
+                as={AiOutlineClose}
+                onClick={() => setIsSearching()}
+              />
+            </InputRightElement>
+          </InputGroup>
         )}
       </Flex>
 
@@ -106,7 +133,20 @@ const HorizontalList = ({
           })}
         </HStack>
       ) : (
-        <></>
+        <>
+          {isSearchbar && (
+            <Flex
+              p="1rem"
+              justify="center"
+              align="center"
+              minH="120px"
+              h="100%"
+              w="100%"
+            >
+              <LoadingIcon />
+            </Flex>
+          )}
+        </>
       )}
     </Flex>
   );

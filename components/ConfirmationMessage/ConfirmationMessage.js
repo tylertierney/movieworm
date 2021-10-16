@@ -34,7 +34,7 @@ const ConfirmationMessage = ({
             <Text textAlign="center" maxW="300px">
               {confirmation === "Error"
                 ? "Sorry, there was an error. Please try again later."
-                : "Success! Your review has been submitted.\nYou may have to reload the page to view your changes."}
+                : "Success! Your review has been submitted. It's now visible in your current group."}
             </Text>
           </Flex>
         </ModalBody>

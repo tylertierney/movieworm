@@ -1,25 +1,16 @@
 import { Flex, Button } from "@chakra-ui/react";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchIcon from "../SearchIcon/SearchIcon";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
-import { useState } from "react";
-
-import { useUser } from "@auth0/nextjs-auth0";
 import UserMenu from "./UserMenu";
 import Link from "next/link";
 import { useLocalUser } from "../../context/authContext";
 
 const NavbarControls = () => {
-  // const [loginDisabled, setLoginDisabled] = useState(false);
-  // const [signupDisabled, setSignupDisabled] = useState(false);
-
-  // const [loginIsLoading, setLoginIsLoading] = useState(false);
-  // const [signupIsLoading, setSignupIsLoading] = useState(false);
-
   const { localUser } = useLocalUser();
 
   return (
     <Flex align="center" justify="center" h="100%">
-      <SearchBar />
+      <SearchIcon />
       <ThemeSwitch />
 
       {localUser ? (
