@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
         return null;
       case "setActiveGroup":
         return action.payload;
-      case "addActiveGroupToLocalUser":
+      case "createReviewInLocalUser":
         return action.payload;
       default:
         return state;
@@ -76,12 +76,15 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: "setActiveGroup", payload: copyOfLocalUser });
   };
 
-  const addActiveGroupToLocalUser = (group) => {
+  // This adds the newly created review to the local user context,
+  // so the user doesn't have to reload the page to see the new review
+
+  const createReviewInLocalUser = (reviewObject) => {
     let copyOfLocalUser = { ...localUser };
 
-    copyOfLocalUser.activeGroup = group;
+    copyOfLocalUser.activeGroup.reviews.push(reviewObject);
 
-    dispatch({ type: "addActiveGroupToLocalUser", payload: copyOfLocalUser });
+    dispatch({ type: "createReviewInLocalUser", payload: copyOfLocalUser });
   };
 
   const ctx = {
@@ -89,7 +92,7 @@ const AuthProvider = ({ children }) => {
     login,
     logout,
     setActiveGroup,
-    addActiveGroupToLocalUser,
+    createReviewInLocalUser,
   };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;

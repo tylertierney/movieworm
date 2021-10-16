@@ -15,10 +15,7 @@ import { truncateUsername } from "../../utils/helperFunctions";
 import { useState, useEffect } from "react";
 
 const UserMenu = () => {
-  const [groupsArray, setGroupsArray] = useState([]);
-
-  const { localUser, setActiveGroup, addActiveGroupToLocalUser } =
-    useLocalUser();
+  const { localUser, setActiveGroup } = useLocalUser();
 
   useEffect(() => {
     if (localUser.groups.length > 0) {

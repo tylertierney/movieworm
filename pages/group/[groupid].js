@@ -21,21 +21,21 @@ const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
 
-  const { localUser } = useLocalUser();
-
-  if (localUser === null || localUser === undefined) {
-    return <div>loading</div>;
-  }
-
-  if (localUser.activeGroup === null || localUser.activeGroup === undefined) {
-    return <div>loading</div>;
-  }
-
   useEffect(() => {
     if (localUser._id === localUser.activeGroup.owner_id) {
       setUserIsAdmin(true);
     }
   }, []);
+
+  const { localUser } = useLocalUser();
+
+  if (localUser === null || localUser === undefined) {
+    return <div>Loading</div>;
+  }
+
+  if (localUser.activeGroup === null || localUser.activeGroup === undefined) {
+    return <div>Loading</div>;
+  }
 
   let groupMembersArray = [];
 

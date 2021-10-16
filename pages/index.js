@@ -6,8 +6,6 @@ import GroupSection from "../components/GroupSection/GroupSection";
 
 import Section from "../components/Section/Section";
 
-import { findActiveGroup } from "../utils/helperFunctions";
-
 const Home = ({ popularList, genre_list, comedyList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();

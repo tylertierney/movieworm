@@ -65,7 +65,7 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
 
   const [reviewText, setReviewText] = useState("");
 
-  const { localUser } = useLocalUser();
+  const { localUser, createReviewInLocalUser } = useLocalUser();
 
   const textColor = useColorModeValue("brand.text.dark", "brand.text.light");
 
@@ -79,17 +79,20 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
     e.preventDefault();
     const currentDate = new Date();
 
+    const reviewObject = {
+      reviewText,
+      rating,
+      movieDetails,
+      postedAt: currentDate,
+    };
+
     await axios
-      .post(`api/user/${localUser._id}/${group._id}/createreview`, {
-        reviewText,
-        rating,
-        movieDetails,
-        postedAt: currentDate,
-      })
+      .post(`api/user/${localUser._id}/${group._id}/createreview`, reviewObject)
       .then((res) => {
         console.log(res);
         setRating(0);
         setReviewText("");
+        createReviewInLocalUser(reviewObject);
         setConfirmation(() => "Success");
         confirmationOnOpen();
       })

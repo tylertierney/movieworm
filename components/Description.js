@@ -19,7 +19,6 @@ import { AiOutlinePlus } from "react-icons/ai";
 import {
   findDirectors,
   getUsernameFromUserId,
-  findActiveGroup,
   getCastItems,
 } from "../utils/helperFunctions";
 
