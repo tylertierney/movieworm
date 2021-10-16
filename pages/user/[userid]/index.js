@@ -22,16 +22,7 @@ import BrandedHeading from "../../../components/BrandedHeading";
 import BrandedSubheading from "../../../components/BrandedSubheading";
 
 const UserHomePage = () => {
-  const [idIsCopied, setIdIsCopied] = useState(false);
-  const [userIsAdmin, setUserIsAdmin] = useState(false);
-
   const borderColor = useColorModeValue("brand.text.light", "brand.text.dark");
-
-  useEffect(() => {
-    if (localUser._id === localUser.activeGroup.owner_id) {
-      setUserIsAdmin(true);
-    }
-  }, []);
 
   const { localUser } = useLocalUser();
 
@@ -39,14 +30,18 @@ const UserHomePage = () => {
     return <LoadingScreen status="loading" />;
   }
 
-  if (localUser.activeGroup === null || localUser.activeGroup === undefined) {
-    return <LoadingScreen status="loading" />;
-  }
+  // if (localUser.activeGroup === null || localUser.activeGroup === undefined) {
+  //   return <LoadingScreen status="loading" />;
+  // }
 
   let groupsArray = [];
 
-  if (localUser) {
-    groupsArray = localUser?.groups.map((group, index) => {
+  if (
+    localUser.groups != undefined &&
+    localUser.groups != null &&
+    localUser.groups.length > 0
+  ) {
+    groupsArray = localUser.groups.map((group, index) => {
       let isAdmin = false;
       if (group.owner_id === localUser._id) {
         isAdmin = true;
@@ -79,52 +74,6 @@ const UserHomePage = () => {
     });
   }
 
-  //   if (localUser && localUser?.activeGroup) {
-  //     groupMembersArray = localUser?.activeGroup.members.map((member, index) => {
-  //       return (
-  //         <Box key={index}>
-  //           <Flex w="100%" justify="space-between" align="center" p="0.5rem">
-  //             <Text color="brand.text.dark">{member.username}</Text>
-  //             {userIsAdmin ? (
-  //               <>
-  //                 {member.userid === localUser._id ? (
-  //                   <></>
-  //                 ) : (
-  // <Button variant="outline" colorScheme="red" size="sm">
-  //   Remove
-  // </Button>
-  //                 )}
-  //               </>
-  //             ) : (
-  //               <>
-  //                 {member.userid === localUser.activeGroup.owner_id ? (
-  // <Text
-  //   userSelect="none"
-  //   fontSize="0.8rem"
-  //   borderRadius="lg"
-  //   p="0.2rem 0.4rem"
-  //   border="1px solid"
-  //   borderColor={borderColor}
-  // >
-  //   Admin
-  // </Text>
-  //                 ) : (
-  //                   <></>
-  //                 )}
-  //               </>
-  //             )}
-  //           </Flex>
-  //           <Divider />
-  //         </Box>
-  //       );
-  //     });
-  //   }
-
-  const copyID = () => {
-    setIdIsCopied(true);
-    navigator.clipboard.writeText(localUser?.activeGroup.group_id);
-  };
-
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
       <Flex
@@ -150,14 +99,6 @@ const UserHomePage = () => {
           Email
         </BrandedSubheading>
         <FormControl position="relative" maxW="360px" mb="1rem">
-          {/* <FormHelperText
-            w="100%"
-            textAlign="right"
-            position="absolute"
-            top="-1.8rem"
-          >
-            {idIsCopied ? "Copied!" : " "}
-          </FormHelperText> */}
           <InputGroup>
             <Input
               color="brand.text.dark"
@@ -165,21 +106,6 @@ const UserHomePage = () => {
               value={localUser.email}
               type="text"
             />
-            {/* <InputRightElement>
-              <Button
-                onClick={(e) => {
-                  copyID();
-                }}
-                variant="ghost"
-                p="1rem 1.8rem"
-                size="sm"
-                mr="1.8rem"
-                _focus={{ outline: "none" }}
-                color="brand.text.light"
-              >
-                Copy
-              </Button>
-            </InputRightElement> */}
           </InputGroup>
         </FormControl>
 
