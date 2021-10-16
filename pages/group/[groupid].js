@@ -10,6 +10,8 @@ import {
   FormControl,
   FormHelperText,
   Divider,
+  useColorModeValue,
+  Box,
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
@@ -20,6 +22,8 @@ import BrandedSubheading from "../../components/BrandedSubheading";
 const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
+
+  const borderColor = useColorModeValue("brand.text.light", "brand.text.dark");
 
   useEffect(() => {
     if (localUser._id === localUser.activeGroup.owner_id) {
@@ -42,14 +46,8 @@ const GroupHomePage = () => {
   if (localUser && localUser?.activeGroup) {
     groupMembersArray = localUser?.activeGroup.members.map((member, index) => {
       return (
-        <>
-          <Flex
-            w="100%"
-            justify="space-between"
-            align="center"
-            key={index}
-            p="0.5rem"
-          >
+        <Box key={index}>
+          <Flex w="100%" justify="space-between" align="center" p="0.5rem">
             {member.username}
             {userIsAdmin ? (
               <>
@@ -69,7 +67,8 @@ const GroupHomePage = () => {
                     fontSize="0.8rem"
                     borderRadius="lg"
                     p="0.2rem 0.4rem"
-                    border="1px solid white"
+                    border="1px solid"
+                    borderColor={borderColor}
                   >
                     Admin
                   </Text>
@@ -80,7 +79,7 @@ const GroupHomePage = () => {
             )}
           </Flex>
           <Divider />
-        </>
+        </Box>
       );
     });
   }

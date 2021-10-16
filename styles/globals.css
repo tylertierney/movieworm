@@ -39,8 +39,8 @@ body {
 }
 
 .loadingIcon span {
-  width: 8px;
-  height: 8px;
+  /* width: 8px;
+  height: 8px; */
   border-radius: 50%;
   animation: flashing 1.4s infinite linear;
   margin: 0 4px;
