@@ -22,12 +22,15 @@ const JoinGroup = () => {
     setIsLoading(true);
     e.preventDefault();
 
+    console.log(localUser._id, groupid.value);
+
     await axios
       .post(`/api/user/${localUser._id}/${groupid.value}/joingroup`, {
         username: username.value,
       })
       .then((res) => {
         window.location = "/";
+        console.log(res);
       })
       .catch((err) => console.log(err));
 
