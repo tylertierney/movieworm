@@ -8,6 +8,8 @@ export default async function handler(req, res) {
 
   const { groupid, userid } = req.query;
 
+  await dbConnect();
+
   switch (method) {
     case "POST":
       try {
