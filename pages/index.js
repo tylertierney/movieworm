@@ -12,6 +12,8 @@ const Home = ({ popularList, genre_list, comedyList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   if (isLoading) return <div>Loading</div>;
   if (error) return <div>Error</div>;
 
@@ -39,8 +41,6 @@ const Home = ({ popularList, genre_list, comedyList }) => {
       isSearching = true;
     }
   }
-
-  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <main>
