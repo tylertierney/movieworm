@@ -31,6 +31,8 @@ const AuthProvider = ({ children }) => {
         return action.payload;
       case "createReviewInLocalUser":
         return action.payload;
+      case "setIsSearching":
+        return action.payload;
       default:
         return state;
     }
@@ -87,12 +89,39 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: "createReviewInLocalUser", payload: copyOfLocalUser });
   };
 
+  const setIsSearching = () => {
+    let isSearching = false;
+    let copyOfLocalUser = { ...localUser };
+
+    if (copyOfLocalUser.isSearching == undefined) {
+      copyOfLocalUser.isSearching = true;
+      // console.log(copyOfLocalUser.isSearching);
+      dispatch({ type: "setIsSearching", payload: copyOfLocalUser });
+      return;
+    }
+
+    if (copyOfLocalUser.isSearching === false) {
+      copyOfLocalUser.isSearching = true;
+      // console.log(copyOfLocalUser.isSearching);
+      dispatch({ type: "setIsSearching", payload: copyOfLocalUser });
+      return;
+    }
+
+    if (copyOfLocalUser.isSearching === true) {
+      copyOfLocalUser.isSearching = false;
+      // console.log(copyOfLocalUser.isSearching);
+      dispatch({ type: "setIsSearching", payload: copyOfLocalUser });
+      return;
+    }
+  };
+
   const ctx = {
     localUser,
     login,
     logout,
     setActiveGroup,
     createReviewInLocalUser,
+    setIsSearching,
   };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;

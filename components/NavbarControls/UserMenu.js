@@ -12,7 +12,7 @@ import { useLocalUser } from "../../context/authContext";
 
 import { truncateUsername } from "../../utils/helperFunctions";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const UserMenu = () => {
   const { localUser, setActiveGroup } = useLocalUser();

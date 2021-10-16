@@ -1,4 +1,11 @@
-import { Flex, List, ListItem, Icon, Box } from "@chakra-ui/react";
+import {
+  Flex,
+  List,
+  ListItem,
+  Icon,
+  Box,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
 
@@ -15,7 +22,14 @@ const listItemsArray = [
 
 const Footer = () => {
   return (
-    <footer style={{ width: "100vw", height: "200px", minHeight: "200px" }}>
+    <footer
+      style={{
+        width: "100vw",
+        height: "200px",
+        minHeight: "200px",
+        boxShadow: "0px 0px 20px 1px rgb(0, 0, 0, 0.5)",
+      }}
+    >
       <Flex
         w="100%"
         h="100%"
@@ -23,6 +37,7 @@ const Footer = () => {
         paddingX={["0.3rem", "2rem"]}
         align="center"
         justify="space-around"
+        color="white"
       >
         <Flex h="90%" justify="center" align="center">
           <Box

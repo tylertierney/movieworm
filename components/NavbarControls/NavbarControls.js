@@ -1,8 +1,8 @@
 import { Flex, Button } from "@chakra-ui/react";
-import BrandedButton from "../BrandedButton/BrandedButton";
+import SearchBar from "../SearchBar/SearchBar";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { useState } from "react";
-// import { useUser } from "../../context/authContext";
+
 import { useUser } from "@auth0/nextjs-auth0";
 import UserMenu from "./UserMenu";
 import Link from "next/link";
@@ -19,6 +19,7 @@ const NavbarControls = () => {
 
   return (
     <Flex align="center" justify="center" h="100%">
+      <SearchBar />
       <ThemeSwitch />
 
       {localUser ? (

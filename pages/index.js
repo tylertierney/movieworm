@@ -6,6 +6,8 @@ import GroupSection from "../components/GroupSection/GroupSection";
 
 import Section from "../components/Section/Section";
 
+import { useState } from "react";
+
 const Home = ({ popularList, genre_list, comedyList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();
@@ -23,13 +25,50 @@ const Home = ({ popularList, genre_list, comedyList }) => {
     }
   }
 
+  let isSearching = false;
+
+  if (localUser != null) {
+    if (localUser.isSearching === undefined) {
+      isSearching = false;
+    }
+
+    if (localUser.isSearching === false) {
+      isSearching = false;
+    }
+    if (localUser.isSearching === true) {
+      isSearching = true;
+    }
+  }
+
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <main>
       {/* <button onClick={() => console.log(localUser)}>localUser</button> */}
+      <p>{searchQuery}</p>
+      {isSearching && (
+        <Section
+          title="Search"
+          movieList={[]}
+          group={activeGroup}
+          isSearchbar={true}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+      )}
       {groupSection}
-
-      <Section title="Popular" movieList={popularList} group={activeGroup} />
-      <Section title="Comedy" movieList={comedyList} group={activeGroup} />
+      <Section
+        title="Popular"
+        movieList={popularList}
+        group={activeGroup}
+        isSearchbar={false}
+      />
+      <Section
+        title="Comedy"
+        movieList={comedyList}
+        group={activeGroup}
+        isSearchbar={false}
+      />
     </main>
   );
 };

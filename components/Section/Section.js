@@ -10,7 +10,14 @@ import NoReviewsMessage from "../NoReviewsMessage/NoReviewsMessage";
 
 import { groupByNestedProperty } from "../../utils/helperFunctions";
 
-const Section = ({ title, movieList, group }) => {
+const Section = ({
+  title,
+  movieList,
+  group,
+  isSearchbar,
+  searchQuery,
+  setSearchQuery,
+}) => {
   const [descriptionShowing, setDescriptionShowing] = useState(false);
   const [descriptionDetails, setDescriptionDetails] = useState({});
   const [reviewsArray, setReviewsArray] = useState(null);
@@ -61,6 +68,9 @@ const Section = ({ title, movieList, group }) => {
         descriptionShowing={descriptionShowing}
         group={group}
         reviewsList={reviewsList}
+        isSearchbar={isSearchbar}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
       <Box ref={descriptionRef} height="0" opacity="0">
         <Description
@@ -75,7 +85,11 @@ const Section = ({ title, movieList, group }) => {
           group={group}
         />
       </Box>
-      {movieList.length === 0 ? <NoReviewsMessage /> : <></>}
+      {movieList.length === 0 && isSearchbar === false ? (
+        <NoReviewsMessage />
+      ) : (
+        <></>
+      )}
       <Divider />
       <ReviewModal
         onOpen={onOpen}

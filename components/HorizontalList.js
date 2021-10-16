@@ -1,4 +1,4 @@
-import { Flex, HStack, Image, Box } from "@chakra-ui/react";
+import { Flex, HStack, Image, Box, Input } from "@chakra-ui/react";
 import BrandedHeading from "./BrandedHeading";
 
 import { useLocalUser } from "../context/authContext";
@@ -6,7 +6,15 @@ import { useLocalUser } from "../context/authContext";
 import MoviePoster from "./MoviePoster/MoviePoster";
 import { groupByNestedProperty } from "../utils/helperFunctions";
 
-const HorizontalList = ({ title, movieList, handleClick, group }) => {
+const HorizontalList = ({
+  title,
+  movieList,
+  handleClick,
+  group,
+  isSearchbar,
+  searchQuery,
+  setSearchQuery,
+}) => {
   const reviewsList = groupByNestedProperty(
     group?.reviews,
     "movieDetails",
@@ -15,14 +23,26 @@ const HorizontalList = ({ title, movieList, handleClick, group }) => {
 
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
-      <BrandedHeading
-        props={{
-          fontSize: ["1.8rem", "2rem", "2rem"],
-          mb: "0rem",
-        }}
-      >
-        {title}
-      </BrandedHeading>
+      <Flex align="center" justify="space-between">
+        <BrandedHeading
+          props={{
+            fontSize: ["1.8rem", "2rem", "2rem"],
+            mb: "0rem",
+            userSelect: "none",
+          }}
+        >
+          {title}
+        </BrandedHeading>
+        {isSearchbar && (
+          <Input
+            ml="0.6rem"
+            variant="flushed"
+            color="brand.text.dark"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        )}
+      </Flex>
 
       {movieList.length > 0 ? (
         <HStack

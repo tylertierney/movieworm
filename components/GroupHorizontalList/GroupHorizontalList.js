@@ -34,6 +34,7 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
           props={{
             fontSize: ["1.8rem", "2rem", "2rem"],
             mb: "0rem",
+            userSelect: "none",
           }}
         >
           {group.name}
