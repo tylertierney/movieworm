@@ -48,7 +48,7 @@ const GroupHomePage = () => {
       return (
         <Box key={index}>
           <Flex w="100%" justify="space-between" align="center" p="0.5rem">
-            {member.username}
+            <Text color="brand.text.dark">{member.username}</Text>
             {userIsAdmin ? (
               <>
                 {member.userid === localUser._id ? (
@@ -127,6 +127,7 @@ const GroupHomePage = () => {
               isReadOnly={true}
               value={localUser.activeGroup.group_id}
               type="text"
+              color="brand.text.dark"
             />
             <InputRightElement>
               <Button
@@ -146,7 +147,14 @@ const GroupHomePage = () => {
           </InputGroup>
         </FormControl>
 
-        <Flex direction="column">{groupMembersArray}</Flex>
+        <Flex direction="column">
+          <BrandedSubheading
+            props={{ fontSize: "1rem", p: "0", m: "0", mr: "1rem" }}
+          >
+            Members
+          </BrandedSubheading>
+          {groupMembersArray}
+        </Flex>
       </Flex>
     </Flex>
   );
