@@ -27,7 +27,6 @@ import useInput from "../../../hooks/useInput";
 import axios from "axios";
 
 import { useLocalUser } from "../../../context/authContext";
-import router from "next/router";
 
 const generateID = () => {
   return Math.random().toString(16).substr(2, 16);

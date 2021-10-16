@@ -8,9 +8,6 @@ import Section from "../components/Section/Section";
 
 import { findActiveGroup } from "../utils/helperFunctions";
 
-import axios from "axios";
-import { useEffect } from "react";
-
 const Home = ({ popularList, genre_list, comedyList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();
