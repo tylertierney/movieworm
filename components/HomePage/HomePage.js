@@ -70,7 +70,6 @@ const HomePage = ({ popularList, comedyList, actionList, dramaList }) => {
           setSearchQuery={setSearchQuery}
         />
       )}
-      <button onClick={() => console.log("something")}>something</button>
       {groupSection}
       <Section
         title="Popular"

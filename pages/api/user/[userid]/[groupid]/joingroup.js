@@ -25,6 +25,8 @@ export default async function handler(req, res) {
           group_id: groupid,
         });
 
+        console.log(group);
+
         group.members.push({
           userid: userid,
           username: req.body.username,
