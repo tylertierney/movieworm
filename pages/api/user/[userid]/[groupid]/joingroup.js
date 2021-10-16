@@ -21,11 +21,13 @@ export default async function handler(req, res) {
 
         user.save();
 
-        let group = await Group.find({
+        let groups = await Group.find({
           group_id: groupid,
         });
 
-        group = group[0];
+        const group = groups[0];
+
+        console.log(group);
 
         group.members.push({
           userid: userid,
