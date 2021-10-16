@@ -110,7 +110,7 @@ const Description = ({
           </Flex>
         </Flex>
 
-        <Text fontSize="0.8rem">{review.reviewText}</Text>
+        <Text fontSize="0.8rem">"{review.reviewText}"</Text>
         <Flex pb="0.5rem" align="center" justify="flex-end">
           <Text fontSize="0.5rem">{postedAtDate()}</Text>
         </Flex>
@@ -173,7 +173,13 @@ const Description = ({
                       as={BsChevronDoubleLeft}
                       minW="2.68rem"
                       cursor="pointer"
-                      onClick={() => (castScrollerRef.current.scrollLeft = 0)}
+                      onClick={() => {
+                        castScrollerRef.current.scrollTo({
+                          top: 0,
+                          left: 0,
+                          behavior: "smooth",
+                        });
+                      }}
                     />
                   ) : (
                     <Text
@@ -202,7 +208,7 @@ const Description = ({
             )}
             <Flex
               justify="space-between"
-              p="0.4rem 0.4rem 0.4rem 0"
+              p="0.4rem 0.4rem 0.2rem 0"
               align="center"
             >
               <Text as="span" fontSize="0.9rem" fontWeight="bold">
@@ -221,8 +227,9 @@ const Description = ({
                 Add Review
               </Button>
             </Flex>
-            {reviewArrayItems}
-            {/* <Divider /> */}
+            <Flex direction="column" mt="0.5rem">
+              {reviewArrayItems}
+            </Flex>
           </Flex>
         </Flex>
       ) : (

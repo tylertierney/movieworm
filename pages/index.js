@@ -81,6 +81,7 @@ const Home = ({ popularList, genre_list, comedyList }) => {
         group={activeGroup}
         isSearchbar={false}
       />
+      <br />
     </main>
   );
 };

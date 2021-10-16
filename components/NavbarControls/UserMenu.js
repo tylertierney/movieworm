@@ -42,7 +42,7 @@ const UserMenu = () => {
     {
       text: "You",
       icon: <Icon as={AiOutlineUser} />,
-      link: "/user/abc",
+      link: `/user/${localUser?._id}`,
     },
     {
       text: "Create a Group",

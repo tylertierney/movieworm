@@ -1,6 +1,5 @@
 import Navbar from "./Navbar/Navbar";
 import Head from "next/head";
-// import { useUser } from "../context/authContext";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Box } from "@chakra-ui/react";
 import Footer from "./Footer/Footer";
@@ -17,8 +16,8 @@ const Layout = ({ children }) => {
         <link rel="icon" href="/wormIconPNG.png" />
       </Head>
 
+      <Navbar />
       <main style={{ width: "100vw" }}>
-        <Navbar />
         <Box
           maxW="100vw"
           mt="7vh"
