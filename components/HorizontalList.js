@@ -19,6 +19,8 @@ import { useLocalUser } from "../context/authContext";
 import MoviePoster from "./MoviePoster/MoviePoster";
 import { groupByNestedProperty } from "../utils/helperFunctions";
 
+import FallbackImg from "./FallbackImg/FallbackImg";
+
 import { AiOutlineClose } from "react-icons/ai";
 
 const HorizontalList = ({
@@ -38,12 +40,13 @@ const HorizontalList = ({
     "id"
   );
 
+  console.log(FallbackImg);
+
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem" minH="200px">
       <Flex align="center" justify="space-between" maxW="94vw">
         <BrandedHeading
           props={{
-            fontSize: ["1.8rem", "2rem", "2rem"],
             mb: "0rem",
             userSelect: "none",
           }}
@@ -75,7 +78,7 @@ const HorizontalList = ({
         <HStack
           overflowX="scroll"
           className="hideScrollbar"
-          p="0.4rem 0.4rem 1.5rem 0.4rem"
+          p="0.4rem 1.4rem 1.5rem 0.4rem"
           m="0"
           spacing={3}
         >
@@ -127,6 +130,7 @@ const HorizontalList = ({
                   minH="240px"
                   alt={`${title} Poster`}
                   src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+                  fallback={<FallbackImg alt={`${title}`} />}
                 />
               </Box>
             );

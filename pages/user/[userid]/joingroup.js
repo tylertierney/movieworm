@@ -17,6 +17,7 @@ const JoinGroup = () => {
   const textColor = useColorModeValue("brand.text.dark", "brand.text.light");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [confirmation, setConfirmation] = useState("");
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
@@ -30,9 +31,13 @@ const JoinGroup = () => {
       })
       .then((res) => {
         console.log(res);
-        window.location = "/";
+        setConfirmation(() => "success");
+        // window.location = "/";
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setConfirmation(() => "error");
+      });
 
     setIsLoading(false);
   };
@@ -40,9 +45,24 @@ const JoinGroup = () => {
   const groupid = useInput("");
   const username = useInput("");
 
+  // const confirmMessage = () =>{
+
+  //   if(confirmation === "success"){
+  //     return "success"
+  //   }
+
+  //   if(confirmation === "error"){
+  //     return "error"
+
+  //   }
+
+  //   return "";
+  // }
+
   return (
     <form onSubmit={(e) => handleSubmit(e)} style={{ width: "100%" }}>
       <VStack spacing={6} color={textColor} p="1rem 0rem">
+        <p>{confirmation}</p>
         <Flex w="100%" direction="column" align="center">
           <BrandedHeading props={{ m: "0rem 0rem 0.5rem 0rem" }}>
             Join a Group

@@ -13,7 +13,7 @@ const NavbarControls = () => {
       <SearchIcon />
       <ThemeSwitch />
 
-      {localUser ? (
+      {localUser && localUser.email ? (
         <UserMenu />
       ) : (
         <Link href="/api/auth/login" passHref>

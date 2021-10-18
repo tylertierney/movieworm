@@ -18,12 +18,16 @@ const UserMenu = () => {
   const { localUser, setActiveGroup } = useLocalUser();
 
   useEffect(() => {
+    if (localUser.groups == undefined || localUser.groups == null) {
+      return;
+    }
+
     if (localUser.groups.length > 0) {
       setActiveGroup(localUser._id, localUser.groups[0].group_id);
     }
   }, []);
 
-  const groupsAsMenuItems = localUser.groups.map((group) => {
+  const groupsAsMenuItems = localUser.groups?.map((group) => {
     let isActive = false;
     if (group.name == localUser.activeGroup?.name) {
       isActive = true;

@@ -33,14 +33,23 @@ const BrandedHeading = ({ children, props }) => {
     }
   });
 
+  const fontSize = (children) => {
+    if (children.length > 13) {
+      return ["1.6rem", "1.7rem", "1.8rem", "1.9rem"];
+    }
+
+    return ["1.7rem", "1.8rem", "1.9rem", "2rem"];
+  };
+
   return (
     <Heading
-      size={props?.size ? props.size : "2xl"}
+      userSelect="none"
+      size={props?.size ? props.size : "xl"}
       bgGradient={bgGradient}
       bgClip="text"
       maxW="480px"
       mb="0.9rem"
-      {...props}
+      fontSize={fontSize(children)}
       p="0.3rem 0.4rem"
     >
       {headingToString}

@@ -30,7 +30,6 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
       <Flex w="100%" justify="space-between" pr="1rem" align="center">
         <BrandedHeading
           props={{
-            fontSize: ["1.8rem", "2rem", "2rem"],
             mb: "0rem",
             userSelect: "none",
           }}

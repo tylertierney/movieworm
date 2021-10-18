@@ -91,24 +91,16 @@ export const getUsernameFromUserId = (userid, members) => {
 };
 
 export const truncateUsername = (usernameOrEmail) => {
+  if (usernameOrEmail === undefined || usernameOrEmail === null) {
+    return usernameOrEmail;
+  }
+
   if (usernameOrEmail.length > 16) {
     return usernameOrEmail.substr(0, 16) + "...";
   }
 
   return usernameOrEmail;
 };
-
-// export const getActiveGroupFromLocalStorage = () => {
-//   let activeGroup = localStorage.getItem("movieworm-active_group");
-
-//   if (activeGroup === "undefined") {
-//     return undefined;
-//   }
-
-//   if (activeGroup != undefined) {
-//     return JSON.parse(activeGroup);
-//   }
-// };
 
 export const getCastItems = (cast) => {
   return cast.map((item, index) => {
