@@ -1,6 +1,8 @@
 import axios from "axios";
 
-import { Flex, Text, Image } from "@chakra-ui/react";
+import { Flex, Text, Image, Box } from "@chakra-ui/react";
+
+import Link from "next/link";
 
 export const generateKey = () => {
   const key = Math.floor(Math.random() * 10000);
@@ -116,18 +118,22 @@ export const getCastItems = (cast) => {
         mr="1rem"
         _hover={{ transform: "scale(1.05)" }}
         transition="0.3s ease-in-out"
-        cursor="default"
         zIndex={1}
         maxH="2.3rem"
+        cursor="pointer"
       >
-        <Flex direction="column" p="0 0.3rem">
-          <Text as="span" fontSize="0.8rem" fontWeight="normal">
-            {item.name}
-          </Text>
-          <Text opacity="0.8" fontSize="0.5rem" fontWeight="normal">
-            {item.character}
-          </Text>
-        </Flex>
+        <Link href={`https://www.imdb.com/find?q=${item.name}`} passHref>
+          <a target="_blank">
+            <Flex direction="column" p="0 0.3rem">
+              <Text as="span" fontSize="0.8rem" fontWeight="normal">
+                {item.name}
+              </Text>
+              <Text opacity="0.8" fontSize="0.5rem" fontWeight="normal">
+                {item.character}
+              </Text>
+            </Flex>
+          </a>
+        </Link>
         <Image
           alt={item.name}
           fallbackSrc="https://via.placeholder.com/60?text=+"

@@ -199,7 +199,7 @@ const Description = ({
                     </Text>
                   )}
                   <Flex
-                    p="0.4rem 1rem 0.4rem 0"
+                    p="0.4rem 1rem 0.4rem 0.3rem"
                     overflowX="scroll"
                     className="hideScrollbar"
                     ref={castScrollerRef}

@@ -40,8 +40,6 @@ const HorizontalList = ({
     "id"
   );
 
-  console.log(FallbackImg);
-
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem" minH="200px">
       <Flex align="center" justify="space-between" maxW="94vw">
