@@ -30,7 +30,7 @@ const Navbar = () => {
         w="100%"
         h="7vh"
         pl="0.5rem"
-        pr="1.2rem"
+        pr={["1.4rem", "1.5rem", "1.6rem", "1.8rem"]}
       >
         <Box width="100px" cursor="pointer" onClick={() => router.push("/")}>
           <Logo />

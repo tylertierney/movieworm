@@ -133,149 +133,148 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
   };
 
   return (
-    <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        autoFocus={false}
-        motionPreset="slideInBottom"
-      >
-        <ModalOverlay />
-        <ModalContent bgColor={bgColor}>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <ModalHeader>
-              <Flex w="100%" mb="1rem">
-                <Image
-                  alt={`${title} poster`}
-                  src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
-                  w={140}
-                  maxH="200px"
-                />
-                <Flex direction="column" p="0.5rem 0.5rem">
-                  <Text>{title}</Text>
-                  <Text fontSize="0.7rem" fontWeight="thin" mb="0.5rem">
-                    {overview}
-                  </Text>
-
-                  <Text fontSize="0.7rem">
-                    {findDirectors(credits).multipleDirectors
-                      ? "Directors:"
-                      : "Director:"}
-                    &nbsp;
-                    {credits === null ? <></> : findDirectors(credits).list}
-                  </Text>
-                </Flex>
-              </Flex>
-              <Divider />
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody color={textColor}>
-              <FormLabel m="0" color="inherit">
-                Group
-              </FormLabel>
-              <Input
-                isReadOnly={true}
-                isDisabled
-                value={group?.name}
-                type="text"
-                mb="1rem"
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      autoFocus={false}
+      motionPreset="slideInBottom"
+      isCentered={true}
+    >
+      <ModalOverlay />
+      <ModalContent bgColor={bgColor}>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <ModalHeader>
+            <Flex w="100%" mb="1rem">
+              <Image
+                alt={`${title} poster`}
+                src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+                w={140}
+                maxH="200px"
               />
-              <FormControl>
-                <Flex align="center" justify="space-between" mb="0.2rem">
-                  <FormLabel m="0" color="inherit">
-                    Rating
-                  </FormLabel>
-                  <FormHelperText
-                    opacity="0.7"
-                    fontSize="0.7rem"
-                  >{`${rating}/10`}</FormHelperText>
-                </Flex>
-                <NumberInput
-                  defaultValue={0}
-                  max={10}
-                  step={0.1}
-                  value={rating}
-                  onChange={(e) => setRating(e)}
-                  mb="1rem"
-                  isDisabled={isLoading}
+              <Flex direction="column" p="0.5rem 0.5rem">
+                <Text>{title}</Text>
+                <Text fontSize="0.7rem" fontWeight="thin" mb="0.5rem">
+                  {overview}
+                </Text>
+
+                <Text fontSize="0.7rem">
+                  {findDirectors(credits).multipleDirectors
+                    ? "Directors:"
+                    : "Director:"}
+                  &nbsp;
+                  {credits === null ? <></> : findDirectors(credits).list}
+                </Text>
+              </Flex>
+            </Flex>
+            <Divider />
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody color={textColor}>
+            <FormLabel m="0" color="inherit">
+              Group
+            </FormLabel>
+            <Input
+              isReadOnly={true}
+              isDisabled
+              value={group?.name}
+              type="text"
+              mb="1rem"
+            />
+            <FormControl>
+              <Flex align="center" justify="space-between" mb="0.2rem">
+                <FormLabel m="0" color="inherit">
+                  Rating
+                </FormLabel>
+                <FormHelperText
+                  opacity="0.7"
+                  fontSize="0.7rem"
+                >{`${rating}/10`}</FormHelperText>
+              </Flex>
+              <NumberInput
+                defaultValue={0}
+                max={10}
+                step={0.1}
+                value={rating}
+                onChange={(e) => setRating(e)}
+                mb="1rem"
+                isDisabled={isLoading}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+            <FormControl>
+              <Flex align="center" justify="space-between" mb="0.2rem">
+                <FormLabel m="0" color="inherit">
+                  Review
+                </FormLabel>
+
+                <FormHelperText opacity="0.7" fontSize="0.7rem">
+                  {`${reviewText.length}/1000 characters`}
+                </FormHelperText>
+              </Flex>
+              <Textarea
+                isDisabled={isLoading}
+                maxLength="1000"
+                color="inherit"
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+              ></Textarea>
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter p="1rem">
+            <Button
+              variant="ghost"
+              transition="0.3s ease-in-out"
+              color={textColor}
+              mr={3}
+              onClick={onClose}
+            >
+              Close
+            </Button>
+
+            <Tooltip
+              fontSize="0.7rem"
+              label={
+                modalSubmitDisabled()
+                  ? "Log in and create a group to save your reviews"
+                  : ""
+              }
+              placement="top"
+            >
+              <Box>
+                <Button
+                  transition="0.3s ease-in-out"
+                  variant="solid"
+                  color="brand.white"
+                  bgColor="brand.primary.1000"
+                  type="submit"
+                  _hover={{
+                    opacity: "0.6",
+                  }}
+                  isDisabled={modalSubmitDisabled()}
                 >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-              <FormControl>
-                <Flex align="center" justify="space-between" mb="0.2rem">
-                  <FormLabel m="0" color="inherit">
-                    Review
-                  </FormLabel>
-
-                  <FormHelperText opacity="0.7" fontSize="0.7rem">
-                    {`${reviewText.length}/1000 characters`}
-                  </FormHelperText>
-                </Flex>
-                <Textarea
-                  isDisabled={isLoading}
-                  maxLength="1000"
-                  color="inherit"
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                ></Textarea>
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter p="1rem">
-              <Button
-                variant="ghost"
-                transition="0.3s ease-in-out"
-                color={textColor}
-                mr={3}
-                onClick={onClose}
-              >
-                Close
-              </Button>
-
-              <Tooltip
-                fontSize="0.7rem"
-                label={
-                  modalSubmitDisabled()
-                    ? "Log in and create a group to save your reviews"
-                    : ""
-                }
-                placement="top"
-              >
-                <Box>
-                  <Button
-                    transition="0.3s ease-in-out"
-                    variant="solid"
-                    color="brand.white"
-                    bgColor="brand.primary.1000"
-                    type="submit"
-                    _hover={{
-                      opacity: "0.6",
-                    }}
-                    isDisabled={modalSubmitDisabled()}
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              </Tooltip>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-        {confirmation && (
-          <ConfirmationMessage
-            bgColor={bgColor}
-            confirmation={confirmation}
-            onOpen={confirmationOnOpen}
-            isOpen={confirmationIsOpen}
-            onClose={handleClose}
-          />
-        )}
-      </Modal>
-    </>
+                  Submit
+                </Button>
+              </Box>
+            </Tooltip>
+          </ModalFooter>
+        </form>
+      </ModalContent>
+      {confirmation && (
+        <ConfirmationMessage
+          bgColor={bgColor}
+          confirmation={confirmation}
+          onOpen={confirmationOnOpen}
+          isOpen={confirmationIsOpen}
+          onClose={handleClose}
+        />
+      )}
+    </Modal>
   );
 };
 

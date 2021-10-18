@@ -3,6 +3,11 @@
   font-family: "Be Vietnam Pro";
 }
 
+/* :root {
+  height: 100vh;
+  min-height: 100vh;
+} */
+
 body {
   height: 100vh;
   max-width: 100vw;
