@@ -31,7 +31,6 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
         <BrandedHeading
           props={{
             mb: "0rem",
-            userSelect: "none",
           }}
         >
           {group.name}
@@ -60,7 +59,7 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
         <HStack
           overflowX="scroll"
           className="hideScrollbar"
-          p="0.4rem 0.4rem 1.5rem 0.4rem"
+          p="0.4rem 1.4rem 1.5rem 0.4rem"
           m="0"
           spacing={3}
         >

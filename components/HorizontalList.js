@@ -76,7 +76,7 @@ const HorizontalList = ({
         <HStack
           overflowX="scroll"
           className="hideScrollbar"
-          p="0.4rem 1.4rem 1.5rem 0.4rem"
+          p="0rem 1.4rem 1.5rem 0.4rem"
           m="0"
           spacing={3}
         >

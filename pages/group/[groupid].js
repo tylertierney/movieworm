@@ -1,5 +1,7 @@
 import { useLocalUser } from "../../context/authContext";
 
+import axios from "axios";
+
 import {
   Flex,
   Text,
@@ -12,7 +14,10 @@ import {
   Divider,
   useColorModeValue,
   Box,
+  useDisclosure,
 } from "@chakra-ui/react";
+
+import ConfirmationMessage from "../../components/ConfirmationMessage/ConfirmationMessage";
 
 import { useEffect, useState } from "react";
 
@@ -23,6 +28,8 @@ const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const borderColor = useColorModeValue("brand.text.light", "brand.text.dark");
 
   useEffect(() => {
@@ -30,6 +37,8 @@ const GroupHomePage = () => {
       setUserIsAdmin(true);
     }
   }, []);
+
+  const bgColor = useColorModeValue("brand.white", "brand.gray");
 
   const { localUser } = useLocalUser();
 
@@ -54,9 +63,30 @@ const GroupHomePage = () => {
                 {member.userid === localUser._id ? (
                   <></>
                 ) : (
-                  <Button variant="outline" colorScheme="red" size="sm">
-                    Remove
-                  </Button>
+                  <>
+                    <Button
+                      variant="outline"
+                      onClick={onOpen}
+                      colorScheme="red"
+                      size="sm"
+                    >
+                      Remove
+                    </Button>
+                    {isOpen && (
+                      <ConfirmationMessage
+                        modalHeader={"Hold on a sec there, pal..."}
+                        modalBody={`Are you sure you want to remove ${member.username} from ${localUser.activeGroup.name}? Doing so will permanently delete all of the reviews they have posted to this group.`}
+                        actionText={"Remove"}
+                        onOpen={onOpen}
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        action="removeMember"
+                        group={localUser.activeGroup}
+                        memberID={member.userid}
+                        bgColor={bgColor}
+                      />
+                    )}
+                  </>
                 )}
               </>
             ) : (

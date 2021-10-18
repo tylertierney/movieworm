@@ -32,7 +32,7 @@ const JoinGroup = () => {
       .then((res) => {
         console.log(res);
         setConfirmation(() => "success");
-        // window.location = "/";
+        window.location = "/";
       })
       .catch((err) => {
         console.log(err);
@@ -45,24 +45,10 @@ const JoinGroup = () => {
   const groupid = useInput("");
   const username = useInput("");
 
-  // const confirmMessage = () =>{
-
-  //   if(confirmation === "success"){
-  //     return "success"
-  //   }
-
-  //   if(confirmation === "error"){
-  //     return "error"
-
-  //   }
-
-  //   return "";
-  // }
-
   return (
     <form onSubmit={(e) => handleSubmit(e)} style={{ width: "100%" }}>
       <VStack spacing={6} color={textColor} p="1rem 0rem">
-        <p>{confirmation}</p>
+        {/* <p>{confirmation}</p> */}
         <Flex w="100%" direction="column" align="center">
           <BrandedHeading props={{ m: "0rem 0rem 0.5rem 0rem" }}>
             Join a Group
