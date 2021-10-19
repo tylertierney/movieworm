@@ -13,6 +13,8 @@ import {
   ModalCloseButton,
   Button,
   Input,
+  Avatar,
+  Box,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -21,40 +23,53 @@ import axios from "axios";
 
 import { AiOutlineEdit } from "react-icons/ai";
 
-const ChangeUsernameModal = ({ localUser, member }) => {
+import ChangeUsernameConfirmation from "./ChangeUsernameConfirmation";
+
+const ChangeUsernameModal = ({ group, member, bgColor }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const textColor = useColorModeValue("brand.text.light", "brand.text.dark");
-  const bgColor = useColorModeValue("brand.white", "brand.gray");
 
   const [username, setUsername] = useState(member.username);
+  const [confirmation, setConfirmation] = useState("");
+
+  const {
+    isOpen: confirmationIsOpen,
+    onOpen: confirmationOnOpen,
+    onClose: confirmationOnClose,
+  } = useDisclosure();
 
   const handleSubmit = (e) => {
     setIsLoading(true);
     e.preventDefault();
 
-    if (username.length === 0) {
-      return;
-    }
-
     axios
-      .post(
-        `/api/user/${member.userid}/${localUser.activeGroup.group_id}/changeusername`,
-        { newUsername: username }
-      )
+      .post(`/api/user/${member.userid}/${group.group_id}/changeusername`, {
+        newUsername: username,
+      })
       .then((res) => {
         setIsLoading(() => false);
-        if (window != null && window != undefined) {
-          console.log(res);
-          //   window.location = "/";
-        }
+        setConfirmation(() => "success");
+        confirmationOnOpen();
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(() => false);
+        setConfirmation(() => "error");
+        confirmationOnOpen();
       });
+  };
+
+  const [profilePicPreview, setProfilePicPreview] = useState("");
+
+  const handleProfilePicUpload = (e) => {
+    let imagefile = e.target.files[0];
+    if (imagefile) {
+      let url = URL.createObjectURL(imagefile);
+      setProfilePicPreview(() => url);
+    }
   };
 
   return (
@@ -66,7 +81,7 @@ const ChangeUsernameModal = ({ localUser, member }) => {
         <ModalOverlay />
         <ModalContent bgColor={bgColor}>
           <form onSubmit={(e) => handleSubmit(e)}>
-            <ModalHeader>Edit Username</ModalHeader>
+            <ModalHeader>Edit Username + Profile Pic</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Input
@@ -74,6 +89,40 @@ const ChangeUsernameModal = ({ localUser, member }) => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
+              <br />
+              <br />
+              <Flex align="center" w="100%">
+                <Avatar
+                  src={profilePicPreview}
+                  name={username}
+                  size="xl"
+                  mr="1rem"
+                />
+                <Box
+                  borderRadius="6px"
+                  cursor="pointer"
+                  border="1px solid"
+                  borderColor="brand.primary.1000"
+                  minW="7rem"
+                  p="0.3rem 0.5rem"
+                >
+                  <label htmlFor="profile_pic" style={{ cursor: "pointer" }}>
+                    Choose File
+                  </label>
+                </Box>
+                <input
+                  id="profile_pic"
+                  type="file"
+                  accept="image/*"
+                  style={{
+                    border: "solid blue 1px",
+                    opacity: "1",
+                    visibility: "hidden",
+                    fontSize: "inherit",
+                  }}
+                  onChange={(e) => handleProfilePicUpload(e)}
+                />
+              </Flex>
             </ModalBody>
             <ModalFooter>
               <Button
@@ -86,7 +135,9 @@ const ChangeUsernameModal = ({ localUser, member }) => {
                 Cancel
               </Button>
               <Button
-                isDisabled={isLoading}
+                isDisabled={
+                  isLoading || username === member.username || username === ""
+                }
                 transition="0.3s ease-in-out"
                 variant="solid"
                 color="brand.white"
@@ -102,6 +153,15 @@ const ChangeUsernameModal = ({ localUser, member }) => {
           </form>
         </ModalContent>
       </Modal>
+      <ChangeUsernameConfirmation
+        group={group}
+        confirmationIsOpen={confirmationIsOpen}
+        confirmationOnOpen={confirmationOnOpen}
+        confirmationOnClose={confirmationOnClose}
+        confirmation={confirmation}
+        username={username}
+        bgColor={bgColor}
+      />
     </>
   );
 };

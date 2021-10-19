@@ -76,7 +76,7 @@ const HorizontalList = ({
         <HStack
           overflowX="scroll"
           className="hideScrollbar"
-          p="0rem 1.4rem 1.5rem 0.4rem"
+          p="0.4rem 1.4rem 1.5rem 0.4rem"
           m="0"
           spacing={3}
         >
@@ -116,12 +116,14 @@ const HorizontalList = ({
             }
 
             return (
-              <Box key={index}>
+              <Box
+                key={index}
+                _hover={{ transform: "scale(1.05)" }}
+                transition="0.3s ease-in-out"
+                cursor="pointer"
+              >
                 <Image
                   onClick={() => handleClick(item)}
-                  cursor="pointer"
-                  transition="0.3s ease-in-out"
-                  _hover={{ transform: "scale(1.05)" }}
                   boxShadow="7px 7px 10px 1px rgb(0, 0, 0, 0.2)"
                   w={40}
                   minW={40}

@@ -29,7 +29,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 
 import ChangeUsernameModal from "../../components/ChangeUsernameModal/ChangeUsernameModal";
 
-import RemoveMemberConfirmation from "../../components/RemoveMemberConfirmation/RemoveMemberConfirmation";
+import RemoveMemberModal from "../../components/RemoveMemberModal/RemoveMemberModal";
 
 const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
@@ -66,7 +66,11 @@ const GroupHomePage = () => {
           <Flex w="100%" justify="space-between" align="center" p="0.5rem">
             <Text color="brand.text.dark">{member.username}</Text>
             {localUser._id === member.userid && (
-              <ChangeUsernameModal localUser={localUser} member={member} />
+              <ChangeUsernameModal
+                group={localUser.activeGroup}
+                member={member}
+                bgColor={bgColor}
+              />
             )}
             {userIsAdmin ? (
               <>
@@ -74,24 +78,14 @@ const GroupHomePage = () => {
                   <></>
                 ) : (
                   <>
-                    <Button
-                      variant="outline"
-                      onClick={onOpen}
-                      colorScheme="red"
-                      size="sm"
-                    >
-                      Remove
-                    </Button>
-                    {isOpen && (
-                      <RemoveMemberConfirmation
-                        group={localUser.activeGroup}
-                        member={member}
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                        bgColor={bgColor}
-                      />
-                    )}
+                    <RemoveMemberModal
+                      group={localUser.activeGroup}
+                      member={member}
+                      isOpen={isOpen}
+                      onOpen={onOpen}
+                      onClose={onClose}
+                      bgColor={bgColor}
+                    />
                   </>
                 )}
               </>

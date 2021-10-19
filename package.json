@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^1.6.7",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "aws-sdk": "^2.1010.0",
     "axios": "^0.22.0",
     "emoji-tree": "^1.1.2",
     "framer-motion": "^4.1.17",
