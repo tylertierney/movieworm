@@ -12,8 +12,6 @@ import axios from "axios";
 
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
-import FallbackImg from "../FallbackImg/FallbackImg";
-
 const HomePage = ({ popularList, comedyList, actionList, dramaList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();

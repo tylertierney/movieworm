@@ -56,8 +56,6 @@ const AuthProvider = ({ children }) => {
         console.log(err);
         dispatch({ type: "login", payload: userFromMongo });
       });
-
-    // dispatch({ type: "login", payload: userFromMongo });
   };
 
   const logout = (name) => {
@@ -71,6 +69,7 @@ const AuthProvider = ({ children }) => {
 
     copyOfLocalUser.groups.forEach((group) => {
       if (group.group_id === groupid) {
+        console.log(group);
         copyOfLocalUser.activeGroup = group;
       }
     });

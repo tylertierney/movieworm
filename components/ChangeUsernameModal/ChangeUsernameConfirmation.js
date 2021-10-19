@@ -24,7 +24,7 @@ const RemoveMemberConfirmation = ({
 }) => {
   const handleClose = () => {
     confirmationOnClose();
-    // window.location = "/";
+    window.location = "/";
   };
 
   return (

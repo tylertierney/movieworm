@@ -32,6 +32,8 @@ import ChangeUsernameModal from "../../components/ChangeUsernameModal/ChangeUser
 
 import RemoveMemberModal from "../../components/RemoveMemberModal/RemoveMemberModal";
 
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
+
 const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
@@ -51,17 +53,19 @@ const GroupHomePage = () => {
   const { localUser } = useLocalUser();
 
   if (localUser === null || localUser === undefined) {
-    return <div>Loading</div>;
+    return <LoadingScreen status="loading" />;
   }
 
   if (localUser.activeGroup === null || localUser.activeGroup === undefined) {
-    return <div>Loading</div>;
+    return <LoadingScreen status="loading" />;
   }
 
   let groupMembersArray = [];
 
   if (localUser && localUser?.activeGroup) {
     groupMembersArray = localUser?.activeGroup.members.map((member, index) => {
+      console.log(member.prof_pic);
+
       return (
         <Box key={index}>
           <Flex w="100%" justify="space-between" align="center" p="0.5rem">
@@ -137,6 +141,7 @@ const GroupHomePage = () => {
         pr="1rem"
         align="center"
       >
+        <button onClick={() => console.log(localUser)}>localUser</button>
         <BrandedHeading
           props={{
             fontSize: ["1.8rem", "2rem", "2rem"],

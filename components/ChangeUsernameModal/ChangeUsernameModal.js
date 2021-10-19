@@ -72,6 +72,9 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
       };
 
       sendFileToS3(profilePicFile, amazonURL);
+      amazonURL = amazonURL.split("?")[0];
+
+      console.log(amazonURL);
     }
 
     axios
