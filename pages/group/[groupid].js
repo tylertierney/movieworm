@@ -16,6 +16,7 @@ import {
   Box,
   useDisclosure,
   Icon,
+  Avatar,
 } from "@chakra-ui/react";
 
 import ConfirmationMessage from "../../components/ConfirmationMessage/ConfirmationMessage";
@@ -64,7 +65,15 @@ const GroupHomePage = () => {
       return (
         <Box key={index}>
           <Flex w="100%" justify="space-between" align="center" p="0.5rem">
-            <Text color="brand.text.dark">{member.username}</Text>
+            <Flex align="center">
+              <Avatar
+                src={member.prof_pic}
+                name={member.username}
+                size="xs"
+                mr="1rem"
+              />
+              <Text color="brand.text.dark">{member.username}</Text>
+            </Flex>
             {localUser._id === member.userid && (
               <ChangeUsernameModal
                 group={localUser.activeGroup}

@@ -41,15 +41,46 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
     onClose: confirmationOnClose,
   } = useDisclosure();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
+
+    let amazonURL = "";
+
+    if (profilePicFile !== null) {
+      amazonURL = await axios
+        .get(`/api/user/${member.userid}/${group.group_id}/s3`)
+        .then((res) => res.data.data)
+        .catch((err) => {
+          console.log(err);
+        });
+
+      if (amazonURL === undefined || amazonURL === null) {
+        setConfirmation(() => "error");
+        setIsLoading(() => false);
+        confirmationOnOpen();
+        return;
+      }
+
+      const sendFileToS3 = (file, s3url) => {
+        let config = { headers: { "Content-Type": "multipart/form-data" } };
+
+        axios
+          .put(s3url, file, config)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+      };
+
+      sendFileToS3(profilePicFile, amazonURL);
+    }
 
     axios
       .post(`/api/user/${member.userid}/${group.group_id}/changeusername`, {
         newUsername: username,
+        newProfPicURL: amazonURL,
       })
       .then((res) => {
+        console.log(res.data);
         setIsLoading(() => false);
         setConfirmation(() => "success");
         confirmationOnOpen();
@@ -62,13 +93,15 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
       });
   };
 
-  const [profilePicPreview, setProfilePicPreview] = useState("");
+  const [profilePicPreviewURL, setProfilePicPreviewURL] = useState("");
+  const [profilePicFile, setProfilePicFile] = useState(null);
 
   const handleProfilePicUpload = (e) => {
     let imagefile = e.target.files[0];
     if (imagefile) {
       let url = URL.createObjectURL(imagefile);
-      setProfilePicPreview(() => url);
+      setProfilePicPreviewURL(() => url);
+      setProfilePicFile(() => imagefile);
     }
   };
 
@@ -93,7 +126,7 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
               <br />
               <Flex align="center" w="100%">
                 <Avatar
-                  src={profilePicPreview}
+                  src={profilePicPreviewURL}
                   name={username}
                   size="xl"
                   mr="1rem"
@@ -135,9 +168,7 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
                 Cancel
               </Button>
               <Button
-                isDisabled={
-                  isLoading || username === member.username || username === ""
-                }
+                isDisabled={isLoading}
                 transition="0.3s ease-in-out"
                 variant="solid"
                 color="brand.white"
