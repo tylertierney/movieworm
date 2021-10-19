@@ -8,6 +8,7 @@ import {
   Image,
   Button,
   Divider,
+  Avatar,
 } from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import BrandedParagraph from "../components/BrandedParagraph";
@@ -18,11 +19,13 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import {
   findDirectors,
-  getUsernameFromUserId,
+  getMemberInfoFromUserID,
   getCastItems,
 } from "../utils/helperFunctions";
 
 import { useLocalUser } from "../context/authContext";
+
+import Review from "./Review/Review";
 
 const Description = ({
   movieDetails,
@@ -78,50 +81,7 @@ const Description = ({
   };
 
   const reviewArrayItems = reviewsArray?.map((review, index) => {
-    const postedAtDate = () => {
-      if (review.postedAt === null || review.postedAt === undefined) {
-        return null;
-      }
-
-      return new Date(review.postedAt).toLocaleDateString();
-    };
-
-    const postedBy = (userid) => {
-      return getUsernameFromUserId(userid, group.members);
-    };
-
-    return (
-      <Flex
-        key={index}
-        direction="column"
-        border="solid 1px"
-        borderColor="brand.primary.1000"
-        borderRadius="lg"
-        p="0.5rem 0.5rem 0.1rem 0.5rem"
-        boxShadow="5px 3px 20px 1px rgb(0, 0, 0, 0.2)"
-        mb="1rem"
-      >
-        <Flex pb="0.5rem" align="center" justify="space-between">
-          <Text fontSize="0.6rem">{postedBy(review.userid)}</Text>
-
-          <Flex align="baseline">
-            <Text fontSize="1rem">{review.rating}</Text>
-            <Text fontSize="0.6rem">/10</Text>
-          </Flex>
-        </Flex>
-
-        {review.reviewText.length > 0 ? (
-          <>
-            <Text fontSize="0.8rem">&quot;{review.reviewText}&quot;</Text>
-            <Flex pb="0.5rem" align="center" justify="flex-end">
-              <Text fontSize="0.5rem">{postedAtDate()}</Text>
-            </Flex>
-          </>
-        ) : (
-          <></>
-        )}
-      </Flex>
-    );
+    return <Review review={review} key={index} group={group} />;
   });
 
   let reviewsNumber = "0 Reviews";

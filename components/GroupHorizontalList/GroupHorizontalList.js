@@ -27,14 +27,15 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
 
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
-      <Flex w="100%" justify="space-between" pr="1rem" align="center">
-        <BrandedHeading
-          props={{
-            mb: "0rem",
-          }}
-        >
-          {group.name}
-        </BrandedHeading>
+      <Flex
+        w="100%"
+        justify="space-between"
+        pr="1rem"
+        mt="0.8rem"
+        mb="0.2rem"
+        align="center"
+      >
+        <BrandedHeading>{group.name}</BrandedHeading>
         <Link passHref href={`/group/${group.group_id}`}>
           <Button
             fontSize="0.9rem"

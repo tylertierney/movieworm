@@ -48,9 +48,7 @@ const BrandedHeading = ({ children, props }) => {
       bgGradient={bgGradient}
       bgClip="text"
       maxW="480px"
-      mb="0.9rem"
       fontSize={fontSize(children)}
-      mt="1rem"
       p="0rem 0.4rem 0rem 0.4rem"
     >
       {headingToString}

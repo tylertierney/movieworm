@@ -42,15 +42,15 @@ const HorizontalList = ({
 
   return (
     <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem" minH="200px">
-      <Flex align="center" justify="space-between" maxW="94vw">
-        <BrandedHeading
-          props={{
-            mb: "0rem",
-            userSelect: "none",
-          }}
-        >
-          {title}
-        </BrandedHeading>
+      <Flex
+        align="center"
+        justify="space-between"
+        maxW="94vw"
+        pr="1rem"
+        mt="0.8rem"
+        mb="0.2rem"
+      >
+        <BrandedHeading>{title}</BrandedHeading>
         {isSearchbar && (
           <InputGroup>
             <Input

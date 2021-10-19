@@ -69,7 +69,6 @@ const AuthProvider = ({ children }) => {
 
     copyOfLocalUser.groups.forEach((group) => {
       if (group.group_id === groupid) {
-        console.log(group);
         copyOfLocalUser.activeGroup = group;
       }
     });

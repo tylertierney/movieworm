@@ -42,7 +42,7 @@ const RemoveMemberConfirmation = ({
                 fontSize="3rem"
               />
               <br />
-              <Text textAlign="center">{`You have successfully changed your username to ${username} in ${group.name}`}</Text>
+              <Text textAlign="center">{`You have successfully updated your info in ${group.name}`}</Text>
             </Flex>
           ) : (
             <Flex direction="column" align="center">

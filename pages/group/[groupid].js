@@ -78,6 +78,7 @@ const GroupHomePage = () => {
               />
               <Text color="brand.text.dark">{member.username}</Text>
             </Flex>
+
             {localUser._id === member.userid && (
               <ChangeUsernameModal
                 group={localUser.activeGroup}
@@ -141,7 +142,6 @@ const GroupHomePage = () => {
         pr="1rem"
         align="center"
       >
-        <button onClick={() => console.log(localUser)}>localUser</button>
         <BrandedHeading
           props={{
             fontSize: ["1.8rem", "2rem", "2rem"],
@@ -191,7 +191,7 @@ const GroupHomePage = () => {
           </InputGroup>
         </FormControl>
 
-        <Flex direction="column">
+        <Flex direction="column" mb="2rem">
           <BrandedSubheading
             props={{ fontSize: "1rem", p: "0", m: "0", mr: "1rem" }}
           >

@@ -80,16 +80,17 @@ export const findDirectors = (credits) => {
   return { list, multipleDirectors };
 };
 
-export const getUsernameFromUserId = (userid, members) => {
+export const getMemberInfoFromUserID = (userid, members) => {
   let username = "";
+  let targeted_member = null;
 
   members.forEach((member) => {
     if (member.userid === userid) {
-      username = member.username;
+      targeted_member = member;
     }
   });
 
-  return username;
+  return targeted_member;
 };
 
 export const truncateUsername = (usernameOrEmail) => {

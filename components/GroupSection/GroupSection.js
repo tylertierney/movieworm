@@ -10,6 +10,8 @@ import ReviewModal from "../ReviewModal/ReviewModal";
 
 import { groupByNestedProperty } from "../../utils/helperFunctions";
 
+import { useLocalUser } from "../../context/authContext";
+
 const GroupSection = ({ group }) => {
   const [descriptionShowing, setDescriptionShowing] = useState(false);
   const [descriptionDetails, setDescriptionDetails] = useState({});
@@ -49,6 +51,17 @@ const GroupSection = ({ group }) => {
     "movieDetails",
     "id"
   );
+
+  const { localUser } = useLocalUser();
+
+  // When the description is open and the user changes groups, we need
+  // this useEffect to close the description and details in order to
+  // prevent errors
+
+  useEffect(() => {
+    setReviewsArray(() => null);
+    setDescriptionShowing(() => false);
+  }, [localUser.activeGroup.group_id]);
 
   return (
     <Box>
