@@ -1,6 +1,8 @@
-import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
-
 import {
+  Flex,
+  Icon,
+  Text,
+  useColorModeValue,
   Modal,
   ModalOverlay,
   ModalContent,

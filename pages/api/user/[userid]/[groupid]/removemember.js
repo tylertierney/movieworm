@@ -20,8 +20,6 @@ export default async function handler(req, res) {
 
         group = group[0];
 
-        console.log(group);
-
         const copyOfGroupMembers = [...group.members];
 
         const index = await copyOfGroupMembers.findIndex(

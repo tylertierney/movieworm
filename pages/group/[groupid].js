@@ -15,6 +15,7 @@ import {
   useColorModeValue,
   Box,
   useDisclosure,
+  Icon,
 } from "@chakra-ui/react";
 
 import ConfirmationMessage from "../../components/ConfirmationMessage/ConfirmationMessage";
@@ -23,6 +24,10 @@ import { useEffect, useState } from "react";
 
 import BrandedHeading from "../../components/BrandedHeading";
 import BrandedSubheading from "../../components/BrandedSubheading";
+
+import { AiOutlineEdit } from "react-icons/ai";
+
+import ChangeUsernameModal from "../../components/ChangeUsernameModal/ChangeUsernameModal";
 
 const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
@@ -58,6 +63,9 @@ const GroupHomePage = () => {
         <Box key={index}>
           <Flex w="100%" justify="space-between" align="center" p="0.5rem">
             <Text color="brand.text.dark">{member.username}</Text>
+            {localUser._id === member.userid && (
+              <ChangeUsernameModal localUser={localUser} member={member} />
+            )}
             {userIsAdmin ? (
               <>
                 {member.userid === localUser._id ? (
