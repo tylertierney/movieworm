@@ -14,6 +14,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 
+import LeaveGroupModal from "../../../components/LeaveGroupModal/LeaveGroupModal";
+
 import LoadingScreen from "../../../components/LoadingScreen/LoadingScreen";
 
 import { useEffect, useState } from "react";
@@ -26,13 +28,11 @@ const UserHomePage = () => {
 
   const { localUser } = useLocalUser();
 
+  const bgColor = useColorModeValue("brand.white", "brand.gray");
+
   if (localUser === null || localUser === undefined) {
     return <LoadingScreen status="loading" />;
   }
-
-  // if (localUser.activeGroup === null || localUser.activeGroup === undefined) {
-  //   return <LoadingScreen status="loading" />;
-  // }
 
   let groupsArray = [];
 
@@ -63,9 +63,11 @@ const UserHomePage = () => {
                 Admin
               </Text>
             ) : (
-              <Button variant="outline" colorScheme="red" size="xs">
-                Leave Group
-              </Button>
+              <LeaveGroupModal
+                bgColor={bgColor}
+                group={group}
+                userid={localUser._id}
+              />
             )}
           </Flex>
           <Divider />
