@@ -29,6 +29,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 
 import ChangeUsernameModal from "../../components/ChangeUsernameModal/ChangeUsernameModal";
 
+import RemoveMemberConfirmation from "../../components/RemoveMemberConfirmation/RemoveMemberConfirmation";
+
 const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
@@ -81,16 +83,12 @@ const GroupHomePage = () => {
                       Remove
                     </Button>
                     {isOpen && (
-                      <ConfirmationMessage
-                        modalHeader={"Hold on a sec there, pal..."}
-                        modalBody={`Are you sure you want to remove ${member.username} from ${localUser.activeGroup.name}? Doing so will permanently delete all of the reviews they have posted to this group.`}
-                        actionText={"Remove"}
-                        onOpen={onOpen}
-                        isOpen={isOpen}
-                        onClose={onClose}
-                        action="removeMember"
+                      <RemoveMemberConfirmation
                         group={localUser.activeGroup}
-                        memberID={member.userid}
+                        member={member}
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
                         bgColor={bgColor}
                       />
                     )}

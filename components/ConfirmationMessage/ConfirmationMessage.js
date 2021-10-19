@@ -46,7 +46,7 @@ const ConfirmationMessage = ({
       .post(`/api/user/${memberID}/${group.group_id}/removemember`)
       .then((res) => {
         setIsLoading(false);
-        window.location("/");
+        window.location = "/";
       })
       .catch((err) => {
         setIsLoading(false);

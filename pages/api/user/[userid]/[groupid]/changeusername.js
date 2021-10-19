@@ -13,25 +13,23 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
-        const group = await Group.find({
+        const groups = await Group.find({
           group_id: req.query.groupid,
         });
 
-        let copyOfGroup = group[0];
+        const group = groups[0];
 
-        const copyOfGroupMembers = [...copyOfGroup.members];
+        const copyOfGroupMembers = [...group.members];
 
         const index = copyOfGroupMembers.findIndex(
           (elem) => elem.userid === req.query.userid
         );
 
-        console.log(copyOfGroupMembers, index);
+        group.members[index].username = newUsername;
 
-        copyOfGroupMembers[index].username = newUsername;
+        group.markModified("members");
 
-        group[0].members = copyOfGroupMembers;
-
-        group[0].save();
+        group.save();
 
         res.status(200).json({ success: true, data: "success" });
       } catch (error) {
