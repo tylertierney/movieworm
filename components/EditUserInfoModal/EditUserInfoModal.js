@@ -78,7 +78,7 @@ const EditUserInfoModal = ({ group, member, bgColor }) => {
     }
 
     axios
-      .post(`/api/user/${member.userid}/${group.group_id}/changeusername`, {
+      .post(`/api/user/${member.userid}/${group.group_id}/edituserinfo`, {
         newUsername: username,
         newProfPicURL: amazonURL,
       })
