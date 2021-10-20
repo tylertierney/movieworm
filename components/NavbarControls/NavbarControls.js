@@ -23,7 +23,7 @@ const NavbarControls = () => {
             transition="0.3s ease-in-out"
             backgroundColor="brand.primary.1000"
             color="white"
-            textShadow="1px 1px rgb(0, 0, 0, 0.3)"
+            textShadow="0px 0px rgb(0, 0, 0, 0.1)"
             size="sm"
             maxH="1.5rem"
           >
