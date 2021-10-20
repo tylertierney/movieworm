@@ -12,6 +12,8 @@ import axios from "axios";
 
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
+import theme from "../theme";
+
 const HomePage = ({ popularList, comedyList, actionList, dramaList }) => {
   const { isLoading, error } = useUser();
   const { localUser } = useLocalUser();

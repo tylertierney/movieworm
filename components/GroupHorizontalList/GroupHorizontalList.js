@@ -44,6 +44,7 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
             color="brand.text.dark"
             size="sm"
             p="1.2rem 0.4rem"
+            boxShadow="4px 4px 10px 1px rgb(0, 0, 0, 0.2)"
           >
             <Flex align="center">
               <Flex direction="column" align="flex-start" mr="0.2rem">
@@ -56,7 +57,6 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
               </Flex>
 
               <Icon
-                // border="solid red 1px"
                 mb="0.1rem"
                 color="brand.text.dark"
                 fontSize="1.8rem"

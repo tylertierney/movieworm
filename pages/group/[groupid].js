@@ -35,6 +35,8 @@ const GroupHomePage = () => {
 
   const borderColor = useColorModeValue("brand.text.light", "brand.text.dark");
 
+  const { localUser } = useLocalUser();
+
   useEffect(() => {
     if (localUser._id === localUser.activeGroup.owner_id) {
       setUserIsAdmin(true);
@@ -42,8 +44,6 @@ const GroupHomePage = () => {
   }, []);
 
   const bgColor = useColorModeValue("brand.white", "brand.gray");
-
-  const { localUser } = useLocalUser();
 
   if (localUser === null || localUser === undefined) {
     return <LoadingScreen status="loading" />;

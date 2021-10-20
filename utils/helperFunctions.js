@@ -148,3 +148,11 @@ export const getCastItems = (cast) => {
     );
   });
 };
+
+// export const convertToRGB = (hexValue) => {
+//   const red = parseInt(hexValue[1] + hexValue[2], 16);
+//   const green = parseInt(hexValue[3] + hexValue[4], 16);
+//   const blue = parseInt(hexValue[5] + hexValue[6], 16);
+
+//   return `rgb (${red}, ${green}, ${blue})`;
+// };

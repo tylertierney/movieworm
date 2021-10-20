@@ -9,10 +9,10 @@ const BrandedHeading = ({ children, props }) => {
 
       break;
     case "blue":
-      bgGradient = "linear(to-r, brand.primary.1000,lightblue)";
+      bgGradient = "linear(to-r, brand.primary.1000, brand.primary.700)";
       break;
     default:
-      bgGradient = "linear(to-r, brand.primary.1000,lightblue)";
+      bgGradient = "linear(to-r, brand.primary.1000, brand.primary.700)";
   }
 
   // Find any emojis and replace them with a different text component,

@@ -134,8 +134,6 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
 
   let needsTruncation = false;
 
-  console.log(overview !== undefined);
-
   if (overview !== undefined) {
     if (overview.length > 264) {
       needsTruncation = true;
@@ -143,8 +141,6 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
   }
 
   const [seeingMore, setSeeingMore] = useState(false);
-
-  console.log(needsTruncation);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom">
