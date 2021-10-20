@@ -3,17 +3,6 @@
   font-family: "Be Vietnam Pro";
 }
 
-/* :root {
-  height: 100vh;
-  min-height: 100vh;
-} */
-
-body {
-  height: 100vh;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
 .hideScrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -25,13 +14,13 @@ body {
   align-items: flex-start;
 }
 
+.chakra-modal__content-container {
+  min-height: 100vh;
+}
+
 .spinnerIcon {
   animation: spinner 1.7s infinite linear;
 }
-
-/* .imageMargin {
-  margin-bottom: 1rem;
-} */
 
 @keyframes spinner {
   from {

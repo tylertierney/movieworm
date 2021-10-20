@@ -133,13 +133,7 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      autoFocus={false}
-      motionPreset="slideInBottom"
-      isCentered={true}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom">
       <ModalOverlay />
       <ModalContent bgColor={bgColor}>
         <form onSubmit={(e) => handleSubmit(e)}>
