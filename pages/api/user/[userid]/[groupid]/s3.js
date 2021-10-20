@@ -2,8 +2,8 @@ import aws from "aws-sdk";
 
 const region = "us-east-2";
 const bucketName = "movieworm";
-const accessKeyId = process.env.AWS_ACCESS_KEY;
-const secretAccessKey = process.env.AWS_SECRET_KEY;
+const accessKeyId = process.env.MOVIEWORM_AWS_ACCESS;
+const secretAccessKey = process.env.MOVIEWORM_AWS_SECRET;
 
 const s3 = new aws.S3({
   region,
