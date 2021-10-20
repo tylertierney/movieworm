@@ -132,6 +132,20 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
     onClose();
   };
 
+  let needsTruncation = false;
+
+  console.log(overview !== undefined);
+
+  if (overview !== undefined) {
+    if (overview.length > 264) {
+      needsTruncation = true;
+    }
+  }
+
+  const [seeingMore, setSeeingMore] = useState(false);
+
+  console.log(needsTruncation);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom">
       <ModalOverlay />
@@ -146,11 +160,32 @@ const ReviewModal = ({ isOpen, onClose, movieDetails, credits, group }) => {
                 maxH="200px"
               />
               <Flex direction="column" p="0.5rem 0.5rem">
-                <Text>{title}</Text>
-                <Text fontSize="0.7rem" fontWeight="thin" mb="0.5rem">
+                <Text fontSize="0.9rem">{title}</Text>
+                <Text
+                  fontSize="0.7rem"
+                  fontWeight="thin"
+                  mb="0.5rem"
+                  className={`reviewModalOverview ${
+                    seeingMore ? "noclamp" : "clamp"
+                  }`}
+                >
                   {overview}
                 </Text>
-
+                {needsTruncation && (
+                  <Text
+                    fontWeight="light"
+                    fontSize="0.7rem"
+                    cursor="pointer"
+                    onClick={() => setSeeingMore(!seeingMore)}
+                    textDecoration="underline"
+                    userSelect="none"
+                    textAlign="right"
+                    mb="0.6rem"
+                    w="100%"
+                  >
+                    See {seeingMore ? "Less" : "More"}
+                  </Text>
+                )}
                 <Text fontSize="0.7rem">
                   {findDirectors(credits).multipleDirectors
                     ? "Directors:"

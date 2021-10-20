@@ -3,6 +3,10 @@
   font-family: "Be Vietnam Pro";
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .hideScrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -78,4 +82,18 @@
   to {
     background-position: -200% 0;
   }
+}
+
+.reviewModalOverview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.clamp {
+  -webkit-line-clamp: 6;
+}
+
+.noclamp {
+  -webkit-line-clamp: 30;
 }
