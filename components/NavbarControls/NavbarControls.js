@@ -22,7 +22,8 @@ const NavbarControls = () => {
             _hover={{ opacity: "0.7" }}
             transition="0.3s ease-in-out"
             backgroundColor="brand.primary.1000"
-            color="brand.white"
+            color="white"
+            textShadow="1px 1px rgb(0, 0, 0, 0.3)"
             size="sm"
             maxH="1.5rem"
           >

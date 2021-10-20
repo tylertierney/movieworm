@@ -72,7 +72,7 @@ const Footer = () => {
         </List>
         <Flex align="center" fontSize="1.4rem" justify="space-around">
           <Link href="/" passHref>
-            <a>
+            <a aria-label="Facebook">
               <Icon
                 transition="0.3s ease-in-out"
                 opacity="0.5"
@@ -84,7 +84,7 @@ const Footer = () => {
             </a>
           </Link>
           <Link href="/" passHref>
-            <a>
+            <a aria-label="Pinterest">
               <Icon
                 as={FaPinterest}
                 transition="0.3s ease-in-out"
@@ -96,7 +96,7 @@ const Footer = () => {
             </a>
           </Link>
           <Link href="/" passHref>
-            <a>
+            <a aria-label="LinkedIn">
               <Icon
                 as={RiLinkedinFill}
                 transition="0.3s ease-in-out"
@@ -108,7 +108,7 @@ const Footer = () => {
             </a>
           </Link>
           <Link href="/" passHref>
-            <a>
+            <a aria-label="Twitter">
               <Icon
                 as={AiOutlineTwitter}
                 transition="0.3s ease-in-out"

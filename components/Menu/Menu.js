@@ -19,6 +19,8 @@ import { useLocalUser } from "../../context/authContext";
 const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
   const { localUser } = useLocalUser();
 
+  const greenIconColor = useColorModeValue("green", "lightgreen");
+
   const menuItemArray = menuItems.map((item, index) => {
     const children = (
       <MenuItem onClick={item.onClick ? item.onClick : null}>
@@ -31,7 +33,7 @@ const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
     }
     return (
       <Link key={index} href={item.link} passHref>
-        <a>{children}</a>
+        <a aria-label={item.text}>{children}</a>
       </Link>
     );
   });
@@ -40,12 +42,14 @@ const MenuComponent = ({ menuName, menuIcon, menuItems, groupsArray }) => {
     return (
       <MenuItem key={index} onClick={group.onClick ? group.onClick : null}>
         {group.icon}
-        <Text ml="10px">{group.text}&nbsp;&nbsp;</Text>
-        {group.isActive ? (
-          <Icon as={AiOutlineCheckCircle} color="lightgreen" />
-        ) : (
-          <></>
-        )}
+        <Flex align="center" grow="1" justify="space-between">
+          <Text ml="10px">{group.text}&nbsp;&nbsp;</Text>
+          {group.isActive ? (
+            <Icon as={AiOutlineCheckCircle} color={greenIconColor} />
+          ) : (
+            <></>
+          )}
+        </Flex>
       </MenuItem>
     );
   });

@@ -49,7 +49,7 @@ const UserHomePage = () => {
 
       return (
         <Box key={index}>
-          <Flex w="100%" justify="space-between" align="center" p="0.5rem">
+          <Flex w="100%" justify="space-between" align="center" p="1rem">
             <Text color="brand.text.dark">{group.name}</Text>
             {isAdmin ? (
               <Text
@@ -77,7 +77,7 @@ const UserHomePage = () => {
   }
 
   return (
-    <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
+    <Flex direction="column" p="1rem 0.4rem 0 0.4rem">
       <Flex
         w="100%"
         maxW="360px"

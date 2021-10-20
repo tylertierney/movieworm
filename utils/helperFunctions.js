@@ -124,7 +124,7 @@ export const getCastItems = (cast) => {
         cursor="pointer"
       >
         <Link href={`https://www.imdb.com/find?q=${item.name}`} passHref>
-          <a target="_blank">
+          <a aria-label={`${item.name} IMDB`} target="_blank">
             <Flex direction="column" p="0 0.3rem">
               <Text as="span" fontSize="0.8rem" fontWeight="normal">
                 {item.name}

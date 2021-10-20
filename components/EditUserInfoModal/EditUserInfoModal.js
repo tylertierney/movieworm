@@ -23,14 +23,14 @@ import axios from "axios";
 
 import { AiOutlineEdit } from "react-icons/ai";
 
-import ChangeUsernameConfirmation from "./ChangeUsernameConfirmation";
+import EditUserInfoConfirmation from "./EditUserInfoConfirmation";
 
-const ChangeUsernameModal = ({ group, member, bgColor }) => {
+const EditUserInfoModal = ({ group, member, bgColor }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const textColor = useColorModeValue("brand.text.light", "brand.text.dark");
+  const textColor = useColorModeValue("brand.text.dark", "brand.text.light");
 
   const [username, setUsername] = useState(member.username);
   const [confirmation, setConfirmation] = useState("");
@@ -96,7 +96,9 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
       });
   };
 
-  const [profilePicPreviewURL, setProfilePicPreviewURL] = useState("");
+  const [profilePicPreviewURL, setProfilePicPreviewURL] = useState(
+    member.prof_pic
+  );
   const [profilePicFile, setProfilePicFile] = useState(null);
 
   const handleProfilePicUpload = (e) => {
@@ -110,7 +112,12 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
 
   return (
     <>
-      <Button size="sm" variant="outline" onClick={onOpen}>
+      <Button
+        borderColor={textColor}
+        size="sm"
+        variant="outline"
+        onClick={onOpen}
+      >
         <Icon color={textColor} as={AiOutlineEdit} />
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -187,7 +194,7 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
           </form>
         </ModalContent>
       </Modal>
-      <ChangeUsernameConfirmation
+      <EditUserInfoConfirmation
         group={group}
         confirmationIsOpen={confirmationIsOpen}
         confirmationOnOpen={confirmationOnOpen}
@@ -200,4 +207,4 @@ const ChangeUsernameModal = ({ group, member, bgColor }) => {
   );
 };
 
-export default ChangeUsernameModal;
+export default EditUserInfoModal;

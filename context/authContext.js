@@ -80,7 +80,6 @@ const AuthProvider = ({ children }) => {
   // so the user doesn't have to reload the page to see the new review
 
   const createReviewInLocalUser = (reviewObject) => {
-    console.log(reviewObject);
     let copyOfLocalUser = { ...localUser };
 
     copyOfLocalUser.activeGroup.reviews.unshift(reviewObject);

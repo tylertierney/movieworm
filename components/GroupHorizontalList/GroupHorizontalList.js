@@ -1,4 +1,4 @@
-import { Flex, HStack, Button, Icon } from "@chakra-ui/react";
+import { Flex, HStack, Button, Icon, Text } from "@chakra-ui/react";
 
 import BrandedHeading from "../BrandedHeading";
 
@@ -38,19 +38,31 @@ const GroupHorizontalList = ({ handleClick, reviewsList, group }) => {
         <BrandedHeading>{group.name}</BrandedHeading>
         <Link passHref href={`/group/${group.group_id}`}>
           <Button
+            fontWeight="light"
             fontSize="0.9rem"
             variant="outline"
-            rightIcon={
-              <Icon
-                color="brand.text.dark"
-                fontSize="0.9rem"
-                as={AiOutlineHome}
-              />
-            }
             color="brand.text.dark"
             size="sm"
+            p="1.2rem 0.4rem"
           >
-            Group Home
+            <Flex align="center">
+              <Flex direction="column" align="flex-start" mr="0.2rem">
+                <Text fontWeight="thin" fontSize="0.7rem" color="inherit">
+                  Group
+                </Text>
+                <Text fontWeight="bold" fontSize="0.8rem" color="inherit">
+                  Home
+                </Text>
+              </Flex>
+
+              <Icon
+                // border="solid red 1px"
+                mb="0.1rem"
+                color="brand.text.dark"
+                fontSize="1.8rem"
+                as={AiOutlineHome}
+              />
+            </Flex>
           </Button>
         </Link>
       </Flex>

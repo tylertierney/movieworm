@@ -1,7 +1,5 @@
 import { useLocalUser } from "../../context/authContext";
 
-import axios from "axios";
-
 import {
   Flex,
   Text,
@@ -15,20 +13,15 @@ import {
   useColorModeValue,
   Box,
   useDisclosure,
-  Icon,
   Avatar,
 } from "@chakra-ui/react";
-
-import ConfirmationMessage from "../../components/ConfirmationMessage/ConfirmationMessage";
 
 import { useEffect, useState } from "react";
 
 import BrandedHeading from "../../components/BrandedHeading";
 import BrandedSubheading from "../../components/BrandedSubheading";
 
-import { AiOutlineEdit } from "react-icons/ai";
-
-import ChangeUsernameModal from "../../components/ChangeUsernameModal/ChangeUsernameModal";
+import EditUserInfoModal from "../../components/EditUserInfoModal/EditUserInfoModal";
 
 import RemoveMemberModal from "../../components/RemoveMemberModal/RemoveMemberModal";
 
@@ -68,19 +61,19 @@ const GroupHomePage = () => {
 
       return (
         <Box key={index}>
-          <Flex w="100%" justify="space-between" align="center" p="0.5rem">
+          <Flex w="100%" justify="space-between" align="center" p="1rem">
             <Flex align="center">
               <Avatar
                 src={member.prof_pic}
                 name={member.username}
-                size="xs"
+                size="sm"
                 mr="1rem"
               />
               <Text color="brand.text.dark">{member.username}</Text>
             </Flex>
 
             {localUser._id === member.userid && (
-              <ChangeUsernameModal
+              <EditUserInfoModal
                 group={localUser.activeGroup}
                 member={member}
                 bgColor={bgColor}
@@ -134,7 +127,7 @@ const GroupHomePage = () => {
   };
 
   return (
-    <Flex direction="column" p="0.4rem 0.4rem 0 0.4rem">
+    <Flex direction="column" p="1rem 0.4rem 0 0.4rem">
       <Flex
         w="100%"
         maxW="360px"

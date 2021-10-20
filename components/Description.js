@@ -5,10 +5,8 @@ import {
   Icon,
   IconButton,
   useColorModeValue,
-  Image,
   Button,
   Divider,
-  Avatar,
 } from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import BrandedParagraph from "../components/BrandedParagraph";
@@ -17,11 +15,7 @@ import { BsChevronDoubleLeft } from "react-icons/bs";
 
 import { AiOutlinePlus } from "react-icons/ai";
 
-import {
-  findDirectors,
-  getMemberInfoFromUserID,
-  getCastItems,
-} from "../utils/helperFunctions";
+import { findDirectors, getCastItems } from "../utils/helperFunctions";
 
 import { useLocalUser } from "../context/authContext";
 
