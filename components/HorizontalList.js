@@ -123,7 +123,7 @@ const HorizontalList = ({
                 cursor="pointer"
               >
                 <Image
-                  onClick={() => handleClick(item)}
+                  onClick={() => handleClick(item, [])}
                   boxShadow="7px 7px 10px 1px rgb(0, 0, 0, 0.2)"
                   w="160px"
                   h="240px"

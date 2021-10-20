@@ -52,6 +52,7 @@ const themeObj = {
     global: (props) => ({
       body: {
         bg: mode("brand.white", "brand.gray")(props),
+        h: "100vh",
       },
 
       p: {
@@ -64,9 +65,6 @@ const themeObj = {
   },
 };
 
-// const theme = extendTheme({ colors });
 const theme = extendTheme(themeObj);
-
-console.log(theme);
 
 export default theme;

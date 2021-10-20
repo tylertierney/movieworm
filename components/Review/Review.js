@@ -2,8 +2,6 @@ import { Flex, Avatar, Text } from "@chakra-ui/react";
 
 import { getMemberInfoFromUserID } from "../../utils/helperFunctions";
 
-import { useEffect } from "react";
-
 const Review = ({ review, group }) => {
   if (review === null || review === undefined) {
     return null;
