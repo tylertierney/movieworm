@@ -1,0 +1,7 @@
+[[redirects]]
+  from = "https://movieworm.netlify.app"
+  to = "https://movieworm.io"
+  status = 301
+  force = true
+  
+  
