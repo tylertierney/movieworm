@@ -56,6 +56,8 @@ const LeaveGroupModal = ({ group, userid, bgColor }) => {
     setIsLoading(false);
   };
 
+  const buttonColor = useColorModeValue("#feb2b2", "#c53030");
+
   return (
     <>
       <Button variant="outline" colorScheme="red" size="xs" onClick={onOpen}>
@@ -84,9 +86,7 @@ const LeaveGroupModal = ({ group, userid, bgColor }) => {
                 isDisabled={isLoading}
                 transition="0.3s ease-in-out"
                 variant="outline"
-                color="brand.white"
-                border="1px solid"
-                borderColor="red"
+                colorScheme="red"
                 type="submit"
                 _hover={{
                   opacity: "0.6",

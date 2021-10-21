@@ -14,7 +14,7 @@ import { RiLinkedinFill } from "react-icons/ri";
 import { AiOutlineTwitter } from "react-icons/ai";
 
 const listItemsArray = [
-  { text: "About Us", link: "/" },
+  { text: "About Us", link: "/about" },
   { text: "Contact", link: "/" },
   { text: "Careers", link: "/" },
   { text: "News", link: "/" },

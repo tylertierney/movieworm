@@ -50,6 +50,7 @@ const BrandedHeading = ({ children, props }) => {
       maxW="480px"
       fontSize={fontSize(children)}
       p="0rem 0.4rem 0rem 0.4rem"
+      {...props}
     >
       {headingToString}
     </Heading>
