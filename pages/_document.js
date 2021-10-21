@@ -24,6 +24,8 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
             rel="stylesheet"
           />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/wormicon-192x192.png" />
         </Head>
         <body>
           <Main />
