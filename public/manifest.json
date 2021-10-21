@@ -3,7 +3,7 @@
     "background_color": "#F5F5F5",
     "display": "fullscreen",
     "scope": "/",
-    "start_url": "/",
+    "start_url": "https://movieworm.netlify.app/",
     "name": "MovieWorm",
     "short_name": "MovieWorm",
     "description": "Movie reviews for friends",
