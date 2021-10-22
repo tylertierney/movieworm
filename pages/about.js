@@ -4,7 +4,9 @@ import BrandedSubheading from "../components/BrandedSubheading";
 
 import BrandedParagraph from "../components/BrandedParagraph";
 
-import { Flex, Text } from "@chakra-ui/react";
+import Link from "next/link";
+
+import { Flex, Text, OrderedList, ListItem } from "@chakra-ui/react";
 
 const AboutPage = () => {
   return (
@@ -13,19 +15,38 @@ const AboutPage = () => {
         Welcome To MovieWorm
       </BrandedHeading>
 
-      <Text p="0rem 0.4rem 0.6rem 0.4rem">1. Create a private group.</Text>
-      <Text p="0rem 0.4rem 0.6rem 0.4rem">
-        2. Use your group invitation code to invite friends.
-      </Text>
-      <Text p="0rem 0.4rem 0.6rem 0.4rem">
-        3. Customize your group profile with a username and profile picture.
-      </Text>
-      <Text p="0rem 0.4rem 0.6rem 0.4rem">
-        4. Share movie reviews and ratings.
-      </Text>
+      <OrderedList maxW="420px">
+        <ListItem>
+          <Text p="0rem 0.4rem 0.6rem 0.4rem">Create a private group.</Text>
+        </ListItem>
+        <ListItem>
+          <Text p="0rem 0.4rem 0.6rem 0.4rem">
+            Use your group invitation code to invite friends.
+          </Text>
+        </ListItem>
+        <ListItem>
+          {" "}
+          <Text p="0rem 0.4rem 0.6rem 0.4rem">
+            Customize your group profile with a username and profile picture.
+          </Text>
+        </ListItem>
+        <ListItem>
+          <Text p="0rem 0.4rem 0.6rem 0.4rem">
+            Share movie reviews and ratings.
+          </Text>
+        </ListItem>
+      </OrderedList>
       <br />
       <BrandedSubheading>Questions or concerns?</BrandedSubheading>
-      <Text p="0rem 0.4rem 0.6rem 0.4rem">Email tytierney@yahoo.com</Text>
+      <Text p="0rem 0.4rem 0.6rem 0.4rem">
+        Email&nbsp;
+        <a
+          style={{ textDecoration: "underline" }}
+          href="mailto:tytierney@yahoo.com"
+        >
+          tytierney@yahoo.com
+        </a>
+      </Text>
     </Flex>
   );
 };

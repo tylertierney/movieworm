@@ -11,7 +11,7 @@ import Link from "next/link";
 
 import { FaFacebook, FaPinterest } from "react-icons/fa";
 import { RiLinkedinFill } from "react-icons/ri";
-import { AiOutlineTwitter } from "react-icons/ai";
+import { AiOutlineTwitter, AiFillGithub } from "react-icons/ai";
 
 const listItemsArray = [
   { text: "About Us", link: "/about" },
@@ -83,10 +83,10 @@ const Footer = () => {
               />
             </a>
           </Link>
-          <Link href="/" passHref>
-            <a aria-label="Pinterest">
+          <Link href="https://github.com/tylertierney/movieworm" passHref>
+            <a aria-label="Github">
               <Icon
-                as={FaPinterest}
+                as={AiFillGithub}
                 transition="0.3s ease-in-out"
                 opacity="0.5"
                 _hover={{ opacity: "1" }}
