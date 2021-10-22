@@ -26,6 +26,7 @@ import EditUserInfoModal from "../../components/EditUserInfoModal/EditUserInfoMo
 import RemoveMemberModal from "../../components/RemoveMemberModal/RemoveMemberModal";
 
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
+import router from "next/router";
 
 const GroupHomePage = () => {
   const [idIsCopied, setIdIsCopied] = useState(false);
@@ -39,9 +40,17 @@ const GroupHomePage = () => {
 
   useEffect(() => {
     if (localUser._id === localUser.activeGroup.owner_id) {
-      setUserIsAdmin(true);
+      setUserIsAdmin(() => true);
     }
   }, []);
+
+  // If the user changes their active group while navigated on this page,
+  // force them to the relevant group page rather than rehydrating the
+  // current url
+
+  useEffect(() => {
+    router.push(`/group/${localUser.activeGroup.group_id}`);
+  }, [localUser?.activeGroup?.group_id]);
 
   const bgColor = useColorModeValue("brand.white", "brand.gray");
 
@@ -57,8 +66,6 @@ const GroupHomePage = () => {
 
   if (localUser && localUser?.activeGroup) {
     groupMembersArray = localUser?.activeGroup.members.map((member, index) => {
-      console.log(member.prof_pic);
-
       return (
         <Box key={index}>
           <Flex w="100%" justify="space-between" align="center" p="1rem">
@@ -71,49 +78,51 @@ const GroupHomePage = () => {
               />
               <Text color="brand.text.dark">{member.username}</Text>
             </Flex>
-
-            {localUser._id === member.userid && (
-              <EditUserInfoModal
-                group={localUser.activeGroup}
-                member={member}
-                bgColor={bgColor}
-              />
-            )}
-            {userIsAdmin ? (
-              <>
-                {member.userid === localUser._id ? (
-                  <></>
-                ) : (
-                  <>
-                    <RemoveMemberModal
-                      group={localUser.activeGroup}
-                      member={member}
-                      isOpen={isOpen}
-                      onOpen={onOpen}
-                      onClose={onClose}
-                      bgColor={bgColor}
-                    />
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                {member.userid === localUser.activeGroup.owner_id ? (
-                  <Text
-                    userSelect="none"
-                    fontSize="0.8rem"
-                    borderRadius="lg"
-                    p="0.2rem 0.4rem"
-                    border="1px solid"
-                    borderColor={borderColor}
-                  >
-                    Admin
-                  </Text>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
+            <Flex align="center">
+              {localUser._id === member.userid && (
+                <EditUserInfoModal
+                  group={localUser.activeGroup}
+                  member={member}
+                  bgColor={bgColor}
+                />
+              )}
+              {userIsAdmin ? (
+                <>
+                  {member.userid === localUser._id ? (
+                    <></>
+                  ) : (
+                    <>
+                      <RemoveMemberModal
+                        group={localUser.activeGroup}
+                        member={member}
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        bgColor={bgColor}
+                      />
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {member.userid === localUser.activeGroup.owner_id ? (
+                    <Text
+                      userSelect="none"
+                      fontSize="0.8rem"
+                      borderRadius="lg"
+                      p="0.2rem 0.4rem"
+                      border="1px solid"
+                      borderColor={borderColor}
+                      ml="0.4rem"
+                    >
+                      Admin
+                    </Text>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
+            </Flex>
           </Flex>
           <Divider />
         </Box>
