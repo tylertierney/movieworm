@@ -19,7 +19,14 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title>MovieWorm</title>
-        <meta name="description" content="Private movie reviews for friends" />
+        <meta name="description" content="Movie reviews for friend groups" />
+        <meta property="og:image" content="/full_logo_whiteBG_564x292.png" />
+        <meta
+          property="og:description"
+          content="Movie reviews for friend groups"
+        />
+        <meta property="og:url" content="https://movieworm.io" />
+        <meta property="og:title" content="MovieWorm" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
