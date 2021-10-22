@@ -39,6 +39,13 @@ const GroupHomePage = () => {
   const { localUser } = useLocalUser();
 
   useEffect(() => {
+    // This conditional is necessary to prevent errors on
+    // page refresh
+
+    if (localUser === null) {
+      return <LoadingScreen status="loading" />;
+    }
+
     if (localUser._id === localUser.activeGroup.owner_id) {
       setUserIsAdmin(() => true);
     }
@@ -46,10 +53,13 @@ const GroupHomePage = () => {
 
   // If the user changes their active group while navigated on this page,
   // force them to the relevant group page rather than rehydrating the
-  // current url
+  // current url. It's wrapped in a conditional to prevent errors on
+  // page refresh.
 
   useEffect(() => {
-    router.push(`/group/${localUser.activeGroup.group_id}`);
+    if (localUser != null && localUser.activeGroup != null) {
+      router.push(`/group/${localUser.activeGroup.group_id}`);
+    }
   }, [localUser?.activeGroup?.group_id]);
 
   const bgColor = useColorModeValue("brand.white", "brand.gray");
