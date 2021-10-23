@@ -46,7 +46,16 @@ const JoinGroup = () => {
   const username = useInput("");
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} style={{ width: "100%" }}>
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      style={{
+        width: "100%",
+        height: "93vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <VStack spacing={6} color={textColor} p="1rem 0rem">
         {/* <p>{confirmation}</p> */}
         <Flex w="100%" direction="column" align="center">
