@@ -36,7 +36,7 @@ const AboutPage = () => {
           </Text>
         </ListItem>
       </OrderedList>
-      <br />
+      {/* <br />
       <BrandedSubheading>Questions or concerns?</BrandedSubheading>
       <Text p="0rem 0.4rem 0.6rem 0.4rem">
         Email&nbsp;
@@ -46,7 +46,7 @@ const AboutPage = () => {
         >
           tytierney@yahoo.com
         </a>
-      </Text>
+      </Text> */}
     </Flex>
   );
 };
