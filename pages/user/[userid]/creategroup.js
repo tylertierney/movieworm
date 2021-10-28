@@ -72,15 +72,12 @@ const CreateGroup = () => {
       onSubmit={(e) => handleSubmit(e)}
       style={{
         width: "100%",
-        height: "93vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        marginTop: "10vh",
       }}
     >
       <VStack spacing={6} color={textColor}>
         <Flex w="100%" direction="column" align="center">
-          <BrandedHeading props={{ m: "0rem 0rem 0.5rem 0rem" }}>
+          <BrandedHeading props={{ m: "0rem 0rem 1.5rem 0rem" }}>
             Create a Group
           </BrandedHeading>
 
