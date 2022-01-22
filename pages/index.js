@@ -21,7 +21,7 @@ const Home = ({
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const api_key = process.env.API_KEY;
   let popularList = [],
     genre_list = [],
